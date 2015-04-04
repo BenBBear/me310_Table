@@ -13,13 +13,9 @@ var express = require('express'),
     uploadDir = os.tmpDir();
 
 
-if (typeof __dirname == 'undefined') {
-    app.use(express.static(appPath + '/src/js/node/server/public'));
-    uploadDir = path.resolve(appPath + '/src/js/node/server/public/uploads');
-} else {
-    app.use(express.static('./public/'));
-    uploadDir = path.resolve('./public/uploads/');
-}
+app.use(express.static(__dirname + '/public/'));
+uploadDir = path.resolve(__dirname + '/public/uploads/');
+
 app.use(bodyParser.json());
 
 var imgSrcPrefix = 'js/node/server/public/uploads/';

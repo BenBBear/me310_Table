@@ -2,7 +2,7 @@ angular.module('app')
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
         $urlRouterProvider
-            .otherwise('/app/404');
+            .otherwise('/app/default');
 
         $stateProvider
             .state('app', {
@@ -12,12 +12,19 @@ angular.module('app')
             })
             .state('app.sharing', {
                 url: '/sharing',
-                templateUrl: 'tpl/sharing.html'
+                templateUrl: 'tpl/sharing.html',
+                resolve: {
+                    deps: ['$ocLazyLoad',
+                        function($ocLazyLoad) {
+                            return $ocLazyLoad.load(['js/app/sharing/app.js']);
+                        }
+                    ]
+                }
             })
 
-        .state('app.404', {
-            url: '/404',
-            template: '<h1>it works!</h1>'
+        .state('app.default', {
+            url: '/default',
+            templateUrl: 'tpl/default.html'
         });
 
     }]);

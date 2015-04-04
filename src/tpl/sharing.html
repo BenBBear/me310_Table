@@ -1,5 +1,7 @@
-<h2>Here For Sharing</h2>
-<div ng-repeat=" x in app.storage.imgList">
-  <img ng-src="x.src" />
-  <h4>{{x.name}}</h4>
+<div ng-controller="sharingAppCtrl">
+  <h2>Here For Sharing</h2>
+  <div ng-repeat="x in app.storage.imgList">
+    <img ng-src="{{x.src}}" />
+    <h4>{{x.name}}</h4>
+  </div>
 </div>
