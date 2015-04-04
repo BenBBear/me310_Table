@@ -9,9 +9,15 @@ angular.module('app')
                 abstract: true,
                 url: '/app',
                 templateUrl: 'tpl/app.html'
-            }).state('app.404', {
-                url: '/404',
-                template: '<h1>it works!</h1>'
-            });
+            })
+            .state('app.sharing', {
+                url: '/sharing',
+                templateUrl: 'tpl/sharing.html'
+            })
+
+        .state('app.404', {
+            url: '/404',
+            template: '<h1>it works!</h1>'
+        });
 
     }]);
