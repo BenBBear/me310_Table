@@ -50,6 +50,7 @@ app.controller('downloadCtrl', function($scope, socket) {
     var storage = $scope.app.storage;
     socket.emit('req:fileList');
     socket.on('res:fileList', function(x) {
+        debugger;
         storage.fileList = x;
     });
 

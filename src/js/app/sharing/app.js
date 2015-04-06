@@ -1,6 +1,5 @@
 angular.module('app')
     .controller('sharingAppCtrl', ['$scope', 'ip', 'devices', function($scope, ip, devices) {
-        debugger;
         $scope.uploadAddr = ip;
         var storage = $scope.app.storage;
         devices.emit('setFileList', storage.fileList);
