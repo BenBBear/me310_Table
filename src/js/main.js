@@ -8,10 +8,9 @@ angular.module('app')
         };
         var storage = $scope.app.storage;
         // debugger
-        storage.imgList = [];
         devices.on('file', function(file) {
-            storage.imgList = storage.imgList || [];
-            storage.imgList.push(file);
+            storage.fileList = storage.fileList || [];
+            storage.fileList.push(file);
             $scope.$apply();
         });
 

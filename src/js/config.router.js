@@ -1,5 +1,5 @@
 angular.module('app')
-    .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', 'JQ_CONFIG', function($stateProvider, $urlRouterProvider, JQ_CONFIG) {
 
         $urlRouterProvider
             .otherwise('/app/default');
@@ -14,9 +14,14 @@ angular.module('app')
                 url: '/sharing',
                 templateUrl: 'tpl/sharing.html',
                 resolve: {
-                    deps: ['$ocLazyLoad',
-                        function($ocLazyLoad) {
-                            return $ocLazyLoad.load(['js/app/sharing/app.js']);
+                    deps: ['$ocLazyLoad', 'uiLoad',
+                        function($ocLazyLoad, uiLoad) {
+                            return uiLoad.load(JQ_CONFIG.qrcode)
+                                .then(
+                                    function() {
+                                        return $ocLazyLoad.load(['ja.qr', 'js/app/sharing/app.js']);
+                                    }
+                                );
                         }
                     ]
                 }
@@ -28,3 +33,6 @@ angular.module('app')
         });
 
     }]);
+
+
+// return $ocLazyLoad.load(['js/app/sharing/app.js']);

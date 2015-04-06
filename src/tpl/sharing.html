@@ -1,7 +1,10 @@
 <div ng-controller="sharingAppCtrl">
   <h2>Here For Sharing</h2>
-  <div ng-repeat="x in app.storage.imgList">
+  <qr text="uploadAddr"></qr>
+
+  <div ng-repeat="x in app.storage.fileList track by $index">
     <img ng-src="{{x.src}}" />
     <h4>{{x.name}}</h4>
+    <button class="btn btn-default"  ng-click="deleteFileByIndex($index)"> 删除它 </button>
   </div>
 </div>

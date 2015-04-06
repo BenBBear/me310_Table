@@ -8,7 +8,7 @@
     },
     "window": {
         "title": "chole",
-        "toolbar": false,
+        "toolbar": true,
         "resizable": true,
         "always-on-top": true,
         "fullscreen": false,
