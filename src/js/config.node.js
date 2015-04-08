@@ -14,6 +14,6 @@ var util = _require('./node/util/util.js'),
 angular.module('app')
     .value('fs', require('fs'))
     .value('util', util)
-    .value('ip', 'http://' + util.getWlanIp() + '/#/upload-page')
+    .value('ip', 'http://' + util.getWlanIp() + ':' + server.port + '/#/upload-page')
     .value('InternalServerPort', server.port)
     .value('devices', server.interface);

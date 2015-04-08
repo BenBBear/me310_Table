@@ -12,7 +12,9 @@ var express = require('express'),
     port = 3000,
     interface = new emt(),
     path = require('path'),
-    uploadDir = os.tmpDir();
+    uploadDir = os.tmpDir(),
+    randomstring = require("randomstring");
+
 
 
 app.use(express.static(__dirname + '/public/'));
@@ -35,9 +37,11 @@ var getForm = function() {
 var errMsg = "Table 内部服务器出现错误",
     fileList = [];
 
+
 app.post('/upload', function(req, res) {
     var form = getForm();
     form.parse(req, function(err, fields, files) {
+        files.file.name = randomstring.generate() + files.file.name;
         var newPath = uploadDir + '/' + files.file.name,
             imgSrcPath = imgSrcPrefix + files.file.name;
         fs.rename(files.file.path, newPath, function(err) {
@@ -58,6 +62,8 @@ app.post('/upload', function(req, res) {
                     name: files.file.name
                 };
                 fileList.push(e);
+                // debugger;
+                console.log('*****************||')
                 interface.emit('file', e);
                 io.emit('cmd:addFile', e);
                 res.json({
@@ -78,7 +84,7 @@ io.on('connection', function(socket) {
     });
 });
 interface.on('removeFile', function(index) {
-    fileList.splice(index);
+    fileList.splice(index, 1);
     io.emit('cmd:removeFile', index);
 });
 

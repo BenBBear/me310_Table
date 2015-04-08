@@ -55,7 +55,7 @@ app.controller('downloadCtrl', function($scope, socket) {
     });
 
     socket.on('cmd:removeFile', function(index) {
-        storage.fileList.splice(index);
+        storage.fileList.splice(index, 1);
     });
     socket.on('cmd:setFileList', function(x) {
         storage.fileList = x;

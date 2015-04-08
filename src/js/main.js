@@ -8,10 +8,15 @@ angular.module('app')
         };
         var storage = $scope.app.storage;
         // debugger
+        debugger;
+        if (devices._events.file !== undefined) {
+            delete devices._events.file;
+        }
         devices.on('file', function(file) {
             storage.fileList = storage.fileList || [];
             storage.fileList.push(file);
             $scope.$apply();
+
         });
 
         storage.appList = [{
