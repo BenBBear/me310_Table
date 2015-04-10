@@ -1,5 +1,6 @@
 # Created by https://www.gitignore.io
-
+/build/
+/src/js/node/server/public/uploads/
 /src/js/node/server/public/bower_components/
 /src/js/node/server/public/node_modules/
 

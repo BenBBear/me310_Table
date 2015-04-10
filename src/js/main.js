@@ -7,14 +7,13 @@ angular.module('app')
             storage: $localStorage
         };
         var storage = $scope.app.storage;
-        // debugger
-        debugger;
+        storage.file_list = storage.file_list || [];
+
         if (devices._events.file !== undefined) {
             delete devices._events.file;
         }
         devices.on('file', function(file) {
-            storage.fileList = storage.fileList || [];
-            storage.fileList.push(file);
+            storage.file_list.push(file);
             $scope.$apply();
 
         });

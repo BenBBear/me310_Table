@@ -62,8 +62,6 @@ app.post('/upload', function(req, res) {
                     name: files.file.name
                 };
                 fileList.push(e);
-                // debugger;
-                console.log('*****************||')
                 interface.emit('file', e);
                 io.emit('cmd:addFile', e);
                 res.json({
@@ -79,7 +77,6 @@ app.post('/upload', function(req, res) {
 
 io.on('connection', function(socket) {
     socket.on('req:fileList', function() {
-        // debugger;
         socket.emit('res:fileList', fileList);
     });
 });
@@ -90,7 +87,7 @@ interface.on('removeFile', function(index) {
 
 
 interface.on('setFileList', function(x) {
-    fileList = x;
+    fileList = x.slice();
     io.emit('cmd:setFileList', x);
 });
 
