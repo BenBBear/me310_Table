@@ -26,6 +26,22 @@ angular.module('app')
                     ]
                 }
             })
+            .state('app.sketch', {
+                url: '/sketch',
+                templateUrl: 'tpl/sketch.html',
+                resolve: {
+                    deps: ['$ocLazyLoad', 'uiLoad',
+                        function($ocLazyLoad, uiLoad) {
+                            return uiLoad.load(JQ_CONFIG.sketchjs)
+                                .then(
+                                    function() {
+                                        return $ocLazyLoad.load(['js/directives/ui-sketchboard.js', 'js/app/sketch/app.js']);
+                                    }
+                                );
+                        }
+                    ]
+                }
+            })
 
         .state('app.default', {
             url: '/default',

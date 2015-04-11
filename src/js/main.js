@@ -8,7 +8,6 @@ angular.module('app')
         };
         var storage = $scope.app.storage;
         storage.file_list = storage.file_list || [];
-
         if (devices._events.file !== undefined) {
             delete devices._events.file;
         }
@@ -17,6 +16,8 @@ angular.module('app')
             $scope.$apply();
 
         });
+        //
+
 
         storage.appList = [{
             name: "默认页",
@@ -24,5 +25,8 @@ angular.module('app')
         }, {
             name: "文件共享",
             state: "app.sharing"
+        }, {
+            name: '画笔',
+            state: 'app.sketch'
         }];
     }]);
