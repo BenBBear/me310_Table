@@ -1,0 +1,18 @@
+<div ng-controller="sharing_pasteasyCtrl" id="sharing_pasteasy">
+    <h2>Here For Sharing with pasteasy</h2>
+    <button class="btn btn-primary"  ui-sref="app.default"> return </button>
+
+
+    <a href="#" id="triggerFile" class="btn btn-primary">Browse File</a>
+
+
+
+    <input type="file" fileread="choosed_dir" id="inputFile" webkitdirectory directory multiple/>
+    <label class="label text-primary">Selected Path to Watch</label>   {{choosed_dir[0].path}}
+
+    <div ng-repeat="x in images_in_dir  track by $index">
+        11223
+        <img ng-src="{{x.src}}" style="max-width:20em;max-height:20em;" />
+        <button class="btn btn-default"  ng-click="deleteFile($index)"> 删除它 </button>
+    </div>
+</div>

@@ -28,5 +28,8 @@ angular.module('app')
         }, {
             name: '画笔',
             state: 'app.sketch'
+        },{
+            name: 'sharing with pasteasy',
+            state: 'app.sharing-pasteasy'
         }];
     }]);

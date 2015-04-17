@@ -42,7 +42,22 @@ angular.module('app')
                     ]
                 }
             })
-
+            .state('app.sharing-pasteasy', {
+                url: '/sketch',
+                templateUrl: 'tpl/sharing-pasteasy.html',
+                resolve: {
+                    deps: ['$ocLazyLoad', 'uiLoad',
+                        function($ocLazyLoad, uiLoad) {
+                            return uiLoad.load(JQ_CONFIG.sketchjs)
+                                .then(
+                                    function() {
+                                        return $ocLazyLoad.load([ 'js/app/sharing-pasteasy/app.js']);
+                                    }
+                                );
+                        }
+                    ]
+                }
+            })
         .state('app.default', {
             url: '/default',
             templateUrl: 'tpl/default.html'

@@ -8,6 +8,7 @@ angular.module('app')
             option: '='
         },
         link: function($scope, $element, attrs) {
+            var ERASER_MAG = 4;
             // sketching in here
             var _colors = ['#E3EB64', '#A7EBCA', '#FFFFFF', '#D8EBA7', '#868E80'];
             var option = {
@@ -47,7 +48,7 @@ angular.module('app')
                                 this.lineCap = 'round';
                                 this.lineJoin = 'round';
                                 this.fillStyle = this.strokeStyle = "#FFFFFF";
-                                this.lineWidth = opt.radius * 2;
+                                this.lineWidth = opt.radius * ERASER_MAG;
                                 this.beginPath();
                                 this.moveTo(touch.ox, touch.oy);
                                 this.lineTo(touch.x, touch.y);

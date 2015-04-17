@@ -1,5 +1,6 @@
 <div ng-controller="sharingAppCtrl">
-  <h2>Here For Sharing</h2>
+    <h2>Here For Sharing</h2>
+        <button class="btn btn-primary"  ui-sref="app.default"> return </button>
   <qr text="uploadAddr"></qr>
 
   <div ng-repeat="x in app.storage.file_list track by $index">
