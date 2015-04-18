@@ -30,7 +30,6 @@ angular.module('app')
                     ignored: /[\/\\]\./
                 }).on('all', function(event, path) {
                     if (event == 'add') {
-                        debugger;
                         $scope.images_in_dir.push({
                             src: path
                         });
