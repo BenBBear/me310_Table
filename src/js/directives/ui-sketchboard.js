@@ -39,6 +39,14 @@ angular.module('app')
                 keydown: function() {
                     if (this.keys.C) this.clear();
                 },
+                touchstart:function(){
+                    debugger;
+                    console.log('TOUCHSTART');
+                },
+                touchend:function(){
+                    debugger;
+                    console.log('TOUCHEND');
+                },
                 touchmove: function() {
 
                     switch (opt.tool) {
@@ -60,6 +68,8 @@ angular.module('app')
                             {
                                 for (var i = this.touches.length - 1, touch; i >= 0; i--) {
                                     touch = this.touches[i];
+                                    console.log('this => ', this);
+                                    console.log('this.touches[',i,'] =>',touch);
                                     this.lineCap = 'round';
                                     this.lineJoin = 'round';
                                     this.fillStyle = this.strokeStyle = opt.colors[i % opt.colors.length];
@@ -68,6 +78,9 @@ angular.module('app')
                                     this.moveTo(touch.ox, touch.oy);
                                     this.lineTo(touch.x, touch.y);
                                     this.stroke();
+                                    // touch => {ox,oy 之前坐标
+                                    //           x,y 现在坐标
+                                    //           dx,dy ox - x, oy - y}
                                 }
                                 break;
                             }

@@ -1,0 +1,33 @@
+<h1>lexicon</h1>
+
+<input type="text" class="form-control" placeholder="give me some words" ng-model="lexicon_input">
+
+
+<div ng-if="true">
+    <div ng-repeat="(key, value) in lexicon_result">
+        <h3>{{key}}</h3>
+        <hr>
+        <p>{{value}}</p>
+    </div>
+</div>
+
+
+<div ng-if="false">
+    <div ng-if="lexicon-input">
+        <h2>wordnet</h2>
+        <div ng-repeat="token in lexicon_result.wordnet track by $index">
+            <div class="col-sm-2 lexicon_token">
+                {{token}}
+            </div>
+        </div>
+
+        <hr>
+
+        <h2>google</h2>
+        <div ng-repeat="token in lexicon_result.google track by $index">
+            <div class="col-sm-2 lexicon_token">
+                {{token}}
+            </div>
+        </div>
+    </div>
+</div>

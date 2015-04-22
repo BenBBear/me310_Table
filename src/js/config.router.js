@@ -58,6 +58,15 @@ angular.module('app')
                     ]
                 }
             })
+            .state('app.lexicon', {
+                url:'/lexicon',
+                templateUrl:'tpl/lexicon.html',
+                resolve:{
+                    deps:['$ozLazyLoad', function($ozLazyLoad){
+                        return $ozLazyLoad.load(['js/app/lexicon/app.js']);
+                    }]
+                }
+            })
         .state('app.default', {
             url: '/default',
             templateUrl: 'tpl/default.html'

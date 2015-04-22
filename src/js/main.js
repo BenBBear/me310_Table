@@ -4,6 +4,7 @@ angular.module('app')
             name: "chole",
             version: "0.0.1",
             setting: {},
+            memory:{},
             storage: $localStorage
         };
         var storage = $scope.app.storage;
@@ -19,7 +20,7 @@ angular.module('app')
         //
 
 
-        storage.appList = [{
+        $scope.memory.appList = [{
             name: "默认页",
             state: "app.default"
         }, {
@@ -31,5 +32,10 @@ angular.module('app')
         },{
             name: 'sharing with pasteasy',
             state: 'app.sharing-pasteasy'
+        }, {
+            name:'lexicon',
+            state:'app.lexicon'
         }];
+
+
     }]);
