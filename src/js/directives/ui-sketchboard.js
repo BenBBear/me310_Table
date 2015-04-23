@@ -39,45 +39,53 @@ angular.module('app')
                 keydown: function() {
                     if (this.keys.C) this.clear();
                 },
-                touchstart:function(){
-                    debugger;
+                touchstart: function() {
+                    // debugger;
                     console.log('TOUCHSTART');
                 },
-                touchend:function(){
-                    debugger;
+                touchend: function() {
+                    // debugger;
                     console.log('TOUCHEND');
                 },
                 touchmove: function() {
-
+                    var me = this;
                     switch (opt.tool) {
                         case "eraser":
-                            for (var i = this.touches.length - 1, touch; i >= 0; i--) {
-                                touch = this.touches[i];
-                                this.lineCap = 'round';
-                                this.lineJoin = 'round';
-                                this.fillStyle = this.strokeStyle = "#FFFFFF";
-                                this.lineWidth = opt.radius * ERASER_MAG;
-                                this.beginPath();
-                                this.moveTo(touch.ox, touch.oy);
-                                this.lineTo(touch.x, touch.y);
-                                this.stroke();
+                            for (var i = me.touches.length - 1, touch; i >= 0; i--) {
+                                touch = me.touches[i];
+
+                                shouldDraw(touch, function() {
+                                    me.lineCap = 'round';
+                                    me.lineJoin = 'round';
+                                    me.fillStyle = me.strokeStyle = "#FFFFFF";
+                                    me.lineWidth = opt.radius * ERASER_MAG;
+                                    me.beginPath();
+                                    me.moveTo(touch.ox, touch.oy);
+                                    me.lineTo(touch.x, touch.y);
+                                    me.stroke();
+                                });
                             }
                             break;
                         case "pen":
                         default:
                             {
-                                for (var i = this.touches.length - 1, touch; i >= 0; i--) {
-                                    touch = this.touches[i];
-                                    console.log('this => ', this);
-                                    console.log('this.touches[',i,'] =>',touch);
-                                    this.lineCap = 'round';
-                                    this.lineJoin = 'round';
-                                    this.fillStyle = this.strokeStyle = opt.colors[i % opt.colors.length];
-                                    this.lineWidth = opt.radius;
-                                    this.beginPath();
-                                    this.moveTo(touch.ox, touch.oy);
-                                    this.lineTo(touch.x, touch.y);
-                                    this.stroke();
+
+                                for (var i = me.touches.length - 1, touch; i >= 0; i--) {
+                                    touch = me.touches[i];
+                                    // debugger;
+                                    // console.log('me => ', me);
+                                    // console.log('me.touches[',i,'] =>',touch);
+
+                                    shouldDraw(touch, function() {
+                                        me.lineCap = 'round';
+                                        me.lineJoin = 'round';
+                                        me.fillStyle = me.strokeStyle = opt.colors[i % opt.colors.length];
+                                        me.lineWidth = opt.radius;
+                                        me.beginPath();
+                                        me.moveTo(touch.ox, touch.oy);
+                                        me.lineTo(touch.x, touch.y);
+                                        me.stroke();
+                                    });
                                     // touch => {ox,oy 之前坐标
                                     //           x,y 现在坐标
                                     //           dx,dy ox - x, oy - y}
@@ -90,3 +98,27 @@ angular.module('app')
         }
     };
 });
+
+//**************************************************************************************************//
+var threshold = 10,
+    just_start = false;
+var square = function(x) {
+        return Math.pow(x, 2);
+    },
+    sqrt = Math.sqrt;
+
+function distance(p1, p2) {
+    return sqrt(square((p1.x || p1.ox) - (p2.x || p2.ox)) + square((p1.y || p1.oy) - (p2.y || p2.oy)));
+}
+
+function shouldDraw(touch, cb) {
+    if (distance({
+            x: touch.x,
+            y: touch.y
+        }, {
+            x: touch.ox,
+            y: touch.oy
+        }) < threshold) {
+        cb();
+    }
+}
