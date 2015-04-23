@@ -1,55 +1,79 @@
 angular.module('app')
-    .controller('lexiconAppCtrl',function($scope, wordNet, google, google_images, spellchecker, tokenize){
+    .controller('lexiconAppCtrl', function($scope, wordNet, google, spellchecker, natural) {
 
-        function spellFilter(tokens){
+        function spellFilter(tokens) {
             var r = [];
-            tokens.forEach(function(x){
-                try{
-                    if(!spellchecker.isMisspelled(x)){
+            tokens.forEach(function(x) {
+                try {
+                    if (!spellchecker.isMisspelled(x)) {
                         r.push(x);
                     }
-                }catch(e){
-                }
+                } catch (e) {}
             });
             return r;
         }
-        function spellEnflater(tokens){
+
+        function spellEnflater(tokens) {
             var r = [];
-            tokens.forEach(function(x){
-                try{
-                    if(spellchecker.isMisspelled(x)){
-                        r.concat(spellchecker.getCorrectionsForMisspelling(x));
-                    }else{
+            tokens.forEach(function(x) {
+                try {
+                    if (spellchecker.isMisspelled(x)) {
+                        r = r.concat(spellchecker.getCorrectionsForMisspelling(x));
+                    } else {
                         r.push(x);
                     }
-                }catch(e){
-                }
+                } catch (e) {}
             });
-            return r;
+            var str = r.join(' '),
+                new_tokens = stemmer.tokenizeAndStem(str);
+
+            return unique(new_tokens);
         }
 
         $scope.lexicon_input = "";
-        $scope.lexicon_result = {};
+        $scope.lexicon_result = {
+            google: undefined,
+            initial_tokens: undefined,
+            spellchecked_Enflated_tokens: undefined,
+            spellchecked_Filtered_tokens: undefined,
+            wordNet: undefined
+        };
 
-        $scope.$watch('lexicon_input', function(newVal, oldVal){
-            var tokens = $scope.lexicon_result.initial_tokens = tokenize(newVal);
+        var stemmer = natural.PorterStemmer;
+
+        $scope.$watch(function() {
+            return $scope.lexicon_input;
+        }, function(newVal, oldVal) {
+            var tokens = $scope.lexicon_result.initial_tokens = stemmer.tokenizeAndStem(newVal).filter(function(x) {
+                return x.length > 2;
+            });
+
             var enflated_tokens = $scope.lexicon_result.spellchecked_Enflated_tokens = spellEnflater(tokens);
             var filtered_tokens = $scope.lexicon_result.spellchecked_Filtered_tokens = spellFilter(tokens);
-            wordNet(filtered_tokens, function(results){
+
+            $scope.lexicon_result.wordNet = [];
+            wordNet(enflated_tokens, function(results) {
                 $scope.lexicon_result.wordNet = $scope.lexicon_result.wordNet || [];
                 $scope.lexicon_result.wordNet.push(results);
             });
-            google(newVal, function(err,next, links){
-                if(err){
+
+            google(newVal, function(err, next, links) {
+                if (err) {
                     $scope.lexicon_result.google = err;
-                }else{
+                } else {
                     $scope.lexicon_result.google = links;
                 }
+                $scope.$apply();
             });
         });
 
 
-        $scope.lex = function(x){
+        $scope.lex = function(x) {
             $scope.lexicon_input = x;
+        };
+
+
+        $scope.debug = function() {
+            debugger;
         };
     });

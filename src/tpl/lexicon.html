@@ -1,7 +1,12 @@
+<div ng-controller="lexiconAppCtrl">
+
+    <button class="btn btn-default" ng-click="debug();">debug</button>
+
 <h1>lexicon</h1>
 
-<input type="text" class="form-control" placeholder="give me some words" ng-model="lexicon_input">
-
+<div style="margin:2em;">
+    <input type="text" class="form-control" placeholder="give me some words"  ng-model="lexicon_input">
+</div>
 
 <div ng-if="true">
     <div ng-repeat="(key, value) in lexicon_result">
@@ -30,4 +35,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

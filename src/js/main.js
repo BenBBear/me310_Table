@@ -20,7 +20,7 @@ angular.module('app')
         //
 
 
-        $scope.memory.appList = [{
+        $scope.app.memory.appList = [{
             name: "默认页",
             state: "app.default"
         }, {
@@ -39,3 +39,19 @@ angular.module('app')
 
 
     }]);
+
+
+
+Array.prototype.unique = function(){
+    return this.reverse().filter(function (e, i, arr) {
+        return arr.indexOf(e, i+1) === -1;
+    }).reverse();
+};
+
+
+
+var unique = function(array){
+    return array.reverse().filter(function (e, i, arr) {
+        return arr.indexOf(e, i+1) === -1;
+    }).reverse();
+};

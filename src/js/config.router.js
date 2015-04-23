@@ -62,8 +62,8 @@ angular.module('app')
                 url:'/lexicon',
                 templateUrl:'tpl/lexicon.html',
                 resolve:{
-                    deps:['$ozLazyLoad', function($ozLazyLoad){
-                        return $ozLazyLoad.load(['js/app/lexicon/app.js']);
+                    deps:['$ocLazyLoad', function($ocLazyLoad){
+                        return $ocLazyLoad.load(['js/app/lexicon/app.js']);
                     }]
                 }
             })

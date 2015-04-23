@@ -9,9 +9,13 @@ var appPath = process.cwd(),
 var util = _require('./node/util/util.js'),
     server = _require('./node/server/');
 
-var natural = require('natural');
-var wn = new natural.wordNet();
+var natural = require('natural'),
+    wn = new natural.WordNet(),
+    google = require('google'),
+    spc = require('_spellchecker'),
+    tokenizer = new natural.WordTokenizer();
 
+google.tld = 'com.hk';
 
 
 angular.module('app')
@@ -20,12 +24,11 @@ angular.module('app')
     .value('ip', 'http://' + util.getWlanIp() + ':' + server.port + '/#/upload-page')
     .value('InternalServerPort', server.port)
     .value('devices', server.interface)
-    .value('google', require('google'))
-    .value('google_images', require('google-images'))
-    .value('spellchecker', require('spellchecker'))
+    .value('google', google)
+    .value('spellchecker', spc)
     .value('natural', natural)
     .value('wordNet', function(words, cb) {
-        if (words instanceof Array) {
+        if (words.length !== undefined) {
             words.forEach(function(x) {
                 wn.lookup(x, cb);
             });
@@ -33,4 +36,4 @@ angular.module('app')
             wn.lookup(words, cb);
         }
     })
-    .value('tokenize', new natural.WordTokenizer());
+    .value('tokenizer', tokenizer);
