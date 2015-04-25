@@ -33,8 +33,11 @@ angular.module('app')
             name: 'sharing with pasteasy',
             state: 'app.sharing-pasteasy'
         }, {
-            name:'lexicon',
+            name:'lexicon old version',
             state:'app.lexicon'
+        },{
+            name:'lexicon new version',
+            state:'app.lexicon_new'
         }];
 
 

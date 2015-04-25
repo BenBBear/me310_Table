@@ -59,11 +59,22 @@ angular.module('app')
                 }
             })
             .state('app.lexicon', {
-                url:'/lexicon',
+                url:'/lexicon_old',
                 templateUrl:'tpl/lexicon.html',
                 resolve:{
                     deps:['$ocLazyLoad', function($ocLazyLoad){
                         return $ocLazyLoad.load(['js/app/lexicon/app.js']);
+                    }]
+                }
+            })
+            .state('app.lexicon_new', {
+                url:'/lexicon',
+                templateUrl:'tpl/lexicon_new.html',
+                resolve:{
+                    deps:['$ocLazyLoad','uiLoad', function($ocLazyLoad,uiLoad){
+                        return uiLoad.load(['js/mylib/recorder.js']).then(function(){
+                            return $ocLazyLoad.load(['js/directives/ui-record.js','js/app/lexicon_new/app.js']);
+                        });
                     }]
                 }
             })

@@ -4,7 +4,7 @@
   "description": "",
   "main": "./src/index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+      "test": "chmod +x ./run.sh && ./run.sh"
   },
   "window": {
     "title": "chole",
@@ -19,14 +19,13 @@
   "dependencies": {
     "WNdb": "^3.1.0",
     "body-parser": "^1.12.2",
+    "cheerio": "^0.19.0",
     "chokidar": "^1.0.1",
     "express": "^4.12.3",
     "formidable": "^1.0.17",
-    "google": "^1.1.0",
-    "google-images": "^0.1.0",
     "natural": "^0.2.1",
-    "spellchecker": "^2.2.0",
-    "teacher": "0.0.1"
+    "request": "^2.55.0",
+    "spellchecker": "^2.2.0"
   },
   "devDependencies": {
     "gulp": "^3.8.11",

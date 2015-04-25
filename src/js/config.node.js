@@ -11,8 +11,9 @@ var util = _require('./node/util/util.js'),
 
 var natural = require('natural'),
     wn = new natural.WordNet(),
-    google = require('google'),
-    spc = require('_spellchecker'),
+    google = _require('./node/google/google-search.js'),
+    google_image = _require('./node/google/google-images.js'),
+    spc = _require('./node/spc-nwjs/'),
     tokenizer = new natural.WordTokenizer();
 
 google.tld = 'com.hk';
@@ -22,9 +23,9 @@ angular.module('app')
     .value('fs', require('fs'))
     .value('util', util)
     .value('ip', 'http://' + util.getWlanIp() + ':' + server.port + '/#/upload-page')
-    .value('InternalServerPort', server.port)
     .value('devices', server.interface)
     .value('google', google)
+    .value('google_image',google_image)
     .value('spellchecker', spc)
     .value('natural', natural)
     .value('wordNet', function(words, cb) {

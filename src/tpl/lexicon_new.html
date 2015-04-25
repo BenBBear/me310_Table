@@ -1,0 +1,23 @@
+<div ng-controller="lexicon_newAppCtrl">
+    <button class="btn btn-primary"  ui-sref="app.default"> return </button>
+    <button class="btn btn-default" ng-click="debug();">debug</button>
+
+    <h1>lexicon NEW</h1>
+
+    <div style="margin:2em;">
+        <input type="text" class="form-control" placeholder="give me some words"  ng-model="lc_text">
+
+        <div class="text-right" style="font-size:larger;">
+        <my-recorder mr-output="lc_audio"></my-recorder>
+        {{lc_audio}}
+        </div>
+    </div>
+
+    <p class="bg-danger"> {{err}}</p>
+
+    <div ng-repeat="img in images_result">
+        <div class="panel col-sm-3">
+            <img alt="" ng-style="settings.imgStyle"  ng-src="{{img.url}}"/>
+        </div>
+    </div>
+</div>
