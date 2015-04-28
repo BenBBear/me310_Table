@@ -4,24 +4,26 @@ sub="${1}"
 home=`pwd`
 
 
+# Help you install nodejs
 function install-node(){
     if hash node 2>/dev/null; then
         echo "Node is installed."
     else
-        if hash brew 2>/dev/null; then
+        if hash brew 2>/dev/null; then # install using brew
             brew install node
         else
             ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" && brew install node
+            # if brew is not installed, install brew first
         fi
     fi
 }
 
 function install-deps(){
-    if hash node 2>/dev/null; then
-        cnpm install -g bower node-webkit-builder &&
-        cnpm install &&
+    if hash node 2>/dev/null; then # if node is installed
+        npm install -g bower node-webkit-builder &&
+        npm install &&
         cd ./src/ && bower install &&
-        cd ./js/node/server/ && cnpm install &&
+        cd ./js/node/server/ && npm install &&
         cd ./public && bower install &&
         cd $home && echo "Deps is installed"
     else
