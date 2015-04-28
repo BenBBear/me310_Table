@@ -7,7 +7,8 @@ angular.module('app')
         templateUrl: 'tpl/directives/myRecorder.html',
         scope: {
             mrOption: '=',
-            mrOutput: '='
+            mrOutput: '=',
+            sampleRate:'='
         },
         controller: function($scope, $element, $window, $interval) {
 
@@ -39,6 +40,8 @@ angular.module('app')
             navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
 
             var audio_context = new AudioContext;
+            $scope.sampleRate = audio_context.sampleRate;
+
             var recorder;
 
 
