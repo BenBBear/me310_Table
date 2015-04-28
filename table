@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+sub="${1}"
+home=`pwd`
+
+
+# Help you install nodejs
+function install-node(){
+    if hash node 2>/dev/null; then
+        echo "Node is installed."
+    else
+        if hash brew 2>/dev/null; then # install using brew
+            brew install node
+        else
+            ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" && brew install node
+            # if brew is not installed, install brew first
+        fi
+    fi
+}
+
+function install-deps(){
+    if hash node 2>/dev/null; then # if node is installed
+        npm install -g bower node-webkit-builder && # install bower & nwbuilder
+        npm install &&                              # install node_modules deps
+        cd ./src/ && bower install &&               # install bower deps
+        cd ./js/node/server/ && npm install &&      # install node_modules for internal server (do so because node is still different from node-webkit)
+        cd ./public && bower install &&             # install bower deps for internal server
+        cd $home && echo "Deps is installed"
+    else
+        install-node            # first install node
+        install-deps            # then try to install deps
+    fi
+}
+
+function run-nw(){
+    if hash nwbuild 2>/dev/null;then
+        nwbuild -r .            # run program with builder
+    else
+        install-deps
+        run-nw
+    fi
+}
+
+
+function main(){
+    case $sub in                # sub command
+        "install-node") install-node ;;
+        "install-deps") install-deps ;;
+        "run-nw") run-nw ;;
+        *) echo "INVALID COMMAND!"
+           exit 127;;
+    esac
+}
+
+main
