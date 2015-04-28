@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+sub="${1}"
+home=`pwd`
+
+
+function install-node(){
+    if hash node 2>/dev/null; then
+        echo "Node is installed."
+    else
+        if hash brew 2>/dev/null; then
+            brew install node
+        else
+            ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" && brew install node
+        fi
+    fi
+}
+
+function install-deps(){
+    if hash node 2>/dev/null; then
+        cnpm install -g bower node-webkit-builder &&
+        cnpm install &&
+        cd ./src/ && bower install &&
+        cd ./js/node/server/ && cnpm install &&
+        cd ./public && bower install &&
+        cd $home && echo "Deps is installed"
+    else
+        install-node
+        install-deps
+    fi
+}
+
+function run-nw(){
+    if hash nwbuild 2>/dev/null;then
+        nwbuild -r .
+    else
+        install-deps
+        run-nw
+    fi
+}
+
+
+function main(){
+    case $sub in
+        "install-node") install-node ;;
+        "install-deps") install-deps ;;
+        "run-nw") run-nw ;;
+        *) echo "INVALID COMMAND!"
+           exit 127;;
+    esac
+}
+
+main
