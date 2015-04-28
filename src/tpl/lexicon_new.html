@@ -3,6 +3,7 @@
     <button class="btn btn-default" ng-click="debug();">debug</button>
 
     <h1>lexicon NEW</h1>
+    <!-- <input name="speech" id="speech" type="text" x-webkit-speech speech error" /> -->
 
     <div style="margin:2em;">
         <input type="text" class="form-control" placeholder="give me some words"  ng-model="lc_text" >
@@ -11,7 +12,13 @@
         <my-recorder mr-output="lc_audio" mr-option="my_recorder_option"></my-recorder>
         {{lc_audio}}
         </div>
+        <hr>
+        <!-- lang="lang" final-output="final" inter-output="inter" -->
+        <!-- <my-speech-recognition lang="lang" final-output="final" inter-output="inter"></my-speech-recognition>
+        {{final}} -->
     </div>
+
+
 
     <p class="bg-danger"> {{err}}</p>
     <p>{{log}}</p>

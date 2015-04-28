@@ -73,7 +73,7 @@ angular.module('app')
                 resolve:{
                     deps:['$ocLazyLoad','uiLoad', function($ocLazyLoad,uiLoad){
                         return uiLoad.load(['js/mylib/recorder.js']).then(function(){
-                            return $ocLazyLoad.load(['js/directives/ui-record.js','js/app/lexicon_new/app.js']);
+                            return $ocLazyLoad.load(['js/directives/ui-record.js','js/directives/ui-speech-recognition.js','bower_components/file-saver.js/FileSaver.js','js/app/lexicon_new/app.js']);
                         });
                     }]
                 }

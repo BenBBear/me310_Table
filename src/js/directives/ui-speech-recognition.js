@@ -1,4 +1,5 @@
 (function() {
+    // debugger;
     function capitalize(s) {
         return s.replace(/\S/, function(m) { return m.toUpperCase(); });
     }
@@ -9,7 +10,8 @@
         }
 
         this.__engine = new webkitSpeechRecognition();
-
+        debugger;
+        // this.__engine.serviceURI = 'wami.csail.mit.edu'
         this.recognizing = false;
         var me = this;
 
@@ -17,17 +19,23 @@
         this.option = {
             lang: arg_option.lang || 'en-US',
             onstart: function() {
+                console.log('recognition start');
                 me.recognizing = true;
                 arg_option.onstart && arg_option.onstart();
             },
             onend: function() {
+                console.log('recognition end');
                 me.recognizing = false;
                 arg_option.onend && arg_option.onend();
             },
             onerror: function(event) {
+                console.log('recognition error');
+                console.error(event);
+
                 arg_option.onerror && arg_option.onerror(event);
             },
             onresult: function(event) {
+                console.log('recognition result get');
                 arg_option.onresult && arg_option.onresult(event);
             }
         };
@@ -70,9 +78,9 @@
 
 
     var microphone_img = {};
-    microphone_img.recording = 'mic-animate.gif';
-    microphone_img.start = 'mic.gif';
-    microphone_img.disabled = 'mic-slash.gif';
+    microphone_img.recording = 'images/SP/mic-animate.gif';
+    microphone_img.start = 'images/SP/mic.gif';
+    microphone_img.disabled = 'images/SP/mic-slash.gif';
 
 
 
@@ -82,14 +90,15 @@
             restrict: 'EA',
             templateUrl: 'tpl/directives/mySpeechRecognition.html',
             scope: {
-                finalOuput: '=',
+                finalOutput: '=',
                 interOutput:'=',
                 lang: '='
             },
             controller: function($scope) {
+                // debugger;
                 $scope.finalOuput = "";
                 $scope.interOutput = "";
-
+                // $scope.lang = "en-US";
                 $scope.microphone = microphone_img.start;
 
 
@@ -127,7 +136,6 @@
                         .setLang($scope.lang)
                         .start();
                 });
-
                 $scope.toggle = function() {
                     if (!sp_engine.disabled) {
                         if (sp_engine.recognizing) {
