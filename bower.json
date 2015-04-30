@@ -1,0 +1,23 @@
+{
+  "name": "me310_Table",
+  "version": "0.0.0",
+  "homepage": "https://github.com/BenBBear/me310_Table",
+  "authors": [
+    "Xinyu Zhang <beviszhang1993@gmail.com>"
+  ],
+  "description": "Source Code For my ME310 Course project",
+  "keywords": [
+    "me310",
+    "node-webkit",
+    "stanford",
+    "ustc"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
