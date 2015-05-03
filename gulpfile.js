@@ -11,7 +11,6 @@ var paths = {
             './src/js/config.node.js',
             './src/js/utilities/*.js',
             './src/js/classes/*.js',
-            './src/js/globals/*.js',
             './src/js/main.js',
             './src/js/app.js'
         ],

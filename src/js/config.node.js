@@ -1,0 +1,1 @@
+Node.devices = require('devices');

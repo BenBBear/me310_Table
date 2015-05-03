@@ -4,6 +4,9 @@
 /src/js/node/server/public/uploads/
 /src/js/node/server/public/bower_components/
 /src/js/node/server/public/node_modules/
+/src/lib/
+!/src/lib/other/
+
 
 ### Node ###
 # Logs
@@ -69,4 +72,3 @@ build/Release
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
-
