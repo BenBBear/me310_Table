@@ -1,1 +1,1 @@
-Node.devices = require('devices');
+Node.devices = Util.require('devices');

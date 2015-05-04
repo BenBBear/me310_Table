@@ -8,8 +8,8 @@ var gulp = require('gulp'),
 var paths = {
         js: [
             './src/js/config.init.js',
-            './src/js/config.node.js',
             './src/js/utilities/*.js',
+            './src/js/config.node.js',
             './src/js/classes/*.js',
             './src/js/main.js',
             './src/js/app.js'
