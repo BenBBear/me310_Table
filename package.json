@@ -1,56 +1,59 @@
 {
-  "name": "me310_Table",
-  "version": "0.0.0",
-  "description": "Source Code For my ME310 Course project ",
-  "main": "./src/index.html",
-  "window": {
-    "title": "me310_Table",
-    "toolbar": true,
-    "resizable": true,
-    "always-on-top": true,
-    "fullscreen": false,
-    "position": "center"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "deps": "npm install && bower install",
-    "run": "./node_modules/node-webkit-builder/bin/nwbuild -r .",
-    "watch": "./node_modules/gulp/bin/gulp.js watch",
-    "build": "./node_modules/gulp/bin/gulp.js",
-    "package": "./node_modules/node-webkit-builder/bin/nwbuild -p osx64, win64 ."
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/BenBBear/me310_Table.git"
-  },
-  "keywords": [
-    "node-webkit",
-    "me310",
-    "stanford",
-    "ustc"
-  ],
-  "author": "Xinyu Zhang",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/BenBBear/me310_Table/issues"
-  },
-  "homepage": "https://github.com/BenBBear/me310_Table",
-  "devDependencies": {
-    "gulp": "^3.8.11",
-    "gulp-concat": "^2.5.2",
-    "gulp-mocha": "^2.0.1",
-    "gulp-watch": "^4.2.4",
-    "node-webkit-builder": "^1.0.11",
-    "should": "^6.0.1"
-  },
-  "dependencies": {
-    "body-parser": "^1.12.3",
-    "chokidar": "^1.0.1",
-    "express": "^4.12.3",
-    "gulp-less": "^3.0.3",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^1.3.3",
-    "jquery": "^2.1.4",
-    "socket.io": "^1.3.5"
-  }
+	"name": "me310_Table",
+	"version": "0.0.0",
+	"description": "Source Code For my ME310 Course project ",
+	"main": "./src/index.html",
+	"window": {
+		"title": "me310_Table",
+		"toolbar": true,
+		"resizable": true,
+		"always-on-top": true,
+		"fullscreen": false,
+		"position": "center"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"deps": "npm install && bower install",
+		"run": "./node_modules/node-webkit-builder/bin/nwbuild -r .",
+		"watch": "./node_modules/gulp/bin/gulp.js watch",
+	    "build": "./node_modules/gulp/bin/gulp.js",
+	    "package": "rm -rf ./node_modules/gulp-less ./node_modules/gulp-mocha ./node_modules/should ./node_modules/jquery ./build/me310_Table/osx64; mv ./node_modules/gulp-sass /tmp/gulp-sass;  ./node_modules/node-webkit-builder/bin/nwbuild -p osx64 . ; mv /tmp/gulp-sass ./node_modules/gulp-sass",
+            "package-mac": "rm -rf ./node_modules/gulp-less ./node_modules/gulp-mocha ./node_modules/should ./node_modules/jquery ./build/me310_Table/osx64; mv ./node_modules/gulp-sass /tmp/gulp-sass;  ./node_modules/node-webkit-builder/bin/nwbuild -p osx64 . ; mv /tmp/gulp-sass ./node_modules/gulp-sass",
+            "package-windows":  "rm -rf ./node_modules/gulp-less ./node_modules/gulp-mocha ./node_modules/should ./node_modules/jquery ./build/me310_Table/win64/; mv ./node_modules/gulp-sass /tmp/gulp-sass;  ./node_modules/node-webkit-builder/bin/nwbuild -p win64 . ; mv /tmp/gulp-sass ./node_modules/gulp-sass",
+            "package-linux":  "rm -rf ./node_modules/gulp-less ./node_modules/gulp-mocha ./node_modules/should ./node_modules/jquery ./build/me310_Table/linux64/; mv ./node_modules/gulp-sass /tmp/gulp-sass;  ./node_modules/node-webkit-builder/bin/nwbuild -p linux64 . ; mv /tmp/gulp-sass ./node_modules/gulp-sass",
+            "package-all":  "rm -rf ./node_modules/gulp-less ./node_modules/gulp-mocha ./node_modules/should ./node_modules/jquery ./build/me310_Table/win64/ ./build/me310_Table/osx64/ ./build/me310_Table/linux64/; mv ./node_modules/gulp-sass /tmp/gulp-sass;  ./node_modules/node-webkit-builder/bin/nwbuild -p osx64,win64,linux64 . ; mv /tmp/gulp-sass ./node_modules/gulp-sass"
+
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/BenBBear/me310_Table.git"
+	},
+	"keywords": [
+		"node-webkit",
+		"me310",
+		"stanford",
+		"ustc"
+	],
+	"author": "Xinyu Zhang",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/BenBBear/me310_Table/issues"
+	},
+	"homepage": "https://github.com/BenBBear/me310_Table",
+	"devDependencies": {
+		"gulp": "^3.8.11",
+		"gulp-concat": "^2.5.2",
+		"gulp-mocha": "^2.0.1",
+		"gulp-watch": "^4.2.4",
+		"node-webkit-builder": "^1.0.11",
+		"gulp-rename": "^1.2.2",
+		"gulp-sass": "^1.3.3",
+		"should": "^6.0.1"
+	},
+	"dependencies": {
+		"body-parser": "^1.12.3",
+		"chokidar": "^1.0.1",
+		"express": "^4.12.3",
+		"socket.io": "^1.3.5"
+	}
 }
