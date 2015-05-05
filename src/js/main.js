@@ -13,8 +13,7 @@ function main() {
         thumb: './assets/images/bear.jpg',
         big: './assets/images/bear.jpg',
         title: 'my first image',
-        description: 'Lorem ipsum caption',
-        link: 'http://domain.com'
+        description: 'Lorem ipsum caption'
     };
     var data = [bear, bear];
     var gallery = new Class.PhotoGallery({

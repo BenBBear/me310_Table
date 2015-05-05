@@ -13,7 +13,13 @@ var Library = {
     Jquery: $
 };
 
-// window.location.protocol = 'http:';
+
+/**
+ User Configuration
+ */
+
+Constant.PasteasyDirectory = '/Users/xyzhang/Pictures/Pasteasy'; //this is mine, change to yours
+Constant.PORT = 3000; // the internal server port
 
 (function(){
     Util.getDefaultTheme = function(x){
@@ -100,7 +106,40 @@ var Library = {
 
 }());
 
-Node.devices = Util.require('devices');
+Util.storage = window.localStorage;
+
+(function(){
+
+    var devices_module = Util.require('devices');
+    var wlan_ip_module = Util.require('wlan_ip');
+
+    /**
+     Bind Module Utilities to Util Object
+     */
+
+    // get wlan ip of current machine
+    Util.getWlanIp = wlan_ip_module;
+
+
+    // set up the sharing devices
+    // Util.devices = devices_module.open({
+    //     Port: Constant.PORT,
+    //     PasteasyDirectory: Constant.PasteasyDirectory
+    // });
+
+    // Util.devices.on('error', function(){
+    //     var msg = 'Cound not open Sharing Devices!';
+    //     alert(msg);
+    //     throw new Error(msg);
+    // });
+    // Util.devices.on('success', function(){
+    //     Constant.ServerAddr = 'http://' + Util.getWlanIp() + ':' + Constant.Port + '/#/upload-page';
+    // });
+
+
+
+    //end
+}());
 
 (function(){
 
@@ -166,7 +205,7 @@ Node.devices = Util.require('devices');
             for(var k in me.option.event){
                 this.bind(k, me.option.event[k]);
             }
-            me.option.ready();
+            me.option.ready(this);
         });
 
     };
@@ -275,8 +314,7 @@ function main() {
         thumb: './assets/images/bear.jpg',
         big: './assets/images/bear.jpg',
         title: 'my first image',
-        description: 'Lorem ipsum caption',
-        link: 'http://domain.com'
+        description: 'Lorem ipsum caption'
     };
     var data = [bear, bear];
     var gallery = new Class.PhotoGallery({
