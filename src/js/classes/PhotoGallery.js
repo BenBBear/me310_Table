@@ -34,7 +34,7 @@
             for(var k in me.option.event){
                 this.bind(k, me.option.event[k]);
             }
-            me.option.ready();
+            me.option.ready(this);
         });
 
     };

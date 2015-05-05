@@ -13,4 +13,10 @@ var Library = {
     Jquery: $
 };
 
-// window.location.protocol = 'http:';
+
+/**
+ User Configuration
+ */
+
+Constant.PasteasyDirectory = '/Users/xyzhang/Pictures/Pasteasy'; //this is mine, change to yours
+Constant.PORT = 3000; // the internal server port

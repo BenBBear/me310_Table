@@ -4,8 +4,6 @@
 /src/js/node/server/public/uploads/
 /src/js/node/server/public/bower_components/
 /src/js/node/server/public/node_modules/
-/src/lib/
-!/src/lib/other/
 
 /examples/
 
@@ -69,3 +67,8 @@ coverage
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
+
+!/src/lib/
+
+/src/lib/*
+!/src/lib/other
