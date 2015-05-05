@@ -5,6 +5,7 @@
 /src/js/node/server/public/bower_components/
 /src/js/node/server/public/node_modules/
 
+!.bowerrc
 /examples/
 
 ### Node ###
@@ -41,6 +42,7 @@ build/Release
 .*
 *~
 !.gitignore
+!.bowerrc
 # Created by https://www.gitignore.io
 
 ### Node ###
