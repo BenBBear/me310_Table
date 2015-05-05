@@ -17,39 +17,19 @@ function main() {
         link: 'http://domain.com'
     };
     var data = [bear, bear];
-
-    $('.galleria').css('height', 400);
-
-    Library.Galleria
-        .loadTheme('./lib/other/galleria/themes/classic/galleria.classic.min.js')
-        .loadTheme('./lib/other/galleria/themes/azur/galleria.azur.min.js');
-
-    // Library.Galleria.run('.galleria', {
-    //     dataSource: data
-    // });
-
-    Galleria.run('.galleria', {
-        theme: 'azur',
+    var gallery = new Class.PhotoGallery({
         dataSource: data
     });
 
 
-
-    var gg;
     Functions.Debug.addBear = function() {
-        debugger;
-        gg.push(bear);
+
+        gallery.push(bear);
     };
 
     Functions.Debug.delBear = function() {
-        debugger;
-        var idx = gg.getIndex();
-        gg.splice(idx, 1);
+        gallery.removeCurrent();
     };
 
-    Galleria.ready(function() {
-        // $('.galleria').data('galleria').enterFullscreen(); it works
-        gg = $('.galleria').data('galleria');
-    });
 
 }

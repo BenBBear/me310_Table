@@ -2,7 +2,8 @@ var gulp = require('gulp'),
     watch = require('gulp-watch'),
     concat = require("gulp-concat"),
     rename = require('gulp-rename'),
-    less = require('gulp-less');
+    sass = require('gulp-sass'),
+    path = require('path');
 
 
 var paths = {
@@ -14,17 +15,23 @@ var paths = {
             './src/js/main.js',
             './src/js/app.js'
         ],
-        less: ['./src/css/*.less', './src/css/*/*.less']
+        sass: ['./src/css/*.scss', './src/css/*/*.scss', './src/css/*/*.css']
     },
     output = {
         js: './src/dist/js/',
         css: './src/dist/css'
     };
 
-gulp.task('less', function(done) {
-    gulp.src(paths.less)
-        .pipe(less())
-        .pipe(rename("app.css"))
+gulp.task('sass', function(done) {
+    gulp.src('./src/css/app.scss')
+      .pipe(sass({
+            onError: function(e) {
+                console.log(e);
+            }
+      }))
+    // .pipe(less())
+        .pipe(concat('app.css'))
+    // .pipe(rename("app.css"))
         .pipe(gulp.dest(output.css))
         .on('end', done);
 });
@@ -37,8 +44,8 @@ gulp.task('js', function(done) {
 });
 
 
-gulp.task('default', ['less', 'js']);
-gulp.task('watch',  function() {
-    gulp.watch(paths.css, ['less']);
+gulp.task('default', ['sass', 'js']);
+gulp.task('watch', function() {
+    gulp.watch(paths.css, ['sass']);
     gulp.watch(paths.js, ['js']);
 });
