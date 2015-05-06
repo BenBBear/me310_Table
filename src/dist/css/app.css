@@ -699,4 +699,6 @@ there.
 /* Larger than desktop */
 /* Larger than Desktop HD */
 .galleria {
-  height: 500px; }
+  height: 720px; 
+  width: 385px;
+}

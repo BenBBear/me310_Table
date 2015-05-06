@@ -14,7 +14,6 @@ function main() {
         big: './assets/images/bear.jpg',
         title: 'my first image',
         description: 'Lorem ipsum caption',
-        link: 'http://domain.com'
     };
     var data = [bear, bear];
     var gallery = new Class.PhotoGallery({

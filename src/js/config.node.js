@@ -11,20 +11,20 @@
     Util.getWlanIp = wlan_ip_module;
 
 
-    // set up the sharing devices
-    // Util.devices = devices_module.open({
-    //     Port: Constant.PORT,
-    //     PasteasyDirectory: Constant.PasteasyDirectory
-    // });
+     set up the sharing devices
+     Util.devices = devices_module.open({
+         Port: Constant.PORT,
+         PasteasyDirectory: Constant.PasteasyDirectory
+     });
 
-    // Util.devices.on('error', function(){
-    //     var msg = 'Cound not open Sharing Devices!';
-    //     alert(msg);
-    //     throw new Error(msg);
-    // });
-    // Util.devices.on('success', function(){
-    //     Constant.ServerAddr = 'http://' + Util.getWlanIp() + ':' + Constant.Port + '/#/upload-page';
-    // });
+     Util.devices.on('error', function(){
+         var msg = 'Cound not open Sharing Devices!';
+         alert(msg);
+         throw new Error(msg);
+     });
+     Util.devices.on('success', function(){
+         Constant.ServerAddr = 'http://' + Util.getWlanIp() + ':' + Constant.Port + '/#/upload-page';
+     });
 
 
 
