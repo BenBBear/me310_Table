@@ -6,27 +6,36 @@ TODO in main:
 - Hand code Interaction Logic  (combined with css to beautify the web page)
  */
 
+
+
+
+
 function main() {
 
-    var bear = {
-        image: './assets/images/bear.jpg',
-        thumb: './assets/images/bear.jpg',
-        big: './assets/images/bear.jpg',
-        title: 'my first image',
-        description: 'Lorem ipsum caption'
-    };
-    var data = [bear, bear];
-    var gallery = new Class.PhotoGallery({
-        path:'/Users/xyzhang/Pictures/Pasteasy'
-        //this path should be selectable from startup of the program, currently just name it here
+    $("#storage_dir_chooser").trigger('click');
+    $("#storage_dir_chooser").change(function(event) {
+        __main(this.files[0].path);
     });
 
 
 
-    Functions.Debug.delPicture = function() {
-        debugger;
-        gallery.removeCurrent();
-    };
 
 
+
+
+
+    /**
+     The True Main
+    */
+    function __main(path) {
+
+        var gallery = new Class.PhotoGallery({
+            path: path
+                //this path should be selectable from startup of the program, currently just name it here
+        });
+
+        Functions.Debug.delPicture = function() {
+            gallery.removeCurrent();
+        };
+    }
 }

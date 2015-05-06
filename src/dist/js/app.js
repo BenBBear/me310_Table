@@ -57,6 +57,19 @@ Util.createSharingServer = Util.require('sharing_server');
 }());
 
 (function() {
+    var image_ext_array = [
+        '.jpg','.jpeg','.png','.bmp','.gif','.svg'
+    ];
+
+    Util.isImage = function(x) {
+        var path = require('path'),
+            ext = path.extname(x);
+
+        return image_ext_array.indexOf(ext) !== -1;
+    };
+}());
+
+(function() {
 
     String.prototype.startsWith = function(str) {
         return this.indexOf(str) === 0;
@@ -288,11 +301,15 @@ Util.storage = window.localStorage;
         this.dir_watcher = new Class.DirWatcher(this.option.path, function(path, stat){
             // add the image/video into the Gallery
             var elm;
+            debugger;
             if(path.endsWith('.json'))
                 elm = makeVideo(path);
-            else
+            else if(Util.isImage(path))
                 elm = makeImage(path);
-            me.galleria_instance.push(elm);
+
+            console.log(elm)
+            if(elm)
+                me.galleria_instance.push(elm);
 
         });
         this.sharing_server = Util.createSharingServer(this.option);
@@ -416,33 +433,42 @@ TODO in main:
 - Hand code Interaction Logic  (combined with css to beautify the web page)
  */
 
+
+
+
+
 function main() {
 
-    var bear = {
-        image: './assets/images/bear.jpg',
-        thumb: './assets/images/bear.jpg',
-        big: './assets/images/bear.jpg',
-        title: 'my first image',
-        description: 'Lorem ipsum caption'
-    };
-    var data = [bear, bear];
-    var gallery = new Class.PhotoGallery({
-        path:'/Users/xyzhang/Pictures/Pasteasy'
-        //this path should be selectable from startup of the program, currently just name it here
+    $("#storage_dir_chooser").trigger('click');
+    $("#storage_dir_chooser").change(function(event) {
+        __main(this.files[0].path);
     });
 
 
 
-    Functions.Debug.delPicture = function() {
-        debugger;
-        gallery.removeCurrent();
-    };
 
 
+
+
+
+    /**
+     The True Main
+    */
+    function __main(path) {
+
+        var gallery = new Class.PhotoGallery({
+            path: path
+                //this path should be selectable from startup of the program, currently just name it here
+        });
+
+        Functions.Debug.delPicture = function() {
+            gallery.removeCurrent();
+        };
+    }
 }
 
-if(Util.isDefined('main'))
+if(Util.isDefined('main')){
     main();
-else{
+} else{
     alert('Main Function is not Defined!');
 }

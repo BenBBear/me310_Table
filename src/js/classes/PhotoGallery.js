@@ -65,11 +65,14 @@
         this.dir_watcher = new Class.DirWatcher(this.option.path, function(path, stat){
             // add the image/video into the Gallery
             var elm;
+
             if(path.endsWith('.json'))
                 elm = makeVideo(path);
-            else
+            else if(Util.isImage(path))
                 elm = makeImage(path);
-            me.galleria_instance.push(elm);
+
+            if(elm)
+                me.galleria_instance.push(elm);
 
         });
         this.sharing_server = Util.createSharingServer(this.option);
