@@ -17,16 +17,14 @@ function main() {
     };
     var data = [bear, bear];
     var gallery = new Class.PhotoGallery({
-        dataSource: data
+        path:'/Users/xyzhang/Pictures/Pasteasy'
+        //this path should be selectable from startup of the program, currently just name it here
     });
 
 
-    Functions.Debug.addBear = function() {
 
-        gallery.push(bear);
-    };
-
-    Functions.Debug.delBear = function() {
+    Functions.Debug.delPicture = function() {
+        debugger;
         gallery.removeCurrent();
     };
 

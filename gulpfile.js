@@ -9,6 +9,7 @@ var gulp = require('gulp'),
 var paths = {
         js: [
             './src/js/config.init.js',
+            './src/js/utilities/require.js',
             './src/js/utilities/*.js',
             './src/js/config.node.js',
             './src/js/classes/*.js',
