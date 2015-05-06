@@ -309,6 +309,8 @@ Util.storage = window.localStorage;
                 me.galleria_instance.push(elm);
 
         });
+        this.option.Util = Util;
+
         this.sharing_server = Util.createSharingServer(this.option);
         this.upload_addr = this.sharing_server.upload_addr;
 
