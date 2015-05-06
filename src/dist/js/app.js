@@ -13,7 +13,28 @@ var Library = {
     Jquery: $
 };
 
-// window.location.protocol = 'http:';
+
+/**
+ User Configuration
+ */
+
+(function(){
+    var prefix = './js/node_modules/';
+    Util.require = function(x){
+        return require(prefix+x);
+    };
+}());
+
+Util.createSharingServer = Util.require('sharing_server');
+
+(function() {
+    var path = require('path');
+    path.filename = function(x) {
+        var base = path.basename(x),
+            ext = path.extname(x);
+        return base.slice(0, base.length - ext.length);
+    };
+}());
 
 (function(){
     Util.getDefaultTheme = function(x){
@@ -35,10 +56,30 @@ var Library = {
     };
 }());
 
-(function(){
-    var prefix = './js/node_modules/';
-    Util.require = function(x){
-        return require(prefix+x);
+(function() {
+
+    String.prototype.startsWith = function(str) {
+        return this.indexOf(str) === 0;
+    };
+
+    String.prototype.endsWith = function(suffix) {
+        return this.indexOf(suffix, this.length - suffix.length) !== -1;
+    };
+}());
+
+(function() {
+    var fs = require('fs'),
+        path = require('path');
+
+    Util.removeFile = function(p,cb){
+        var file_to_remove;
+        cb = cb || function(){};
+
+        if(p instanceof Array)
+            file_to_remove = path.join(p);
+        else
+            file_to_remove = p;
+        fs.unlink(file_to_remove,cb);
     };
 }());
 
@@ -100,7 +141,57 @@ var Library = {
 
 }());
 
-Node.devices = Util.require('devices');
+Util.storage = window.localStorage;
+
+(function() {
+    var os = require('os');
+    var wirelessName = ['en1', 'en4', 'wlan0', 'en0'];
+    var getWifiIp = function() {
+        var ifaces = os.networkInterfaces(),
+            ip = undefined;
+        wirelessName.forEach(function(name) {
+            var wl = ifaces[name];
+            if (wl) {
+                wl.forEach(function(val) {
+                    if (val.family == 'IPv4') {
+                        ip = ip || val.address;
+                    }
+                });
+            }
+        });
+        return ip;
+    };
+    Object.defineProperty(Util, "wifi_ip", {
+        get: getWifiIp
+    });
+}());
+
+(function(){
+    var chokidar = require('chokidar');
+    var noop = function(){};
+    function DirWatcher(path,cb){
+        this.path = path;
+        this.addCb = cb;
+    }
+
+    DirWatcher.prototype = function(){
+        return {
+            start:function(){
+                this.watcher = chokidar.watch(this.path,{
+                    ignored: /[\/\\]\./
+                }).on('add', this.addCb);
+                return this;
+            },
+            stop:function(){
+                this.watcher && this.watcher.close();
+                return;
+            }
+        };
+    }();
+
+
+    Class.DirWatcher = DirWatcher;
+}());
 
 (function(){
 
@@ -149,47 +240,104 @@ Node.devices = Util.require('devices');
 
     var retry_period = 300;
 
+    var theBear = {
+        image: './assets/images/bear.jpg',
+        thumb: './assets/images/bear.jpg',
+        big: './assets/images/bear.jpg',
+        title: 'Bear',
+        description: 'A Lovely Bear'
+    };
+
+    var makeImage = function(file_path){
+        var path = require('path');
+        return {
+            image:file_path,
+            thumb:file_path,
+            big:file_path,
+            title:path.filename(file_path),
+            description:path.basename(file_path)
+        };
+    };
+
+    var makeVideo = function(){
+        // TODO
+        var msg = 'makeVideo not implemented';
+        alert(msg);
+        throw new Error(msg);
+    };
+
+
     var PhotoGallery = function(opt){
         // TODO
+        var me = this;
         this.option = $.extend({}, opt);
         this.option.ready =  this.option.ready || function(){};
         this.option.event  = this.option.event || {};
+        this.option.dataSource = this.option.dataSource || [theBear];
 
         var theme = this.option.theme = this.option.theme || 'azur';
         var theme_path = theme_path_a + theme + theme_path_b + theme + theme_path_c;
         this.element = this.element || '.galleria';
         this.Galleria.loadTheme(theme_path);
+
+        /**
+         Set up Gallery Storage
+         */
+
+        // me.galleria_instance
+        this.dir_watcher = new Class.DirWatcher(this.option.path, function(path, stat){
+            // add the image/video into the Gallery
+            var elm;
+            if(path.endsWith('.json'))
+                elm = makeVideo(path);
+            else
+                elm = makeImage(path);
+            me.galleria_instance.push(elm);
+
+        });
+        this.sharing_server = Util.createSharingServer(this.option);
+
+
+
+
+        /**
+         Begin creating the Gallery
+         */
         this.Galleria.run(this.element, this.option);
-        var me = this;
         me.Galleria.ready(function(){
             me.galleria_instance = this;
             for(var k in me.option.event){
                 this.bind(k, me.option.event[k]);
             }
-            me.option.ready();
+            me.dir_watcher.start();
+            me.sharing_server.start();
+            me.option.ready(this);
         });
 
     };
 
+
+    /**
+     The "Static" Method of PhotoGallery
+     */
     PhotoGallery.prototype = function(){
         return {
             Galleria: Library.Galleria,
-            push:function(x){
-                var me = this;
-                if(me.galleria_instance){
-                    me.galleria_instance.push(x);
-                }else{
-                    setTimeout(function(){
-                        me.push(x);
-                    }, retry_period);
-                }
-                return me;
-            },
             removeCurrent:function(){
                 var me = this;
                 if(me.galleria_instance){
                     var idx = me.galleria_instance.getIndex();
+                    var data = me.galleria_instance.getData();
                     me.galleria_instance.splice(idx,1);
+                    me.galleria_instance.next();
+                    if(!data.image.startsWith('.')){
+                        // Not Default Image, could delete
+                        // Remove the Image from Disk
+                        Util.removeFile(data.image);
+                    }
+
+
+
                 }else{
                     setTimeout(function(){
                         me.removeCurrent();
@@ -275,21 +423,18 @@ function main() {
         thumb: './assets/images/bear.jpg',
         big: './assets/images/bear.jpg',
         title: 'my first image',
-        description: 'Lorem ipsum caption',
-        link: 'http://domain.com'
+        description: 'Lorem ipsum caption'
     };
     var data = [bear, bear];
     var gallery = new Class.PhotoGallery({
-        dataSource: data
+        path:'/Users/xyzhang/Pictures/Pasteasy'
+        //this path should be selectable from startup of the program, currently just name it here
     });
 
 
-    Functions.Debug.addBear = function() {
 
-        gallery.push(bear);
-    };
-
-    Functions.Debug.delBear = function() {
+    Functions.Debug.delPicture = function() {
+        debugger;
         gallery.removeCurrent();
     };
 

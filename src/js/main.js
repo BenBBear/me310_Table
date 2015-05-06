@@ -13,21 +13,18 @@ function main() {
         thumb: './assets/images/bear.jpg',
         big: './assets/images/bear.jpg',
         title: 'my first image',
-        description: 'Lorem ipsum caption',
-        link: 'http://domain.com'
+        description: 'Lorem ipsum caption'
     };
     var data = [bear, bear];
     var gallery = new Class.PhotoGallery({
-        dataSource: data
+        path:'/Users/xyzhang/Pictures/Pasteasy'
+        //this path should be selectable from startup of the program, currently just name it here
     });
 
 
-    Functions.Debug.addBear = function() {
 
-        gallery.push(bear);
-    };
-
-    Functions.Debug.delBear = function() {
+    Functions.Debug.delPicture = function() {
+        debugger;
         gallery.removeCurrent();
     };
 
