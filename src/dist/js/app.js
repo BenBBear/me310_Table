@@ -276,9 +276,8 @@ function main() {
         big: './assets/images/bear.jpg',
         title: 'my first image',
         description: 'Lorem ipsum caption',
-        link: 'http://domain.com'
     };
-    var data = [bear, bear];
+    var data = [bear, bear, bear];
     var gallery = new Class.PhotoGallery({
         dataSource: data
     });
@@ -292,6 +291,27 @@ function main() {
     Functions.Debug.delBear = function() {
         gallery.removeCurrent();
     };
+
+    var chokidar = require('chokidar');
+    var path = "/Users/apple/Pictures/Pasteasy";
+
+    var watcher = chokidar.watch(path, {ignored: /^\./, persistent: true});
+
+    watcher.on('add', function(path) {
+        var arr = path.split( '/' );
+        var lastToken = arr.pop();
+        if(lastToken != ".DS_Store"){
+            var newimage = {
+                image: path,
+                thumb: path,
+                big: path,
+                title: 'success',
+                description: 'Lorem ipsum caption',
+            };
+            gallery.push(newimage);
+        }
+       
+    });
 
 
 }
