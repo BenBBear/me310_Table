@@ -1,5 +1,5 @@
-if(Util.isDefined('main'))
+if(Util.isDefined('main')){
     main();
-else{
+} else{
     alert('Main Function is not Defined!');
 }

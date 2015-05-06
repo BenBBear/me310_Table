@@ -4,13 +4,16 @@
         <link href="./dist/css/app.css" rel="stylesheet"/>
     </head>
     <body>
-
+        <input type="file"  id="storage_dir_chooser" style="display:none;"   webkitdirectory directory multiple/>
         <div class="galleria">
         </div>
 
 
 
         <button onclick="Functions.Debug.delPicture()"> DelPicture</button>
+        <!--     will be removed in the future, will use gestures to control everything     -->
+
+
     </body>
     <script src="./lib/jquery/dist/jquery.min.js"></script>
     <script src="./lib/other/qrcode/qrcode.min.js"></script>
