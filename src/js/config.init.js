@@ -15,5 +15,10 @@ var Library = {
 
 
 /**
- User Configuration
+ Node & Browser Context Variable Patching
  */
+
+
+
+global.Image = Image;
+global.document = window.document;

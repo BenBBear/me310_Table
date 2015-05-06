@@ -15,8 +15,13 @@ var Library = {
 
 
 /**
- User Configuration
+ Node & Browser Context Variable Patching
  */
+
+
+
+global.Image = Image;
+global.document = window.document;
 
 (function(){
     var prefix = './js/node_modules/';
@@ -78,6 +83,22 @@ Util.createSharingServer = Util.require('sharing_server');
     String.prototype.endsWith = function(suffix) {
         return this.indexOf(suffix, this.length - suffix.length) !== -1;
     };
+}());
+
+(function() {
+    var Datauri = require('datauri'),
+        qrcode = require('zxing');
+
+    var path = require('path');
+
+    Util.qrDecode = function(pathToImage, cb) {
+        qrcode.decode(Datauri(path.resolve(pathToImage)), function(err, result) {
+            if(err)
+                console.error(err);
+            cb(err, result);
+        });
+    };
+
 }());
 
 (function() {
@@ -155,29 +176,6 @@ Util.createSharingServer = Util.require('sharing_server');
 }());
 
 Util.storage = window.localStorage;
-
-(function() {
-    var os = require('os');
-    var wirelessName = ['en1', 'en4', 'wlan0', 'en0'];
-    var getWifiIp = function() {
-        var ifaces = os.networkInterfaces(),
-            ip = undefined;
-        wirelessName.forEach(function(name) {
-            var wl = ifaces[name];
-            if (wl) {
-                wl.forEach(function(val) {
-                    if (val.family == 'IPv4') {
-                        ip = ip || val.address;
-                    }
-                });
-            }
-        });
-        return ip;
-    };
-    Object.defineProperty(Util, "wifi_ip", {
-        get: getWifiIp
-    });
-}());
 
 (function(){
     var chokidar = require('chokidar');
@@ -301,19 +299,18 @@ Util.storage = window.localStorage;
         this.dir_watcher = new Class.DirWatcher(this.option.path, function(path, stat){
             // add the image/video into the Gallery
             var elm;
-            debugger;
+
             if(path.endsWith('.json'))
                 elm = makeVideo(path);
             else if(Util.isImage(path))
                 elm = makeImage(path);
 
-            console.log(elm)
             if(elm)
                 me.galleria_instance.push(elm);
 
         });
         this.sharing_server = Util.createSharingServer(this.option);
-
+        this.upload_addr = this.sharing_server.upload_addr;
 
 
 
@@ -449,17 +446,20 @@ function main() {
 
 
 
-
-
     /**
      The True Main
     */
     function __main(path) {
 
         var gallery = new Class.PhotoGallery({
-            path: path
-                //this path should be selectable from startup of the program, currently just name it here
+            path: path,
+            //this path should be selectable from startup of the program, currently just name it here
+            ready:function(instance){
+                // console.log(gallery.upload_addr);
+            }
         });
+
+
 
         Functions.Debug.delPicture = function() {
             gallery.removeCurrent();

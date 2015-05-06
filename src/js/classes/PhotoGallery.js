@@ -76,7 +76,7 @@
 
         });
         this.sharing_server = Util.createSharingServer(this.option);
-
+        this.upload_addr = this.sharing_server.upload_addr;
 
 
 
