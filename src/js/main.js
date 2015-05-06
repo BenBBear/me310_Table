@@ -22,17 +22,20 @@ function main() {
 
 
 
-
-
     /**
      The True Main
     */
     function __main(path) {
 
         var gallery = new Class.PhotoGallery({
-            path: path
-                //this path should be selectable from startup of the program, currently just name it here
+            path: path,
+            //this path should be selectable from startup of the program, currently just name it here
+            ready:function(instance){
+                // console.log(gallery.upload_addr);
+            }
         });
+
+
 
         Functions.Debug.delPicture = function() {
             gallery.removeCurrent();

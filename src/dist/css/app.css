@@ -700,3 +700,9 @@ there.
 /* Larger than Desktop HD */
 .galleria {
   height: 400px; }
+
+.wrapper-sm {
+  padding: 5px; }
+
+.wrapper-md {
+  padding: 15px; }
