@@ -36,7 +36,7 @@ function main() {
                     .popUp('#qrcode-uploading', {
                         type: 'image'
                     });
-
+                Util.hideSearchBar();
 
             }
         });

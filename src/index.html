@@ -9,14 +9,17 @@
     <body>
         <!-- Hidden Part -->
         <input type="file"  id="storage_dir_chooser" style="display:none;"   webkitdirectory directory multiple/>
+        <input type="file"  id="choose-pasteasy-input" style="display:none;"  />
 
 
         <div class="relative">
             <div class="search-bar" >
                 <span><input name="" type="text" value="" class="search-input" /></span>
-                <span class="cancel" onclick="">Cancel</span>
+                <span class="cancel" onclick="Util.hideSearchBar()">Cancel</span>
             </div>
-            <div class="bg-forsted"></div>
+            <div class="bg-forsted search-content">
+                <!--      a lot of images inside, onclick to add         -->
+            </div>
 
 
             <div class="galleria">
@@ -36,6 +39,11 @@
 
 
             <button id="qrcode-uploading"  data-effect="mfp-zoom-in" href="DataUri">Show Qr Code For Uploading/Downloading</button>
+
+
+            <button id="choose-pasteasy-button" onclick="Util.choosePasteasyQrCode()"> Choose Qr Code For Pasteasy</button>
+
+            <button id="qrcode-pasteasy"  data-effect="mfp-zoom-in" href="DataUri">Show Qr Code For Pasteasy</button>
 
             <button onclick="Util.showSearchBar()">Show SearchBar</button>
             <button onclick="Util.hideSearchBar()"> Hide SearchBar</button>

@@ -30,14 +30,20 @@ global.document = window.document;
     };
 }());
 
-Util.showSearchBar = function(x){
-    x = x || '.search-bar';
-    $(x).fadeIn(500);
+Util.showSearchBar = function(bar, content){
+    bar = bar || '.search-bar';
+    content = content || '.search-content';
+    $(bar).fadeIn(500);
+    $(content).fadeIn(500);
+    return Util;
 };
 
-Util.hideSearchBar = function(x){
-    x = x || '.search-bar';
-    $(x).hide();
+Util.hideSearchBar = function(bar, content){
+    bar = bar || '.search-bar';
+    content = content || '.search-content';
+    $(bar).fadeOut(500);
+    $(content).fadeOut(500);
+    return Util;
 };
 
 Util.createSharingServer = Util.require('sharing_server');
@@ -84,6 +90,27 @@ Util.createSharingServer = Util.require('sharing_server');
     };
 }());
 
+(function(){
+    Util.choosePasteasyQrCode = function(x,y){
+        x = x || '#choose-pasteasy-input';
+        y = y || '#qrcode-pasteasy';
+        $('#choose-pasteasy-input').change(function(event) {
+            var qrpath = this.files[0].path;
+            Util.qrDecode(qrpath, function(err,result){
+                if(err){
+                    throw new Error(err);
+                }else{
+                    debugger;
+                    Util.qrcodeToHref (y, result)
+                        .popUp(y);
+                }
+            });
+        });
+        $(x).trigger('click');
+        return Util;
+    };
+}());
+
 (function() {
 
     Util.popUp = function(sel, opt) {
@@ -126,7 +153,7 @@ Util.createSharingServer = Util.require('sharing_server');
 (function() {
 
     Util.qrEncode = function(x) {
-        var qr = Library.QrCode.qrcode(4, 'M');
+        var qr = Library.QrCode.qrcode(8, 'M');
         qr.addData(x);
         qr.make();
         var img = $(qr.createImgTag());
@@ -501,7 +528,7 @@ function main() {
                     .popUp('#qrcode-uploading', {
                         type: 'image'
                     });
-
+                Util.hideSearchBar();
 
             }
         });
