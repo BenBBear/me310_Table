@@ -9,7 +9,7 @@ var Functions = {
 
 var Library = {
     Galleria: Galleria,
-    QrCode: QRCode,
+    QrCode:  require('qrcode-npm'),
     Jquery: $
 };
 

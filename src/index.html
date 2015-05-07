@@ -1,7 +1,9 @@
 <html>
     <head>
         <title>Table Version 2</title>
+        <link href="./lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet"/>
         <link href="./dist/css/app.css" rel="stylesheet"/>
+
     </head>
     <body>
         <input type="file"  id="storage_dir_chooser" style="display:none;"   webkitdirectory directory multiple/>
@@ -10,14 +12,26 @@
 
 
 
-        <button onclick="Functions.Debug.delPicture()"> DelPicture</button>
-        <!--     will be removed in the future, will use gestures to control everything     -->
+
+        <h2 class="text-center border-bottom-sm wrapper-md">Notice</h2>
+        <p class="wrapper-md">
+            Any buttons or texts here will be removed in the future, the app whole interface should be the fullscreen gallery.
+
+
+            I will try to implement gesture detector to control everything.
+        </p>
+        <p class="wrapper-md">
+
+
+            <button id="qrcode-uploading"  data-effect="mfp-zoom-in" href="DataUri">Show Qr Code For Uploading/Downloading</button>
+        </p>
 
 
     </body>
     <script src="./lib/jquery/dist/jquery.min.js"></script>
-    <script src="./lib/other/qrcode/qrcode.min.js"></script>
+    <!-- <script src="./lib/other/qrcode/qrcode.min.js"></script> -->
     <script src="./lib/other/galleria/galleria-1.4.2.js"></script>
+    <script src="./lib/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
     <script src="./dist/js/app.js"></script>
 
 </html>

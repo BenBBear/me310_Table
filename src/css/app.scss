@@ -1,6 +1,7 @@
 @import "./lib/normalize.scss";
 @import "./lib/skeleton.scss";
 @import "./gallery.scss";
+@import "./popup.scss";
 
 $sm:5px;
 $md:15px;
@@ -9,4 +10,13 @@ $md:15px;
 }
 .wrapper-md{
     padding: $md;
+}
+
+
+.text-center {
+    text-align:center;
+}
+
+.border-bottom-sm{
+    border-bottom:1px solid #eee;
 }
