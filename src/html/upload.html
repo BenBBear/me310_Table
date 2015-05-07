@@ -1,47 +1,52 @@
 <!-- download.page /storage/   -->
-<html>
+<html ng-app="app" ng-controller="AppCtrl">
     <head>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
         <title>Upload Your Images</title>
-        <link href="../lib/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
-        <link href="../lib/burger/dist/css/burger.min.css" rel="stylesheet"/>
-        <link href="../dist/css/app.css" rel="stylesheet"/>
+        <link href="../lib/ionic/css/ionic.min.css" rel="stylesheet"/>
+        <link href="../lib/ionicons/css/ionicons.min.css" rel="stylesheet"/>
+
     </head>
     <body>
 
+        <input id="file-input" style="display:none;"  type="file" nv-file-select="" uploader="uploader" multiple />
 
-        <div class="burger-nav">
-            <li><a class="burger-link active" href="#">Home</a></li>
-            <li><a class="burger-link" href="#">About</a></li>
-            <li><a class="burger-link" href="#">Portfolio</a></li>
-            <li><a class="burger-link" href="#">Contact</a></li>
-        </div>
-        <div style="text-align:center;margin-top:2em;">
-            <h1 style="text-align:center">Sharing Panel</h1>
-            <span>Stanford & USTC</span>
-            <hr>
+        <div class="bar bar-header bar-positive">
+            <h1 class="title">Sharing Panel</h1>
         </div>
 
-        <div class="wrapper-md">
-        <p>
-            This Program is from Stanford-Ustc Me310 Course Microsoft Team.
-
-            The Source Code is in here <a href="https://github.com/BenBBear/me310_Table">https://github.com/BenBBear/me310_Table</a>.
-        </p>
-        <h2>MIT License</h2>
-        <p></p>
-        </div>
-        <!-- Burger-Icon -->
-        <div class="burger-contain" style="width:100%;height:100%;">
-            <div class="burger" style="position: absolute;right:2em;">
-                <!-- <div class="bun bun-top"></div>
-                <div class="bun bun-mid"></div>
-                <div class="bun bun-bottom"></div> -->
-                <i class="fa fa-cloud-download" style="color:#fff;font-size:large;margin-left:3px"></i>
+        <ion-content >
+            <br>
+            <br>
+            <br>
+            <div class="padding">
+        <button class="button button-block button-royal" style="border-radius:10px;" ng-click="upload()">
+            <i class="icon ion-upload"></i>
+            Upload Your Files
+        </button>
             </div>
+        <div class="list">
+
+            <div class="item item-divider">
+                Share With Table
+            </div>
+
+             <a ng-repeat="file in files track by $index" class="item item-thumbnail-left" ng-href="{{file.src}}" download>
+                 <img ng-src="{{file.src}}">
+                 <h2>{{file.name}}</h2>
+                 <p>Click To Download</p>
+             </a>
+        </div>
+
+        </ion-content>
+
 
 
     </body>
-    <script src="../lib/burger/dist/scripts/burger.min.js"></script>
+
     <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/ionic/js/dist/js/ionic.bundle.js"></script>
+
+    <script src="../lib/angular-file-upload/angular-file-upload.min.js"></script>
     <script src="../js/standalone/upload_index.js"></script>
 </html>

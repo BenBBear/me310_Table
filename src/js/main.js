@@ -30,8 +30,14 @@ function main() {
         var gallery = new Class.PhotoGallery({
             path: path,
             //this path should be selectable from startup of the program, currently just name it here
-            ready:function(instance){
-                // console.log(gallery.upload_addr);
+            ready: function(instance) {
+
+                Util.qrcodeToHref('#qrcode-uploading', gallery.upload_addr)
+                    .popUp('#qrcode-uploading', {
+                        type: 'image'
+                    });
+
+
             }
         });
 

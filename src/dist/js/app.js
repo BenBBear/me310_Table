@@ -9,7 +9,7 @@ var Functions = {
 
 var Library = {
     Galleria: Galleria,
-    QrCode: QRCode,
+    QrCode:  require('qrcode-npm'),
     Jquery: $
 };
 
@@ -76,6 +76,18 @@ Util.createSharingServer = Util.require('sharing_server');
 
 (function() {
 
+    Util.popUp = function(sel, opt) {
+        var __opt = $.extend({
+            type: 'image',
+            mainClass:'mfp-zoom-in'
+        }, opt);
+        $(sel).magnificPopup(__opt);
+        return Util;
+    };
+}());
+
+(function() {
+
     String.prototype.startsWith = function(str) {
         return this.indexOf(str) === 0;
     };
@@ -100,6 +112,23 @@ Util.createSharingServer = Util.require('sharing_server');
     };
 
 }());
+
+(function() {
+
+    Util.qrEncode = function(x) {
+        var qr = Library.QrCode.qrcode(4, 'M');
+        qr.addData(x);
+        qr.make();
+        var img = $(qr.createImgTag());
+        return $(img).attr('src');
+    };
+}());
+
+Util.qrcodeToHref = function(sel, text){
+    var qrcode = Util.qrEncode(text);
+    $(sel).attr('href', qrcode);
+    return Util;
+};
 
 (function() {
     var fs = require('fs'),
@@ -309,6 +338,8 @@ Util.storage = window.localStorage;
                 me.galleria_instance.push(elm);
 
         });
+        this.option.Util = Util;
+
         this.sharing_server = Util.createSharingServer(this.option);
         this.upload_addr = this.sharing_server.upload_addr;
 
@@ -454,8 +485,14 @@ function main() {
         var gallery = new Class.PhotoGallery({
             path: path,
             //this path should be selectable from startup of the program, currently just name it here
-            ready:function(instance){
-                // console.log(gallery.upload_addr);
+            ready: function(instance) {
+
+                Util.qrcodeToHref('#qrcode-uploading', gallery.upload_addr)
+                    .popUp('#qrcode-uploading', {
+                        type: 'image'
+                    });
+
+
             }
         });
 
