@@ -43,8 +43,10 @@ function main() {
 
 
 
-        Functions.Debug.delPicture = function() {
-            gallery.removeCurrent();
-        };
+        // Functions.Debug.delPicture = function() {
+        //     gallery.removeCurrent();
+        // };
+
+
     }
 }
