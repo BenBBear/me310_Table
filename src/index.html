@@ -2,15 +2,27 @@
     <head>
         <title>Table Version 2</title>
         <link href="./lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet"/>
+        <link href="./lib/animate.css/animate.min.css" rel="stylesheet"/>
         <link href="./dist/css/app.css" rel="stylesheet"/>
 
     </head>
     <body>
+        <!-- Hidden Part -->
         <input type="file"  id="storage_dir_chooser" style="display:none;"   webkitdirectory directory multiple/>
-        <div class="galleria">
+
+
+        <div class="relative">
+            <div class="search-bar" >
+                <span><input name="" type="text" value="" class="search-input" /></span>
+                <span class="cancel" onclick="">Cancel</span>
+            </div>
+            <div class="bg-forsted"></div>
+
+
+            <div class="galleria">
+            </div>
+
         </div>
-
-
 
 
         <h2 class="text-center border-bottom-sm wrapper-md">Notice</h2>
@@ -24,6 +36,9 @@
 
 
             <button id="qrcode-uploading"  data-effect="mfp-zoom-in" href="DataUri">Show Qr Code For Uploading/Downloading</button>
+
+            <button onclick="Util.showSearchBar()">Show SearchBar</button>
+            <button onclick="Util.hideSearchBar()"> Hide SearchBar</button>
         </p>
 
 
