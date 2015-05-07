@@ -23,8 +23,6 @@
   "dependencies": {
     "jquery": "~2.1.4",
     "font-awesome": "~4.3.0",
-    "angular-bootstrap": "~0.13.0",
-    "bootstrap": "~3.3.4",
     "angular-file-upload": "~1.1.5",
     "ionicons": "~2.0.1",
     "magnific-popup": "~1.0.0",
