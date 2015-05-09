@@ -12,18 +12,9 @@ var Globals = {};
 var Library = {
     Galleria: Galleria,
     QrCode:  require('qrcode-npm'),
-    Jquery: $
+    Jquery: $,
+    DrawingBoard: DrawingBoard
 };
-
-
-/**
- Node & Browser Context Variable Patching
- */
-
-
-
-global.Image = Image;
-global.document = window.document;
 
 (function(){
     var prefix = './js/node_modules/';
@@ -199,6 +190,10 @@ Util.createSharingServer = Util.require('sharing_server');
     var Datauri = require('datauri'),
         qrcode = require('zxing');
 
+
+
+    global.Image = Image;
+    global.document = window.document;
     var path = require('path');
 
     Util.qrDecode = function(pathToImage, cb) {
@@ -299,6 +294,45 @@ Util.qrcodeToHref = function(sel, text){
         $(query).css('rotate',degree);
         return Util;
     };
+
+}());
+
+(function() {
+
+    Util.showSketchBoard = function(x) {
+        x = x || '.sketching';
+        $(x).show();
+        return Util;
+    };
+
+    Util.hideSketchBoard = function(x) {
+        x = x || '.sketching';
+        $(x).hide();
+        return Util;
+    };
+
+    Util.hideSketchBoardAndSave = function(sel_sketch, gallery) {
+        sel_sketch = sel_sketch || '.sketching';
+        gallery = gallery || Globals.gallery;
+
+
+        if ($(sel_sketch).is(":visible")) {
+            var canvas = $(sel_sketch).find('canvas')[0];
+            var DataUri = canvas.toDataURL();
+            var current = gallery.current;
+
+            gallery.push({
+                image: DataUri,
+                thumb: DataUri,
+                big: DataUri,
+                title: current.title,
+                description: current.description
+            });
+
+        }
+        return Util.hideSketchBoard(sel_sketch);
+    };
+
 
 }());
 
@@ -473,9 +507,16 @@ Util.storage = window.localStorage;
     PhotoGallery.prototype = function(){
         return {
             Galleria: Library.Galleria,
+            get current (){
+                return this.galleria_instance.getData();
+            },
+
             push:function(url){
                 var me = this;
-                me.galleria_instance.push(makeImage(url));
+                if(url instanceof String)
+                    me.galleria_instance.push(makeImage(url));
+                else
+                    me.galleria_instance.push(url);
                 return me;
             },
             removeCurrent:function(){
@@ -594,35 +635,67 @@ function main() {
     */
     function __main(path) {
 
+        var init = function(f) {
+            if (f) {
+                init.queue.push(f);
+            } else {
+                init.queue.forEach(function(ifun) {
+                    ifun();
+                });
+            }
+            return init;
+        };
+        init.queue = [];
+
+
+
         var gallery = new Class.PhotoGallery({
             path: path,
-            //this path should be selectable from startup of the program, currently just name it here
             ready: function(instance) {
-
-                Util.qrcodeToHref('#qrcode-uploading', gallery.upload_addr)
-                    .popUp('#qrcode-uploading', {
-                        type: 'image'
-                    });
-
-                Util.onLexiconInput('.search-input', function(value) {
-                    Util.googleImageSearch(value, function(err, images) {
-                        Util.addLexiconResult('.search-content-next', {
-                            images: images,
-                            // onclick: "Util.downloadAndSave(this.src, Globals.PATH)"
-                            onclick:"Globals.gallery.push(this.src)"
-                        });
-                    });
-                });
-                Util.hideSearchBar();
+                init();
             }
         });
 
+
+
         Globals.PATH = path;
         Globals.gallery = gallery;
+        Globals.init = init;
 
-        // Functions.Debug.delPicture = function() {
-        //     gallery.removeCurrent();
-        // };
+
+        // init for qrcode
+        init(function() {
+            Util.qrcodeToHref('#qrcode-uploading', gallery.upload_addr)
+                .popUp('#qrcode-uploading', {
+                    type: 'image'
+                });
+        }, 'qrcode');
+
+
+        // init for lexicon
+        init(function() {
+            Util.onLexiconInput('.search-input', function(value) {
+                Util.googleImageSearch(value, function(err, images) {
+                    Util.addLexiconResult('.search-content-next', {
+                        images: images,
+                        // onclick: "Util.downloadAndSave(this.src, Globals.PATH)"
+                        onclick: "Globals.gallery.push(this.src)"
+                    });
+                });
+            });
+            Util.hideSearchBar();
+        }, 'lexicon');
+
+
+        // init for sketching
+        init(function() {
+            var defaultBoard = new Library.DrawingBoard.Board('sketching',{
+                background:'rgba(255,255,255,0.3)'
+            });
+            Util.hideSketchBoard();
+        }, 'sketching');
+
+
 
 
     }

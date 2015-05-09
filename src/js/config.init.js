@@ -12,15 +12,6 @@ var Globals = {};
 var Library = {
     Galleria: Galleria,
     QrCode:  require('qrcode-npm'),
-    Jquery: $
+    Jquery: $,
+    DrawingBoard: DrawingBoard
 };
-
-
-/**
- Node & Browser Context Variable Patching
- */
-
-
-
-global.Image = Image;
-global.document = window.document;

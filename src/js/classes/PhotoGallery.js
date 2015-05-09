@@ -105,9 +105,16 @@
     PhotoGallery.prototype = function(){
         return {
             Galleria: Library.Galleria,
+            get current (){
+                return this.galleria_instance.getData();
+            },
+
             push:function(url){
                 var me = this;
-                me.galleria_instance.push(makeImage(url));
+                if(url instanceof String)
+                    me.galleria_instance.push(makeImage(url));
+                else
+                    me.galleria_instance.push(url);
                 return me;
             },
             removeCurrent:function(){

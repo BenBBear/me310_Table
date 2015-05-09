@@ -29,35 +29,67 @@ function main() {
     */
     function __main(path) {
 
+        var init = function(f) {
+            if (f) {
+                init.queue.push(f);
+            } else {
+                init.queue.forEach(function(ifun) {
+                    ifun();
+                });
+            }
+            return init;
+        };
+        init.queue = [];
+
+
+
         var gallery = new Class.PhotoGallery({
             path: path,
-            //this path should be selectable from startup of the program, currently just name it here
             ready: function(instance) {
-
-                Util.qrcodeToHref('#qrcode-uploading', gallery.upload_addr)
-                    .popUp('#qrcode-uploading', {
-                        type: 'image'
-                    });
-
-                Util.onLexiconInput('.search-input', function(value) {
-                    Util.googleImageSearch(value, function(err, images) {
-                        Util.addLexiconResult('.search-content-next', {
-                            images: images,
-                            // onclick: "Util.downloadAndSave(this.src, Globals.PATH)"
-                            onclick:"Globals.gallery.push(this.src)"
-                        });
-                    });
-                });
-                Util.hideSearchBar();
+                init();
             }
         });
 
+
+
         Globals.PATH = path;
         Globals.gallery = gallery;
+        Globals.init = init;
 
-        // Functions.Debug.delPicture = function() {
-        //     gallery.removeCurrent();
-        // };
+
+        // init for qrcode
+        init(function() {
+            Util.qrcodeToHref('#qrcode-uploading', gallery.upload_addr)
+                .popUp('#qrcode-uploading', {
+                    type: 'image'
+                });
+        }, 'qrcode');
+
+
+        // init for lexicon
+        init(function() {
+            Util.onLexiconInput('.search-input', function(value) {
+                Util.googleImageSearch(value, function(err, images) {
+                    Util.addLexiconResult('.search-content-next', {
+                        images: images,
+                        // onclick: "Util.downloadAndSave(this.src, Globals.PATH)"
+                        onclick: "Globals.gallery.push(this.src)"
+                    });
+                });
+            });
+            Util.hideSearchBar();
+        }, 'lexicon');
+
+
+        // init for sketching
+        init(function() {
+            var defaultBoard = new Library.DrawingBoard.Board('sketching',{
+                background:'rgba(255,255,255,0.3)'
+            });
+            Util.hideSketchBoard();
+        }, 'sketching');
+
+
 
 
     }
