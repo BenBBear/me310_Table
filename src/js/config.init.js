@@ -7,6 +7,8 @@ var Functions = {
     Debug: {}
 };
 
+var Globals = {};
+
 var Library = {
     Galleria: Galleria,
     QrCode:  require('qrcode-npm'),

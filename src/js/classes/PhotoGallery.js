@@ -105,6 +105,11 @@
     PhotoGallery.prototype = function(){
         return {
             Galleria: Library.Galleria,
+            push:function(url){
+                var me = this;
+                me.galleria_instance.push(makeImage(url));
+                return me;
+            },
             removeCurrent:function(){
                 var me = this;
                 if(me.galleria_instance){

@@ -971,7 +971,6 @@ there.
 
 .search-bar {
   /* -webkit-transition: height 1s; */
-  display: none;
   position: absolute;
   width: 100%;
   height: 2.5em;
@@ -987,6 +986,44 @@ there.
     .search-bar .search-input:before {
       -webkit-filter: blur(1px); }
   .search-bar .cancel {
+    color: #fff;
     float: right;
     margin-top: 0.5em;
     margin-right: 0.5em; }
+
+.bg-forsted {
+  -webkit-filter: blur(2px); }
+
+.search-content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-filter: blur(20px);
+  z-index: 2;
+  opacity: 0.5;
+  background-color: #B2B2B2; }
+
+.clearfix {
+  overflow: auto;
+  zoom: 1; }
+
+.lexicon-result {
+  margin: 1em;
+  -webkit-box-shadow: 10px 15px 71px -9px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 15px 71px -9px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 15px 71px -9px rgba(0, 0, 0, 0.75);
+  border-radius: 7px 7px 7px 7px;
+  -moz-border-radius: 7px 7px 7px 7px;
+  -webkit-border-radius: 7px 7px 7px 7px;
+  border: 0.1em solid #fff;
+  float: left;
+  max-width: 8em;
+  max-height: 8em; }
+
+.search-content-next {
+  position: absolute;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 3em; }

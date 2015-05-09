@@ -7,6 +7,8 @@ var Functions = {
     Debug: {}
 };
 
+var Globals = {};
+
 var Library = {
     Galleria: Galleria,
     QrCode:  require('qrcode-npm'),
@@ -30,17 +32,44 @@ global.document = window.document;
     };
 }());
 
-Util.showSearchBar = function(x){
-    x = x || '.search-bar';
-    $(x).fadeIn(500);
+Util.showSearchBar = function(bar, content){
+    bar = bar || '.search-bar';
+    content = content || '.search-content';
+
+    $(bar).fadeIn(500);
+    $(content).fadeIn(500);
+    $(content+'-next').fadeIn(500);
+    return Util;
 };
 
-Util.hideSearchBar = function(x){
-    x = x || '.search-bar';
-    $(x).hide();
+Util.hideSearchBar = function(bar, content){
+    bar = bar || '.search-bar';
+    content = content || '.search-content';
+    $(bar).fadeOut(500);
+    $(content).fadeOut(500);
+    $(content+'-next').fadeOut(500);
+    return Util;
 };
 
 Util.createSharingServer = Util.require('sharing_server');
+
+(function(){
+    var http = require('http');
+    var https = require('https');
+    var fs = require('fs');
+    var path = require('path');
+
+    Util.downloadAndSave = function(src,pathToSave){
+        var file = fs.createWriteStream(path.join(pathToSave, path.basename(src)));
+        var request = src.startsWith('https') ? https : http;
+        var req = request.get(src, function(res) {
+            res.pipe(file);
+            file.on('finish', function() {
+                file.close();
+            });
+        });
+    };
+}());
 
 (function() {
     var path = require('path');
@@ -59,6 +88,13 @@ Util.createSharingServer = Util.require('sharing_server');
         return {};
     };
     Settings.Theme = Util.getDefaultTheme();
+}());
+
+(function (){
+    //**********//
+    var google_images = Util.require('google-images');
+    Util.googleImageSearch = google_images.search;
+
 }());
 
 (function(){
@@ -81,6 +117,58 @@ Util.createSharingServer = Util.require('sharing_server');
             ext = path.extname(x);
 
         return image_ext_array.indexOf(ext) !== -1;
+    };
+}());
+
+(function() {
+    //**********//
+    Util.onLexiconInput = function(query, cb) {
+        $(query).on('input propertychange paste',function() {
+            cb(this.value);
+        });
+    };
+
+
+    Util.addLexiconResultToGallery = function(){};
+
+    Util.addLexiconResult = function(query, opt){
+        var parent = $(query);
+        parent.empty();
+        $('<div class="clearfix" ></div>')
+            .prependTo(parent);
+        opt = opt || {};
+        opt.images.forEach(function(img){
+            $('<img/>',{
+                src:img.url,
+                class:'lexicon-result',
+                onclick: opt.onclick || function(){}
+            }).prependTo(parent);
+        });
+
+    };
+
+}());
+
+(function(){
+    Util.choosePasteasyQrCode = function(x,y){
+        x = x || '#choose-pasteasy-input';
+        y = y || '#qrcode-pasteasy';
+        $('#choose-pasteasy-input').change(function(event) {
+            var qrpath = this.files[0].path;
+            // Util.qrDecode(qrpath, function(err,result){
+            //     if(err){
+            //         throw new Error(err);
+            //     }else{
+            //         debugger;
+            //         Util.qrcodeToHref (y, result)
+            //             .popUp(y);
+            //     }
+            // });
+            $(y).attr('href', qrpath);
+            Util.popUp(y);
+        });
+        $(x).trigger('click');
+        return Util;
     };
 }());
 
@@ -126,7 +214,7 @@ Util.createSharingServer = Util.require('sharing_server');
 (function() {
 
     Util.qrEncode = function(x) {
-        var qr = Library.QrCode.qrcode(4, 'M');
+        var qr = Library.QrCode.qrcode(8, 'M');
         qr.addData(x);
         qr.make();
         var img = $(qr.createImgTag());
@@ -216,26 +304,33 @@ Util.qrcodeToHref = function(sel, text){
 
 Util.storage = window.localStorage;
 
-(function(){
+(function() {
     var chokidar = require('chokidar');
-    var noop = function(){};
-    function DirWatcher(path,cb){
+    var noop = function() {};
+
+    function DirWatcher(path, cb) {
         this.path = path;
         this.addCb = cb;
     }
 
-    DirWatcher.prototype = function(){
+    DirWatcher.prototype = function() {
         return {
-            start:function(){
-                this.watcher = chokidar.watch(this.path,{
+            start: function() {
+                var me = this;
+                this.watcher = chokidar.watch(this.path, {
                     ignored: /[\/\\]\./
-                }).on('add', this.addCb);
+                }).on('add', function(path,stat) {
+                    setTimeout(function() {
+                        me.addCb(path,stat);
+                    }, DirWatcher.prototype.WAIT_TIME);
+                });
                 return this;
             },
-            stop:function(){
+            stop: function() {
                 this.watcher && this.watcher.close();
                 return;
-            }
+            },
+            WAIT_TIME:5000
         };
     }();
 
@@ -378,6 +473,11 @@ Util.storage = window.localStorage;
     PhotoGallery.prototype = function(){
         return {
             Galleria: Library.Galleria,
+            push:function(url){
+                var me = this;
+                me.galleria_instance.push(makeImage(url));
+                return me;
+            },
             removeCurrent:function(){
                 var me = this;
                 if(me.galleria_instance){
@@ -482,8 +582,10 @@ function main() {
         __main(this.files[0].path);
     });
 
-
-
+    /**
+     Configuration
+     */
+    Class.DirWatcher.prototype.WAIT_TIME = 0;
 
 
 
@@ -502,11 +604,21 @@ function main() {
                         type: 'image'
                     });
 
-
+                Util.onLexiconInput('.search-input', function(value) {
+                    Util.googleImageSearch(value, function(err, images) {
+                        Util.addLexiconResult('.search-content-next', {
+                            images: images,
+                            // onclick: "Util.downloadAndSave(this.src, Globals.PATH)"
+                            onclick:"Globals.gallery.push(this.src)"
+                        });
+                    });
+                });
+                Util.hideSearchBar();
             }
         });
 
-
+        Globals.PATH = path;
+        Globals.gallery = gallery;
 
         // Functions.Debug.delPicture = function() {
         //     gallery.removeCurrent();
