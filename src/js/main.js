@@ -17,8 +17,10 @@ function main() {
         __main(this.files[0].path);
     });
 
-
-
+    /**
+     Configuration
+     */
+    Class.DirWatcher.prototype.WAIT_TIME = 0;
 
 
 
@@ -36,12 +38,22 @@ function main() {
                     .popUp('#qrcode-uploading', {
                         type: 'image'
                     });
-                Util.hideSearchBar();
 
+                Util.onLexiconInput('.search-input', function(value) {
+                    Util.googleImageSearch(value, function(err, images) {
+                        Util.addLexiconResult('.search-content-next', {
+                            images: images,
+                            // onclick: "Util.downloadAndSave(this.src, Globals.PATH)"
+                            onclick:"Globals.gallery.push(this.src)"
+                        });
+                    });
+                });
+                Util.hideSearchBar();
             }
         });
 
-
+        Globals.PATH = path;
+        Globals.gallery = gallery;
 
         // Functions.Debug.delPicture = function() {
         //     gallery.removeCurrent();
