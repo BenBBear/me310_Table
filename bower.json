@@ -27,6 +27,7 @@
     "ionicons": "~2.0.1",
     "magnific-popup": "~1.0.0",
     "animate.css": "~3.2.6",
-    "Hover": "~2.0.2"
+    "Hover": "~2.0.2",
+    "drawingboard.js": "~0.4.4"
   }
 }

@@ -2,6 +2,10 @@
     var Datauri = require('datauri'),
         qrcode = require('zxing');
 
+
+
+    global.Image = Image;
+    global.document = window.document;
     var path = require('path');
 
     Util.qrDecode = function(pathToImage, cb) {

@@ -2,7 +2,8 @@
     <head>
         <title>Table Version 2</title>
         <link href="./lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet"/>
-        <link href="./lib/animate.css/animate.min.css" rel="stylesheet"/>
+        <!-- <link href="./lib/animate.css/animate.min.css" rel="stylesheet"/> -->
+        <link href="./lib/drawingboard.js/dist/drawingboard.min.css" rel="stylesheet"/>
         <link href="./dist/css/app.css" rel="stylesheet"/>
 
     </head>
@@ -22,12 +23,20 @@
             <div class="search-content-next">
             </div>
 
+            <div id="sketching" class="sketching">
+            </div>
             <div class="galleria">
             </div>
 
         </div>
 
 
+
+
+
+
+
+        <!--====================================================================================================-->
         <h2 class="text-center border-bottom-sm wrapper-md">Notice</h2>
         <p class="wrapper-md">
             Any buttons or texts here will be removed in the future, the app whole interface should be the fullscreen gallery.
@@ -36,7 +45,6 @@
             I will try to implement gesture detector to control everything.
         </p>
         <p class="wrapper-md">
-
 
             <button id="qrcode-uploading"  data-effect="mfp-zoom-in" href="DataUri">Show Qr Code For Uploading/Downloading</button>
 
@@ -47,12 +55,20 @@
 
             <button onclick="Util.showSearchBar()">Show SearchBar</button>
             <button onclick="Util.hideSearchBar()"> Hide SearchBar</button>
+
+            <button onclick="Util.showSketchBoard()">Show SketchBoard</button>
+            <button onclick="Util.hideSketchBoard()"> Hide SketchBoard</button>
+            <button onclick="Util.hideSketchBoardAndSave()"> Hide SketchBoard And Save Picture</button>
         </p>
 
 
     </body>
+    <!-- <script src="./lib/other/html2canvas/html2canvas.old.js"></script> -->
+    <!-- <script src="./lib/other/html2canvas/html2canvas.js"></script>
+    <script src="./lib/other/html2canvas/html2canvas.svg.js"></script> -->
+
     <script src="./lib/jquery/dist/jquery.min.js"></script>
-    <!-- <script src="./lib/other/qrcode/qrcode.min.js"></script> -->
+    <script src="./lib/drawingboard.js/dist/drawingboard.min.js"></script>
     <script src="./lib/other/galleria/galleria-1.4.2.js"></script>
     <script src="./lib/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
     <script src="./dist/js/app.js"></script>
