@@ -20,10 +20,10 @@
     left: 0;
     right: 0;
     bottom: 40px;
-    background:#000 url(bg.png);
+    background: url(bg.png);
 }
 .galleria-theme-azur.light .galleria-stage {
-    background:#181818 url(bg.png);
+    background: #181818  url(bg.png);
 }
 .galleria-theme-azur .galleria-bar {
     height: 40px;
@@ -402,4 +402,3 @@ body .galleria-theme-azur .galleria-tooltip {
 
 .galleria-theme-azur.videoplay .galleria-info,
 .galleria-theme-azur.videoplay .galleria-counter{display:none!important;}
-

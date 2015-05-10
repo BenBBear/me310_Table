@@ -25,14 +25,24 @@
             var canvas = $(sel_sketch).find('canvas')[0];
             var DataUri = canvas.toDataURL();
             var current = gallery.current;
-            Util.fetchImages(current.image, DataUri, function(background, note) {
-                gm(background)
-                    .composite(note)
-                    .write(path.join(filepath, 'Note_' + randomstring.generate(7) + '.png'), function(err) {
-                        if (err)
-                            throw err;
-                    });
+            gallery.push({
+                image: DataUri,
+                big: DataUri,
+                thumb: DataUri,
+                title: 'Noted For ' + current.title,
+                description: 'Noted For ' + current.description
             });
+
+
+            // Util.fetchImages(current.image, DataUri, function(background, note) {
+            //     gm(background)
+            //         // .resize(gallery.width,gallery.height)
+            //         .composite(note)
+            //         .write(path.join(filepath, 'Note_' + randomstring.generate(7) + '.png'), function(err) {
+            //             if (err)
+            //                 throw err;
+            //         });
+            // });
 
 
         }
