@@ -168,11 +168,8 @@ Util.createSharingServer = Util.require('sharing_server');
         });
     };
 
-
-    Util.addLexiconResultToGallery = function(){};
-
     Util.addLexiconResult = function(query, opt){
-        var parent = $(query);
+        var parent = $(query + "> #lexicon_images");
         parent.empty();
         $('<div class="clearfix" ></div>')
             .prependTo(parent);
@@ -184,8 +181,19 @@ Util.createSharingServer = Util.require('sharing_server');
                 onclick: opt.onclick || function(){}
             }).prependTo(parent);
         });
-
     };
+
+    Util.addLexiconResultForRelatedWord = function(query,opt){
+        var parent = $(query + "> #lexicon_words");
+        parent.empty();
+        $('<div class="clearfix" ></div>')
+            .prependTo(parent);
+        opt = opt || {};
+        opt.words.reverse().forEach(function(word){
+            $('<span/>').addClass('lexicon-result-word').html(word).click(opt.onclick).prependTo(parent);
+        });
+    };
+
 
 }());
 
@@ -346,6 +354,50 @@ Util.qrcodeToHref = function(sel, text){
 
 }());
 
+(function(){
+    var request = require('request');
+    var thunks = require('thunks')();
+
+    var semanticLink = 'http://semantic-link.com/related.php?word=';
+
+
+    /**
+     @param  {string},{an array of strings} words
+     */
+    var thunk_request = thunks.thunkify(request);
+    function getRelatedWord(words, cb){
+        if(!(words instanceof Array)){
+            words = [words];
+        }
+
+        var reqList = [];
+        words.forEach(function(word){
+            console.log('Fetching related word for: ' + word);
+            reqList.push(thunk_request(semanticLink + word));
+        });
+        return thunks.all(reqList)(function(err, res){
+            console.log(res);
+            var resultList = [];
+            if(err)
+                cb(err);
+            res.forEach(function(r){
+                var body = r[1];
+                var parsed_body = JSON.parse(body);
+                resultList.push(parsed_body.map(function(obj){
+                    return obj.v;
+                }));
+            });
+            cb(null, resultList);
+        });
+    }
+
+    Util.getRelatedWord = getRelatedWord;
+    // getRelatedWord(['apple', 'bin'], function(err, resultList){
+    //     debugger;
+    // });
+
+}());
+
 (function() {
     var gm = require('gm');
     var path = require('path');
@@ -401,6 +453,13 @@ Util.qrcodeToHref = function(sel, text){
 }());
 
 Util.storage = window.localStorage;
+
+(function(){
+    var natural = require('natural');
+    Util.tokenizeAndStem = function(str){
+        return natural.PorterStemmer.tokenizeAndStem(str);
+    };
+}());
 
 (function() {
     var chokidar = require('chokidar');
@@ -749,13 +808,35 @@ function main() {
         // init for lexicon
         init(function() {
             Util.onLexiconInput('.search-input', function(value) {
+
+                // the lexicon image searching part
                 Util.googleImageSearch(value, function(err, images) {
                     Util.addLexiconResult('.search-content-next', {
                         images: images,
-                        // onclick: "Util.downloadAndSave(this.src, Globals.PATH)"
                         onclick: "Globals.gallery.push(this.src)"
                     });
                 });
+
+                // the lexicon related words finding part
+                Util.getRelatedWord(Util.tokenizeAndStem(value), function(err, resultList) {
+                    if (err)
+                        throw err;
+                    else {
+                        var result_to_display = [];
+                        resultList.forEach(function(r) {
+                            result_to_display = result_to_display.concat(r.slice(0, 10));
+                        });
+                        Util.addLexiconResultForRelatedWord('.search-content-next', {
+                            words: result_to_display,
+                            onclick:function(){
+                                $('.search-input').val(this.innerHTML)
+                                    .trigger('input');
+
+                            }
+                        });
+                    }
+                });
+
             });
             Util.hideSearchBar();
         }, 'lexicon');
@@ -763,8 +844,8 @@ function main() {
 
         // init for sketching
         init(function() {
-            var defaultBoard = new Library.DrawingBoard.Board('sketching',{
-                background:'rgba(255,255,255,0.3)'
+            var defaultBoard = new Library.DrawingBoard.Board('sketching', {
+                background: 'rgba(255,255,255,0.3)'
             });
             Util.hideSketchBoard();
         }, 'sketching');

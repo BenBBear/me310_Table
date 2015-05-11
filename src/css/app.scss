@@ -30,7 +30,7 @@ $md:15px;
     position: absolute;
     width: 100%;
     height: 2.5em;
-    z-index: 4;
+    z-index: 5;
     opacity: 0.5;
     background-color: #000;
     .search-input {
@@ -95,6 +95,16 @@ $md:15px;
     height: 100%;
     box-sizing: border-box;
     padding: 3em;
+
+    #lexicon_images{
+        height:50%;
+        overflow-y:scroll;
+        border-bottom: 3px solid rgba(130,130,130,0.3);
+    }
+    #lexicon_words{
+        height:50%;
+        overflow-y:scroll;
+    }
 }
 
 .sketching{
@@ -102,4 +112,24 @@ $md:15px;
     z-index:3;
     width:100%;
     height:100%;
+}
+
+
+.lexicon-result-word {
+    margin: 1em;
+    -webkit-box-shadow: 10px 15px 71px -9px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 10px 15px 71px -9px rgba(0, 0, 0, 0.75);
+    box-shadow: 10px 15px 71px -9px rgba(0, 0, 0, 0.75);
+    border-radius: 7px 7px 7px 7px;
+    -moz-border-radius: 7px 7px 7px 7px;
+    -webkit-border-radius: 7px 7px 7px 7px;
+    border: 0.1em solid #4aa3df;
+    float: left;
+    max-width: 8em;
+    max-height: 8em;
+    padding:0.3em 0.1em 0.3em 0.1em;
+
+    &:hover{
+
+    }
 }

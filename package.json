@@ -56,7 +56,10 @@
     "express": "^4.12.3",
     "formidable": "^1.0.17",
     "gm": "^1.17.0",
+    "htmlparser": "^1.7.7",
+    "jsdom": "^3.1.2",
     "jsonfile": "^2.0.0",
+    "natural": "^0.2.1",
     "node-base64-image": "0.0.1",
     "qrcode-npm": "0.0.3",
     "randomstring": "^1.0.5",
@@ -64,6 +67,7 @@
     "serve-index": "^1.6.3",
     "serve-static": "^1.9.2",
     "socket.io": "^1.3.5",
+    "thunks": "^3.0.1",
     "zxing": "^0.1.0"
   },
   "chromium-args": "--enable-speech-input --enable-speech-recognition --enable-webaudio-input",
