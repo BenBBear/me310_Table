@@ -31,6 +31,7 @@
                     return obj.v;
                 }));
             });
+            // console.log(resultList);
             cb(null, resultList);
         });
     }
