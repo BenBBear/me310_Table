@@ -376,7 +376,7 @@ Util.qrcodeToHref = function(sel, text){
             reqList.push(thunk_request(semanticLink + word));
         });
         return thunks.all(reqList)(function(err, res){
-            console.log(res);
+            console.log('One Fetch Operation Complete');
             var resultList = [];
             if(err)
                 cb(err);
@@ -387,6 +387,7 @@ Util.qrcodeToHref = function(sel, text){
                     return obj.v;
                 }));
             });
+            // console.log(resultList);
             cb(null, resultList);
         });
     }
@@ -454,10 +455,19 @@ Util.qrcodeToHref = function(sel, text){
 
 Util.storage = window.localStorage;
 
-(function(){
-    var natural = require('natural');
-    Util.tokenizeAndStem = function(str){
-        return natural.PorterStemmer.tokenizeAndStem(str);
+(function() {
+    var keyword = require('gramophone');
+    var natural = require('natural'),
+        tokenizer = new natural.WordTokenizer();
+    Util.tokenizeAndStem = function(str) {
+        var arr  = keyword.extract(str, {
+            min: 1
+        });
+        var result = [];
+        arr.forEach(function(str){
+            result = result.concat(tokenizer.tokenize(str));
+        });
+        return result;
     };
 }());
 
