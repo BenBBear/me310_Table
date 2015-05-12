@@ -14,7 +14,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "deps": "brew install GraphicsMagick && npm install && bower install",
-    "run": "./node_modules/node-webkit-builder/bin/nwbuild -r .",
+    "run": "./node_modules/node-webkit-builder/bin/nwbuild -r . -v 0.12.1",
     "watch": "./node_modules/gulp/bin/gulp.js watch",
     "build": "./node_modules/gulp/bin/gulp.js",
     "package": "rm -rf ./node_modules/gulp-less ./node_modules/gulp-mocha ./node_modules/should ./node_modules/jquery ./build/me310_Table/osx64; mv ./node_modules/gulp-sass /tmp/gulp-sass;  ./node_modules/node-webkit-builder/bin/nwbuild -p osx64 . ; mv /tmp/gulp-sass ./node_modules/gulp-sass",
