@@ -185,9 +185,8 @@ Util.createSharingServer = Util.require('sharing_server');
         opt.images.forEach(function(img){
             $('<img/>',{
                 src:img.url,
-                class:'lexicon-result',
-                onclick: opt.onclick || function(){}
-            }).prependTo(parent);
+                class:'lexicon-result'
+            }).click(opt.onclick || function(){}).prependTo(parent);
         });
     };
 
@@ -400,7 +399,6 @@ Util.qrcodeToHref = function(sel, text){
                 }));
             });
             // console.log(resultList);
-            debugger;
             cb(null, origin_value, resultList);
         });
     }
@@ -670,7 +668,7 @@ Util.storage = window.localStorage;
 
             push: function(url) {
                 var me = this;
-                if (url instanceof String)
+                if (typeof(url) == 'string')
                     me.galleria_instance.push(makeImage(url));
                 else
                     me.galleria_instance.push(url);
@@ -840,7 +838,9 @@ function main() {
                     if (origin_value == latest_search_input) {
                         Util.addLexiconResult('.search-content-next', {
                             images: images,
-                            onclick: "alert('clicked');Globals.gallery.push(this.src)"
+                            onclick: function(){
+                                gallery.push(this.src);
+                            }
                         });
                     }
                 });
@@ -860,7 +860,6 @@ function main() {
                                 onclick: function() {
                                     $('.search-input').val(this.innerHTML)
                                         .trigger('input');
-
                                 }
                             });
                         }

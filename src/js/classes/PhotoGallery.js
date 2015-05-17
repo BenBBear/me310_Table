@@ -121,7 +121,7 @@
 
             push: function(url) {
                 var me = this;
-                if (url instanceof String)
+                if (typeof(url) == 'string')
                     me.galleria_instance.push(makeImage(url));
                 else
                     me.galleria_instance.push(url);
@@ -139,9 +139,6 @@
                         // Remove the Image from Disk
                         Util.removeFile(data.image);
                     }
-
-
-
                 } else {
                     setTimeout(function() {
                         me.removeCurrent();

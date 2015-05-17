@@ -77,7 +77,9 @@ function main() {
                     if (origin_value == latest_search_input) {
                         Util.addLexiconResult('.search-content-next', {
                             images: images,
-                            onclick: "alert('clicked');Globals.gallery.push(this.src)"
+                            onclick: function(){
+                                gallery.push(this.src);
+                            }
                         });
                     }
                 });
@@ -97,7 +99,6 @@ function main() {
                                 onclick: function() {
                                     $('.search-input').val(this.innerHTML)
                                         .trigger('input');
-
                                 }
                             });
                         }

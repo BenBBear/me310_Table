@@ -36,7 +36,6 @@
                 }));
             });
             // console.log(resultList);
-            debugger;
             cb(null, origin_value, resultList);
         });
     }

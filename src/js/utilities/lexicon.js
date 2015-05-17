@@ -15,9 +15,8 @@
         opt.images.forEach(function(img){
             $('<img/>',{
                 src:img.url,
-                class:'lexicon-result',
-                onclick: opt.onclick || function(){}
-            }).prependTo(parent);
+                class:'lexicon-result'
+            }).click(opt.onclick || function(){}).prependTo(parent);
         });
     };
 
