@@ -1078,3 +1078,9 @@ img.qrcode {
 
 .float-left {
   float: left; }
+
+#touch-board {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -10; }

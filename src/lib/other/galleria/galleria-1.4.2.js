@@ -4110,22 +4110,77 @@
             @returns Instance
         */
 
-        push: function() {
-            var self = this,
-                args = Utils.array(arguments);
+        push: // function() {
+        //     var self = this,
+        //         args = Utils.array(arguments);
 
-            if (args.length == 1 && args[0].constructor == Array) {
-                args = args[0];
+        //     if (args.length == 1 && args[0].constructor == Array) {
+        //         args = args[0];
+        //     }
+
+        //     window.setTimeout(function() {
+        //         protoArray.push.apply(self._data, args);
+        //         self._parseData(function() {
+        //             self._createThumbnails(args);
+        //         });
+        //     }, 2);
+        //     return self;
+        // }
+        function() {
+        var self = this,
+            args = Utils.array( arguments );
+
+        if ( args.length == 1 && args[0].constructor == Array ) {
+            args = args[0];
+        }
+
+        window.setTimeout(function() {
+            protoArray.push.apply( self._data, args );
+            self._parseData( function() {
+                self._createThumbnails( args );
+            });
+            if (self._options.swipe) {
+                var slidesLength = (self.getDataLength() - 1),
+                    $images = self.$( 'images' ).width( slidesLength * self._stageWidth ),
+                    image = new Galleria.Picture(),
+                    data = self.getData(slidesLength);
+
+                $( image.container ).css({
+                    position: 'absolute',
+                    top: 0,
+                    left: self._stageWidth*(slidesLength)
+                }).prepend( self._layers[slidesLength] = $( Utils.create('galleria-layer') ).css({
+                    position: 'absolute',
+                    top:0, left:0, right:0, bottom:0,
+                    zIndex:2
+                })[0] ).appendTo( $images );
+
+                if( data.video ) {
+                    _playIcon( image.container );
+                }
+
+                self._controls.slides.push(image);
+
+                var frame = new Galleria.Picture();
+                frame.isIframe = true;
+
+                $( frame.container ).attr('class', 'galleria-frame').css({
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    zIndex: 4,
+                    background: '#000',
+                    display: 'none'
+                }).appendTo( image.container );
+
+                self._controls.frames.push(frame);
+
+                self.finger.setup();
             }
 
-            window.setTimeout(function() {
-                protoArray.push.apply(self._data, args);
-                self._parseData(function() {
-                    self._createThumbnails(args);
-                });
-            }, 2);
-            return self;
-        },
+        }, 2);
+        return self;
+    }        ,
 
         _getActive: function() {
             return this._controls.getActive();

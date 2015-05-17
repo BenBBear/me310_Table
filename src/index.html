@@ -19,6 +19,10 @@
 
 
     <div class="relative">
+
+        <div id="touch-board">
+        </div>
+
         <div class="search-bar">
             <span><input name="" type="text" value="" class="search-input" /></span>
             <span class="cancel" onclick="Globals.hideSearchBar()">Cancel</span>
@@ -50,7 +54,11 @@
 </body>
 
 <script src="./lib/jquery/dist/jquery.min.js"></script>
-<!-- <script src="./lib/draggabilly/dist/draggabilly.pkgd.min.js"></script> -->
+<script src="./lib/hammer-touchemulator/touch-emulator.js"></script>
+<script>
+ TouchEmulator();
+ debugger;
+</script>
 <script src="./lib/webui-popover/dist/jquery.webui-popover.min.js"></script>
 <script src="./lib/drawingboard.js/dist/drawingboard.min.js"></script>
 <script src="./lib/other/galleria/galleria-1.4.2.js"></script>

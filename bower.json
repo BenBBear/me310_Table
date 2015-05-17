@@ -31,6 +31,7 @@
     "drawingboard.js": "~0.4.4",
     "webui-popover": "~1.1.4",
     "quojs": "~3.0.7",
-    "draggabilly": "~1.2.3"
+    "draggabilly": "~1.2.3",
+    "hammer-touchemulator": "~0.0.2"
   }
 }

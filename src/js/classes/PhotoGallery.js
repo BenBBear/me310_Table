@@ -81,6 +81,8 @@
             else if (Util.isImage(path))
                 elm = makeImage(path);
 
+
+            // var arr = me.galleria_instance._data.concat(elm);
             if (elm)
                 me.galleria_instance.push(elm);
 
@@ -91,10 +93,11 @@
         this.upload_addr = this.sharing_server.upload_addr;
 
 
-
+        console.log(this.option);
         /**
          Begin creating the Gallery
          */
+
         this.Galleria.run(this.element, this.option);
         me.Galleria.ready(function() {
             me.galleria_instance = this;

@@ -649,6 +649,8 @@ Util.storage = window.localStorage;
             else if (Util.isImage(path))
                 elm = makeImage(path);
 
+
+            // var arr = me.galleria_instance._data.concat(elm);
             if (elm)
                 me.galleria_instance.push(elm);
 
@@ -659,10 +661,11 @@ Util.storage = window.localStorage;
         this.upload_addr = this.sharing_server.upload_addr;
 
 
-
+        console.log(this.option);
         /**
          Begin creating the Gallery
          */
+
         this.Galleria.run(this.element, this.option);
         me.Galleria.ready(function() {
             me.galleria_instance = this;
@@ -792,10 +795,6 @@ TODO in main:
 function main() {
 
 
-
-
-
-
     // End PlayGround
     var storage_path;
     var pasteasy_qrcode;
@@ -810,7 +809,8 @@ function main() {
 
 
     $('#pasteasy_qr_chooser').change(function(event) {
-        alert('Now the program should start.');
+        alert('Now the program should start.' +
+            '\n\nMore Info of This Program Please See:\n\n https://github.com/BenBBear/me310_Table');
 
         pasteasy_qrcode = this.files[0].path;
         __main(storage_path);
@@ -846,6 +846,8 @@ function main() {
 
         var gallery = new Class.PhotoGallery({
             path: path,
+            show:0,
+            swipe:'enforced',
             ready: function(instance) {
                 init();
             }
@@ -860,23 +862,23 @@ function main() {
         /**
          More Global Function
          */
-        Globals.toggleSketchBoard = function(){
+        Globals.toggleSketchBoard = function() {
             var me = Globals.toggleSketchBoard;
-            if(me.opening){
+            if (me.opening) {
                 me.opening = false;
                 Util.hideSketchBoardAndSave();
-            }else{
+            } else {
                 me.opening = true;
                 Util.showSketchBoard();
             }
         };
 
-        Globals.showSearchBar = function(){
+        Globals.showSearchBar = function() {
             Util.showSearchBar();
             $('.toolbar').hide();
         };
 
-        Globals.hideSearchBar = function(){
+        Globals.hideSearchBar = function() {
             Util.hideSearchBar();
             $('.toolbar').show();
         };
@@ -946,6 +948,12 @@ function main() {
         }, 'sketching');
 
 
+        // You Could not use quojs with galleria
+        // init(function(){
+        //     $$('#touch-board').swipe(function() {
+        //         alert('swipe');
+        //     });
+        // }, 'touch-board');
 
 
     }
