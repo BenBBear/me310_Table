@@ -12,10 +12,32 @@ TODO in main:
 
 function main() {
 
+
+
+
+
+
+    // End PlayGround
+    var storage_path;
+    var pasteasy_qrcode;
+
     $("#storage_dir_chooser").trigger('click');
     $("#storage_dir_chooser").change(function(event) {
-        __main(this.files[0].path);
+        alert('Ok, after choosing the Gallery Folder. You have to choose the Pasteasy Qrcode Picture. It should be a screenshot of the pasteasy in the finder');
+
+        storage_path = this.files[0].path;
+        $('#pasteasy_qr_chooser').trigger('click');
     });
+
+
+    $('#pasteasy_qr_chooser').change(function(event) {
+        alert('Now the program should start.');
+
+        pasteasy_qrcode = this.files[0].path;
+        __main(storage_path);
+    });
+
+
 
     /**
      Configuration
@@ -56,13 +78,40 @@ function main() {
         Globals.gallery = gallery;
         Globals.init = init;
 
+        /**
+         More Global Function
+         */
+        Globals.toggleSketchBoard = function(){
+            var me = Globals.toggleSketchBoard;
+            if(me.opening){
+                me.opening = false;
+                Util.hideSketchBoardAndSave();
+            }else{
+                me.opening = true;
+                Util.showSketchBoard();
+            }
+        };
+
+        Globals.showSearchBar = function(){
+            Util.showSearchBar();
+            $('.toolbar').hide();
+        };
+
+        Globals.hideSearchBar = function(){
+            Util.hideSearchBar();
+            $('.toolbar').show();
+        };
+
+
 
         // init for qrcode
         init(function() {
-            Util.qrcodeToHref('#qrcode-uploading', gallery.upload_addr)
-                .popUp('#qrcode-uploading', {
-                    type: 'image'
-                });
+            Util.qrPopup('#qrcode-popover', {
+                qrcode: {
+                    'Uploading/Downloading': Util.qrEncode(gallery.upload_addr),
+                    'Pasteasy': pasteasy_qrcode
+                }
+            });
         }, 'qrcode');
 
 
@@ -70,14 +119,13 @@ function main() {
         var latest_search_input = "";
         init(function() {
             Util.onLexiconInput('.search-input', function(value) {
-
                 latest_search_input = value;
                 // the lexicon image searching part
                 Util.googleImageSearch(value, function(err, origin_value, images) {
                     if (origin_value == latest_search_input) {
                         Util.addLexiconResult('.search-content-next', {
                             images: images,
-                            onclick: function(){
+                            onclick: function() {
                                 gallery.push(this.src);
                             }
                         });
@@ -122,4 +170,8 @@ function main() {
 
 
     }
+
+
+
+
 }

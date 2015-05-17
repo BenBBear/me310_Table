@@ -281,6 +281,27 @@ Util.createSharingServer = Util.require('sharing_server');
     };
 }());
 
+(function() {
+    Util.qrPopup = function(sel, opt) {
+        sel = sel || '#qrcode-popover';
+        var content = "";
+        for(var name in opt.qrcode){
+            var src = opt.qrcode[name];
+            content += '<div>';
+            content += '<img class="qrcode"  src="' + src + '" />';
+            content += ' <figcaption>' + 'For' +  name + '</figcaption>';
+            content += '</div><br><br>';
+        }
+        $(sel).webuiPopover({
+            title: 'Qrcode',
+            content: content,
+            style: 'inverse',
+            animation: 'pop',
+            placement:  opt.placement || 'bottom-left'
+        });
+    };
+}());
+
 Util.qrcodeToHref = function(sel, text){
     var qrcode = Util.qrEncode(text);
     $(sel).attr('href', qrcode);
@@ -441,8 +462,8 @@ Util.qrcodeToHref = function(sel, text){
                 image: DataUri,
                 big: DataUri,
                 thumb: DataUri,
-                title: 'Noted For ' + current.title,
-                description: 'Noted For ' + current.description
+                title: 'Note For ' + current.title,
+                description: 'Note For ' + current.description
             });
 
 
@@ -686,9 +707,6 @@ Util.storage = window.localStorage;
                         // Remove the Image from Disk
                         Util.removeFile(data.image);
                     }
-
-
-
                 } else {
                     setTimeout(function() {
                         me.removeCurrent();
@@ -773,10 +791,32 @@ TODO in main:
 
 function main() {
 
+
+
+
+
+
+    // End PlayGround
+    var storage_path;
+    var pasteasy_qrcode;
+
     $("#storage_dir_chooser").trigger('click');
     $("#storage_dir_chooser").change(function(event) {
-        __main(this.files[0].path);
+        alert('Ok, after choosing the Gallery Folder. You have to choose the Pasteasy Qrcode Picture. It should be a screenshot of the pasteasy in the finder');
+
+        storage_path = this.files[0].path;
+        $('#pasteasy_qr_chooser').trigger('click');
     });
+
+
+    $('#pasteasy_qr_chooser').change(function(event) {
+        alert('Now the program should start.');
+
+        pasteasy_qrcode = this.files[0].path;
+        __main(storage_path);
+    });
+
+
 
     /**
      Configuration
@@ -817,13 +857,40 @@ function main() {
         Globals.gallery = gallery;
         Globals.init = init;
 
+        /**
+         More Global Function
+         */
+        Globals.toggleSketchBoard = function(){
+            var me = Globals.toggleSketchBoard;
+            if(me.opening){
+                me.opening = false;
+                Util.hideSketchBoardAndSave();
+            }else{
+                me.opening = true;
+                Util.showSketchBoard();
+            }
+        };
+
+        Globals.showSearchBar = function(){
+            Util.showSearchBar();
+            $('.toolbar').hide();
+        };
+
+        Globals.hideSearchBar = function(){
+            Util.hideSearchBar();
+            $('.toolbar').show();
+        };
+
+
 
         // init for qrcode
         init(function() {
-            Util.qrcodeToHref('#qrcode-uploading', gallery.upload_addr)
-                .popUp('#qrcode-uploading', {
-                    type: 'image'
-                });
+            Util.qrPopup('#qrcode-popover', {
+                qrcode: {
+                    'Uploading/Downloading': Util.qrEncode(gallery.upload_addr),
+                    'Pasteasy': pasteasy_qrcode
+                }
+            });
         }, 'qrcode');
 
 
@@ -831,14 +898,13 @@ function main() {
         var latest_search_input = "";
         init(function() {
             Util.onLexiconInput('.search-input', function(value) {
-
                 latest_search_input = value;
                 // the lexicon image searching part
                 Util.googleImageSearch(value, function(err, origin_value, images) {
                     if (origin_value == latest_search_input) {
                         Util.addLexiconResult('.search-content-next', {
                             images: images,
-                            onclick: function(){
+                            onclick: function() {
                                 gallery.push(this.src);
                             }
                         });
@@ -883,6 +949,10 @@ function main() {
 
 
     }
+
+
+
+
 }
 
 if(Util.isDefined('main')){

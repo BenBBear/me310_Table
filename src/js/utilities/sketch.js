@@ -29,8 +29,8 @@
                 image: DataUri,
                 big: DataUri,
                 thumb: DataUri,
-                title: 'Noted For ' + current.title,
-                description: 'Noted For ' + current.description
+                title: 'Note For ' + current.title,
+                description: 'Note For ' + current.description
             });
 
 
