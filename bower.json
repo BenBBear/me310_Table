@@ -28,6 +28,10 @@
     "magnific-popup": "~1.0.0",
     "animate.css": "~3.2.6",
     "Hover": "~2.0.2",
-    "drawingboard.js": "~0.4.4"
+    "drawingboard.js": "~0.4.4",
+    "webui-popover": "~1.1.4",
+    "quojs": "~3.0.7",
+    "draggabilly": "~1.2.3",
+    "hammer-touchemulator": "~0.0.2"
   }
 }

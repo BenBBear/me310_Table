@@ -10,6 +10,7 @@
         arr.forEach(function(str){
             result = result.concat(tokenizer.tokenize(str));
         });
+        result.origin_value = str;
         return result;
     };
 }());

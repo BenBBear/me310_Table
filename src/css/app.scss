@@ -12,6 +12,11 @@ $md:15px;
     padding: $md;
 }
 
+.wrapper-margin-sm{
+    margin:$sm;
+}
+
+
 .relative {
     position: relative;
 }
@@ -132,4 +137,41 @@ $md:15px;
     &:hover{
 
     }
+}
+
+
+img.qrcode{
+    width:10em;
+    height:10em;
+}
+
+
+.floating-btn{
+    color:#fff;
+    display:inline-block;
+    padding:15px;
+}
+
+
+.toolbar{
+    position:absolute;
+    z-index:100;
+    height:1em;
+    width:90%;
+}
+
+.float-right{
+    float:right;
+}
+
+.float-left{
+    float:left;
+}
+
+
+#touch-board{
+    position:absolute;
+    width:100%;
+    height:100%;
+    z-index:-10;
 }

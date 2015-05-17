@@ -12,10 +12,29 @@ TODO in main:
 
 function main() {
 
+
+    // End PlayGround
+    var storage_path;
+    var pasteasy_qrcode;
+
     $("#storage_dir_chooser").trigger('click');
     $("#storage_dir_chooser").change(function(event) {
-        __main(this.files[0].path);
+        alert('Ok, after choosing the Gallery Folder. You have to choose the Pasteasy Qrcode Picture. It should be a screenshot of the pasteasy in the finder');
+
+        storage_path = this.files[0].path;
+        $('#pasteasy_qr_chooser').trigger('click');
     });
+
+
+    $('#pasteasy_qr_chooser').change(function(event) {
+        alert('Now the program should start.' +
+            '\n\nMore Info of This Program Please See:\n\n https://github.com/BenBBear/me310_Table');
+
+        pasteasy_qrcode = this.files[0].path;
+        __main(storage_path);
+    });
+
+
 
     /**
      Configuration
@@ -45,6 +64,8 @@ function main() {
 
         var gallery = new Class.PhotoGallery({
             path: path,
+            show:0,
+            swipe:'enforced',
             ready: function(instance) {
                 init();
             }
@@ -56,45 +77,78 @@ function main() {
         Globals.gallery = gallery;
         Globals.init = init;
 
+        /**
+         More Global Function
+         */
+        Globals.toggleSketchBoard = function() {
+            var me = Globals.toggleSketchBoard;
+            if (me.opening) {
+                me.opening = false;
+                Util.hideSketchBoardAndSave();
+            } else {
+                me.opening = true;
+                Util.showSketchBoard();
+            }
+        };
+
+        Globals.showSearchBar = function() {
+            Util.showSearchBar();
+            $('.toolbar').hide();
+        };
+
+        Globals.hideSearchBar = function() {
+            Util.hideSearchBar();
+            $('.toolbar').show();
+        };
+
+
 
         // init for qrcode
         init(function() {
-            Util.qrcodeToHref('#qrcode-uploading', gallery.upload_addr)
-                .popUp('#qrcode-uploading', {
-                    type: 'image'
-                });
+            Util.qrPopup('#qrcode-popover', {
+                qrcode: {
+                    'Uploading/Downloading': Util.qrEncode(gallery.upload_addr),
+                    'Pasteasy': pasteasy_qrcode
+                }
+            });
         }, 'qrcode');
 
 
         // init for lexicon
+        var latest_search_input = "";
         init(function() {
             Util.onLexiconInput('.search-input', function(value) {
-
+                latest_search_input = value;
                 // the lexicon image searching part
-                Util.googleImageSearch(value, function(err, images) {
-                    Util.addLexiconResult('.search-content-next', {
-                        images: images,
-                        onclick: "Globals.gallery.push(this.src)"
-                    });
+                Util.googleImageSearch(value, function(err, origin_value, images) {
+                    if (origin_value == latest_search_input) {
+                        Util.addLexiconResult('.search-content-next', {
+                            images: images,
+                            onclick: function() {
+                                gallery.push(this.src);
+                            }
+                        });
+                    }
                 });
 
                 // the lexicon related words finding part
-                Util.getRelatedWord(Util.tokenizeAndStem(value), function(err, resultList) {
+                Util.getRelatedWord(Util.tokenizeAndStem(value), function(err, origin_value, resultList) {
                     if (err)
                         throw err;
                     else {
-                        var result_to_display = [];
-                        resultList.forEach(function(r) {
-                            result_to_display = result_to_display.concat(r.slice(0, 10));
-                        });
-                        Util.addLexiconResultForRelatedWord('.search-content-next', {
-                            words: result_to_display,
-                            onclick:function(){
-                                $('.search-input').val(this.innerHTML)
-                                    .trigger('input');
-
-                            }
-                        });
+                        if (origin_value == latest_search_input) {
+                            var result_to_display = [];
+                            resultList.forEach(function(r) {
+                                result_to_display = result_to_display.concat(r.slice(0, 10));
+                            });
+                            Util.addLexiconResultForRelatedWord('.search-content-next', {
+                                words: result_to_display,
+                                onclick: function() {
+                                    $('.search-input').val(this.innerHTML)
+                                        .trigger('input');
+                                }
+                            });
+                        }
                     }
                 });
 
@@ -112,7 +166,17 @@ function main() {
         }, 'sketching');
 
 
+        // You Could not use quojs with galleria
+        // init(function(){
+        //     $$('#touch-board').swipe(function() {
+        //         alert('swipe');
+        //     });
+        // }, 'touch-board');
 
 
     }
+
+
+
+
 }
