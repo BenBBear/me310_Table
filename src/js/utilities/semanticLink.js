@@ -10,8 +10,12 @@
      */
     var thunk_request = thunks.thunkify(request);
     function getRelatedWord(words, cb){
+        var origin_value;
         if(!(words instanceof Array)){
+            origin_value = words;
             words = [words];
+        }else{
+            origin_value = words.origin_value;
         }
 
         var reqList = [];
@@ -32,7 +36,8 @@
                 }));
             });
             // console.log(resultList);
-            cb(null, resultList);
+            debugger;
+            cb(null, origin_value, resultList);
         });
     }
 

@@ -67,34 +67,40 @@ function main() {
 
 
         // init for lexicon
+        var latest_search_input = "";
         init(function() {
             Util.onLexiconInput('.search-input', function(value) {
 
+                latest_search_input = value;
                 // the lexicon image searching part
-                Util.googleImageSearch(value, function(err, images) {
-                    Util.addLexiconResult('.search-content-next', {
-                        images: images,
-                        onclick: "Globals.gallery.push(this.src)"
-                    });
+                Util.googleImageSearch(value, function(err, origin_value, images) {
+                    if (origin_value == latest_search_input) {
+                        Util.addLexiconResult('.search-content-next', {
+                            images: images,
+                            onclick: "alert('clicked');Globals.gallery.push(this.src)"
+                        });
+                    }
                 });
 
                 // the lexicon related words finding part
-                Util.getRelatedWord(Util.tokenizeAndStem(value), function(err, resultList) {
+                Util.getRelatedWord(Util.tokenizeAndStem(value), function(err, origin_value, resultList) {
                     if (err)
                         throw err;
                     else {
-                        var result_to_display = [];
-                        resultList.forEach(function(r) {
-                            result_to_display = result_to_display.concat(r.slice(0, 10));
-                        });
-                        Util.addLexiconResultForRelatedWord('.search-content-next', {
-                            words: result_to_display,
-                            onclick:function(){
-                                $('.search-input').val(this.innerHTML)
-                                    .trigger('input');
+                        if (origin_value == latest_search_input) {
+                            var result_to_display = [];
+                            resultList.forEach(function(r) {
+                                result_to_display = result_to_display.concat(r.slice(0, 10));
+                            });
+                            Util.addLexiconResultForRelatedWord('.search-content-next', {
+                                words: result_to_display,
+                                onclick: function() {
+                                    $('.search-input').val(this.innerHTML)
+                                        .trigger('input');
 
-                            }
-                        });
+                                }
+                            });
+                        }
                     }
                 });
 
