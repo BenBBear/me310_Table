@@ -16,6 +16,13 @@ $md:15px;
     margin:$sm;
 }
 
+.margin-right-sm{
+    margin-right:$sm;
+}
+.margin-left-sm{
+    margin-left:$sm;
+}
+
 
 .relative {
     position: relative;
@@ -51,8 +58,8 @@ $md:15px;
     .cancel {
         color: #fff;
         float: right;
-        margin-top: 0.5em;
-        margin-right: 0.5em;
+        padding-top: 0.5em;
+        padding-right: 0.5em;
     }
 }
 
@@ -150,6 +157,7 @@ img.qrcode{
     color:#fff;
     display:inline-block;
     padding:15px;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 
@@ -174,4 +182,9 @@ img.qrcode{
     width:100%;
     height:100%;
     z-index:-10;
+}
+
+
+body{
+    -webkit-transition: -webkit-transform 0.5s cubic-bezier(0.000, 0.825, 0.695, 1.000);
 }

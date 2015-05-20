@@ -963,6 +963,12 @@ there.
 .wrapper-margin-sm {
   margin: 5px; }
 
+.margin-right-sm {
+  margin-right: 5px; }
+
+.margin-left-sm {
+  margin-left: 5px; }
+
 .relative {
   position: relative; }
 
@@ -991,8 +997,8 @@ there.
   .search-bar .cancel {
     color: #fff;
     float: right;
-    margin-top: 0.5em;
-    margin-right: 0.5em; }
+    padding-top: 0.5em;
+    padding-right: 0.5em; }
 
 .bg-forsted {
   -webkit-filter: blur(2px); }
@@ -1065,7 +1071,8 @@ img.qrcode {
 .floating-btn {
   color: #fff;
   display: inline-block;
-  padding: 15px; }
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.5); }
 
 .toolbar {
   position: absolute;
@@ -1084,3 +1091,6 @@ img.qrcode {
   width: 100%;
   height: 100%;
   z-index: -10; }
+
+body {
+  -webkit-transition: -webkit-transform 0.5s cubic-bezier(0, 0.825, 0.695, 1); }

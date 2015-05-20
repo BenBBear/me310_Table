@@ -31,7 +31,7 @@
                 thumb: DataUri,
                 title: 'Note For ' + current.title,
                 description: 'Note For ' + current.description
-            });
+            }).last();
 
 
             // Util.fetchImages(current.image, DataUri, function(background, note) {
