@@ -464,7 +464,7 @@ Util.qrcodeToHref = function(sel, text){
                 thumb: DataUri,
                 title: 'Note For ' + current.title,
                 description: 'Note For ' + current.description
-            });
+            }).last();
 
 
             // Util.fetchImages(current.image, DataUri, function(background, note) {
@@ -690,6 +690,15 @@ Util.storage = window.localStorage;
                 return this.galleria_instance.getData();
             },
 
+
+            last: function() {
+                var me = this;
+                setTimeout(function() {
+                    var len = me.galleria_instance._data.length;
+                    me.galleria_instance.show(len - 1);
+                }, 1000);
+                return me;
+            },
             push: function(url) {
                 var me = this;
                 if (typeof(url) == 'string')
@@ -830,6 +839,8 @@ function main() {
     */
     function __main(path) {
 
+
+        var applescript = require('applescript');
         var init = function(f) {
             if (f) {
                 init.queue.push(f);
@@ -884,7 +895,26 @@ function main() {
         };
 
 
+        var rotate_hash = {};
+        Globals.rotateScreen = function(){
+            var old = rotate_hash[document.body];
+            if(old){
+                rotate_hash[document.body]+=90;
+                Util.rotate(document.body, old + 90);
+            }
+            else{
+                rotate_hash[document.body] = 90;
+                Util.rotate(document.body, 90);
+            }
+        };
 
+
+
+
+
+        /**
+         Initialization Block
+         */
         // init for qrcode
         init(function() {
             Util.qrPopup('#qrcode-popover', {
@@ -899,7 +929,13 @@ function main() {
         // init for lexicon
         var latest_search_input = "";
         init(function() {
-            Util.onLexiconInput('.search-input', function(value) {
+            var sel_search_input = '.search-input';
+            $(sel_search_input).focus(function(){
+                applescript.execFile('./src/applescript/pressFN.scpt');
+            });
+
+
+            Util.onLexiconInput(sel_search_input, function(value) {
                 latest_search_input = value;
                 // the lexicon image searching part
                 Util.googleImageSearch(value, function(err, origin_value, images) {
@@ -907,7 +943,9 @@ function main() {
                         Util.addLexiconResult('.search-content-next', {
                             images: images,
                             onclick: function() {
-                                gallery.push(this.src);
+                                gallery
+                                    .push(this.src)
+                                    .last();
                             }
                         });
                     }

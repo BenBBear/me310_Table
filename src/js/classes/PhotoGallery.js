@@ -122,6 +122,15 @@
                 return this.galleria_instance.getData();
             },
 
+
+            last: function() {
+                var me = this;
+                setTimeout(function() {
+                    var len = me.galleria_instance._data.length;
+                    me.galleria_instance.show(len - 1);
+                }, 1000);
+                return me;
+            },
             push: function(url) {
                 var me = this;
                 if (typeof(url) == 'string')
