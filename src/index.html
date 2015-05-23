@@ -1,13 +1,12 @@
-<html>
+<html ng-app="me310_Table" ng-controller="AppCtrl">
 
 <head>
     <title>Table Version 2</title>
-    <link href="./lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet" />
-    <!-- <link href="./lib/animate.css/animate.min.css" rel="stylesheet"/> -->
-    <link href="./lib/drawingboard.js/dist/drawingboard.min.css" rel="stylesheet" />
-    <link href="./lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="./lib/webui-popover/dist/jquery.webui-popover.min.css" rel="stylesheet" />
+    <link href="./lib/animate.css/animate.min.css" rel="stylesheet" />
+    <link href="./lib/ionic/css/ionic.min.css" rel="stylesheet" />
+    <link href="./lib/ionicons/css/ionicons.min.css" rel="stylesheet" />
     <link href="./dist/css/app.css" rel="stylesheet" />
+
 
 </head>
 
@@ -15,53 +14,20 @@
     <!-- Hidden Part -->
     <input type="file" id="storage_dir_chooser" style="display:none;" webkitdirectory directory multiple/>
     <input type="file" id="pasteasy_qr_chooser" style="display:none;" accept="image/x-png, image/gif, image/jpeg" />
-    <input type="file" id="choose-pasteasy-input" style="display:none;" />
 
 
-    <div class="relative">
 
-        <div id="touch-board">
-        </div>
 
-        <div class="search-bar">
-            <span><input name="" type="text" value="" class="search-input" /></span>
-            <span class="cancel" onclick="Globals.hideSearchBar()">Cancel</span>
-        </div>
-        <div class="bg-forsted search-content">
-        </div>
-        <div class="search-content-next">
-            <div id="lexicon_images">
-            </div>
-            <div id="lexicon_words">
-            </div>
-        </div>
+    {{OK}}
 
-        <div id="sketching" class="sketching">
-        </div>
-
-        <div class="toolbar">
-            <a class="floating-btn float-right"  id="qrcode-popover"><i class="fa fa-qrcode"></i></a>
-            <a class="floating-btn float-right margin-left-sm margin-right-sm" onclick="Globals.rotateScreen()"  ><i class="fa fa-repeat"></i></a>
-            <a class="floating-btn float-left " style="margin-left:4em;"  onclick="Globals.showSearchBar()"><i class="fa fa-search"></i></a>
-
-            <a class="floating-btn float-right margin-right-sm " onclick="Globals.toggleSketchBoard()"><i class="fa fa-paint-brush"></i></a>
-        </div>
-
-        <div class="galleria">
-        </div>
-
-    </div>
 </body>
 
 <script src="./lib/jquery/dist/jquery.min.js"></script>
-<script src="./lib/other/touch-emu/emulator.js"></script>
-<script>
- TouchEmulator();
-</script>
-<script src="./lib/webui-popover/dist/jquery.webui-popover.min.js"></script>
-<script src="./lib/drawingboard.js/dist/drawingboard.min.js"></script>
-<script src="./lib/other/galleria/galleria-1.4.2.js"></script>
-<script src="./lib/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+<script src="./lib/ionic/js/dist/js/ionic.bundle.js"></script>
+<script src="./lib/other/angular-dragdrop.min.js"></script>
+<script src="./lib/other/imagesloaded.pkgd.min.js"></script>
+<script src="./lib/other/masonry.pkgd.min.js"></script>
+<script src="./lib/other/angular-masonry.min.js"></script>
 <script src="./dist/js/app.js"></script>
 
 </html>

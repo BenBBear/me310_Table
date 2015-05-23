@@ -1094,3 +1094,6 @@ img.qrcode {
 
 body {
   -webkit-transition: -webkit-transform 0.5s cubic-bezier(0, 0.825, 0.695, 1); }
+
+.pointer-events-none {
+  pointer-events: none; }

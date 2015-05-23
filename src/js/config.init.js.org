@@ -10,7 +10,8 @@ var Functions = {
 var Globals = {};
 
 var Library = {
+    Galleria: Galleria,
     QrCode:  require('qrcode-npm'),
     Jquery: $,
-    Angular:angular
+    DrawingBoard: DrawingBoard
 };
