@@ -1,7 +1,10 @@
 <html ng-app="me310_Table" ng-controller="AppCtrl">
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>Table Version 2</title>
+    <link href="./lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="./lib/animate.css/animate.min.css" rel="stylesheet" />
     <link href="./lib/ionic/css/ionic.min.css" rel="stylesheet" />
     <link href="./lib/ionicons/css/ionicons.min.css" rel="stylesheet" />
@@ -16,9 +19,47 @@
     <input type="file" id="pasteasy_qr_chooser" style="display:none;" accept="image/x-png, image/gif, image/jpeg" />
 
 
+    <div class="bar bar-header item-input-inset">
+        <button class="button-clear button margin-right-sm">
+            <i class="fa fa-microphone"></i>
+        </button>
+        <label class="item-input-wrapper">
+            <input type="search" placeholder="What's Your Topic?" ng-model="lexicon_input">
+        </label>
+        <button class="button button-clear">
+            <i class="fa fa-qrcode"></i>
+        </button>
+    </div>
+
+    <ion-content class="margin-top-vvlg">
+        <div ng-if="lexicon_images" class="lexicon">
+
+            <div class="row">
+                <div class="col col-75">
+                    <div masonry>
+                        <div class="masonry-brick" ng-repeat="image in lexicon_images track by $index">
+                            <img ng-src="{{image}}" class="image-item" alt="No Images Here" ng-click="lexicon.index($index);openImageModal(lexicon.current)">
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <ul class="list lexicon-words">
+                        <li class="item" ng-repeat="word in lexicon_words" ng-click="setLexiconInput(word)">
+                            {{word}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
 
-    {{OK}}
+        <div masonry>
+            <div class="masonry-brick" ng-repeat="image in main_gallery track by $index">
+                <img ng-src="{{image}}" class="image-item" alt="No Images Here" ng-click="gallery.index($index);openImageModal(gallery.current)" >
+            </div>
+        </div>
+    </ion-content>
+
 
 </body>
 
@@ -29,5 +70,14 @@
 <script src="./lib/other/masonry.pkgd.min.js"></script>
 <script src="./lib/other/angular-masonry.min.js"></script>
 <script src="./dist/js/app.js"></script>
+
+
+<script id="image-modal.html" type="text/ng-template">
+    <div class="modal image-modal" ng-click="closeImageModal();">
+
+        <img alt="No Image Here" class="image-modal-main" ng-src="{{image_modal_src}}" ng-click="$event.stopPropagation();"  />
+        <!--  detect swipe on this element  -->
+    </div>
+</script>
 
 </html>

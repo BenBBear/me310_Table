@@ -1,7 +1,8 @@
-@import "./lib/normalize.scss";
-@import "./lib/skeleton.scss";
-@import "./gallery.scss";
-@import "./popup.scss";
+/* @import "./lib/normalize.scss"; */
+/* @import "./lib/skeleton.scss"; */
+/* @import "./gallery.scss"; */
+/* @import "./popup.scss"; */
+
 $sm:5px;
 $md:15px;
 .wrapper-sm {
@@ -12,17 +13,21 @@ $md:15px;
     padding: $md;
 }
 
-.wrapper-margin-sm{
-    margin:$sm;
+.wrapper-margin-sm {
+    margin: $sm;
 }
 
-.margin-right-sm{
-    margin-right:$sm;
-}
-.margin-left-sm{
-    margin-left:$sm;
+.margin-right-sm {
+    margin-right: $sm;
 }
 
+.margin-left-sm {
+    margin-left: $sm;
+}
+
+.margin-top-vvlg {
+    margin-top: 3em;
+}
 
 .relative {
     position: relative;
@@ -94,10 +99,7 @@ $md:15px;
     float: left;
     max-width: 8em;
     max-height: 8em;
-
-    &:hover{
-
-    }
+    &:hover {}
 }
 
 .search-content-next {
@@ -107,25 +109,23 @@ $md:15px;
     height: 100%;
     box-sizing: border-box;
     padding: 3em;
-
-    #lexicon_images{
-        height:50%;
-        overflow-y:scroll;
-        border-bottom: 3px solid rgba(130,130,130,0.3);
+    #lexicon_images {
+        height: 50%;
+        overflow-y: scroll;
+        border-bottom: 3px solid rgba(130, 130, 130, 0.3);
     }
-    #lexicon_words{
-        height:50%;
-        overflow-y:scroll;
+    #lexicon_words {
+        height: 50%;
+        overflow-y: scroll;
     }
 }
 
-.sketching{
-    position:absolute;
-    z-index:3;
-    width:100%;
-    height:100%;
+.sketching {
+    position: absolute;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
 }
-
 
 .lexicon-result-word {
     margin: 1em;
@@ -139,57 +139,79 @@ $md:15px;
     float: left;
     max-width: 8em;
     max-height: 8em;
-    padding:0.3em 0.1em 0.3em 0.1em;
-
-    &:hover{
-
-    }
+    padding: 0.3em 0.1em 0.3em 0.1em;
+    &:hover {}
 }
 
-
-img.qrcode{
-    width:10em;
-    height:10em;
+img.qrcode {
+    width: 10em;
+    height: 10em;
 }
 
-
-.floating-btn{
-    color:#fff;
-    display:inline-block;
-    padding:15px;
+.floating-btn {
+    color: #fff;
+    display: inline-block;
+    padding: 15px;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-
-.toolbar{
-    position:absolute;
-    z-index:100;
-    height:1em;
-    width:90%;
+.toolbar {
+    position: absolute;
+    z-index: 100;
+    height: 1em;
+    width: 90%;
 }
 
-.float-right{
-    float:right;
+.float-right {
+    float: right;
 }
 
-.float-left{
-    float:left;
+.float-left {
+    float: left;
 }
 
-
-#touch-board{
-    position:absolute;
-    width:100%;
-    height:100%;
-    z-index:-10;
+#touch-board {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
 }
 
-
-body{
+body {
     -webkit-transition: -webkit-transform 0.5s cubic-bezier(0.000, 0.825, 0.695, 1.000);
 }
 
-
-.pointer-events-none{
+.pointer-events-none {
     pointer-events: none
+}
+
+.image-item {
+    width: 8em;
+    height: 10em;
+    margin: 1em;
+    border-radius: 5px;
+    -webkit-box-shadow: 6px 6px 35px -10px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 6px 6px 35px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 6px 6px 35px -10px rgba(0, 0, 0, 0.75);
+}
+
+.image-modal{
+    background-color:rgba(17, 26, 24, 0.7) !important;
+    text-align:center;
+}
+
+.image-modal-main{
+    max-width:40em;
+    max-height:40em;
+    margin-top:10%;
+}
+
+.lexicon{
+    border-bottom:1px solid #ddd;
+    margin-bottom:2em;
+}
+
+
+.lexicon-words{
+
 }

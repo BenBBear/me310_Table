@@ -2,7 +2,9 @@ var Util = {}; // utility
 var Node = {}; // Node Modules
 var Class = {}; // Classes
 var Constant = {
-    GoogleImagePageNumber:4
+    GoogleImagePageNumber:1,
+    GoogleImageNumberPerPage:8,
+    DEBUG_UI:false
 }; // Constant
 var Settings = {};
 var Functions = {
@@ -151,6 +153,7 @@ Util.createSharingServer = Util.require('sharing_server');
         for (var i = 0; i < query.page; i++) {
             query_list.push({
                 for: query.for,
+                rsz:query.rsz,
                 page: i
             });
         }
@@ -158,7 +161,7 @@ Util.createSharingServer = Util.require('sharing_server');
         var thunk_request = thunks.thunkify(request);
 
         var thunks_search_list = query_list.map(function(q) {
-            return thunk_request("https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + (q.for.replace(/\s/g, '+')) + "&start=" + q.page);
+            return thunk_request("https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + (q.for.replace(/\s/g, '+')) + "&start=" + q.page + '&rsz='+ q.rsz);
         });
 
         thunks.all(thunks_search_list)(function(err, res, body) {
@@ -901,7 +904,11 @@ function main() {
     var SetUpScopeVariable = function($scope) {
         //**********//
         $scope.lexicon_input = "";
-        $scope.main_gallery = ['img/bear.jpg']; //a array of images
+        $scope.setLexiconInput = function(x){
+            $scope.lexicon_input = x;
+        };
+
+        $scope.main_gallery = ['assets/images/bear.jpg']; //a array of images
         $scope.main_gallery_cursor = 0;
         $scope.gallery = {
             index: function(x) {
@@ -955,91 +962,116 @@ function main() {
     };
 
 
+    if (!Constant.DEBUG_UI) {
+        app.controller('AppCtrl', function($scope, storage_path, pasteasy_qrcode, $ionicModal) {
+            // Every Thing Goes Here
+            storage_path.then(function(storage_path) {
+                pasteasy_qrcode.then(function(pasteasy_qrcode) {
 
-    app.controller('AppCtrl', function($scope, storage_path, pasteasy_qrcode) {
-        // Every Thing Goes Here
-        storage_path.then(function(storage_path) {
-            pasteasy_qrcode.then(function(pasteasy_qrcode) {
+                    // setup $scope variables
+                    SetUpScopeVariable($scope);
 
-                // setup $scope variables
-                SetUpScopeVariable($scope);
+                    /**
+                     lexicon_input
+                     main_gallery
+                     lexicon_images
+                     lexicon_words
+                     */
+                    // setup the dirwatcher
+                    var dir_watcher = new Class.DirWatcher(storage_path, function(path, stat) {
+                        if (Util.isImage(path))
+                            $scope.main_gallery.push(path);
+                    });
 
-                /**
-                 lexicon_input
-                 main_gallery
-                 lexicon_images
-                 lexicon_words
-                 */
-                // setup the dirwatcher
-                var dir_watcher = new Class.DirWatcher(storage_path, function(path, stat) {
-                    if (Util.isImage(path))
-                        $scope.main_gallery.push(path);
-                });
-
-                // start the server
-                var sharing_server = Util.createSharingServer({
-                    Util: Util,
-                    port: 3000,
-                    path: storage_path
-                });
-
-
-                dir_watcher.start();
-                sharing_server.start();
+                    // start the server
+                    var sharing_server = Util.createSharingServer({
+                        Util: Util,
+                        port: 3000,
+                        path: storage_path
+                    });
 
 
-                // Watching the lexicon_input
-                var latest_search_input;
-                $scope.$watch('lexicon_input', function(nv, ov) {
-                    if (nv) {
-                        latest_search_input = nv;
-                        Util.getRelatedWord(Util.tokenizeAndStem(nv), function(err, origin_value, resultList) {
-                            if (err)
-                                throw err;
-                            else {
-                                if (origin_value == latest_search_input) {
-                                    var result_to_display = [];
-                                    resultList.forEach(function(r) {
-                                        result_to_display = result_to_display.concat(r.slice(0, 10));
-                                    });
-                                    $scope.lexicon_words = result_to_display;
+                    dir_watcher.start();
+                    sharing_server.start();
+
+
+                    // Watching the lexicon_input
+                    var latest_search_input;
+                    $scope.$watch('lexicon_input', function(nv, ov) {
+                        if (nv) {
+                            latest_search_input = nv;
+                            Util.getRelatedWord(Util.tokenizeAndStem(nv), function(err, origin_value, resultList) {
+                                if (err)
+                                    throw err;
+                                else {
+                                    if (origin_value == latest_search_input) {
+                                        var result_to_display = [];
+                                        resultList.forEach(function(r) {
+                                            result_to_display = result_to_display.concat(r.slice(0, 10));
+                                        });
+                                        $scope.lexicon_words = result_to_display.slice(0, 10);
+                                        if(!$scope.$$phase) {
+                                            $scope.$apply();
+                                        }
+                                    }
                                 }
-                            }
-                        });
+                            });
 
-                        Util.googleImageSearch({
-                            for: nv,
-                            page: Constant.GoogleImagePageNumber
-                        }, function(err, origin_value, images) {
-                            if (err) {
-                                throw err;
-                            } else {
-                                if (origin_value == latest_search_input) {
-                                    $scope.lexicon_images = images;
-                                    console.log(images);
+                            Util.googleImageSearch({
+                                for: nv,
+                                page: Constant.GoogleImagePageNumber,
+                                rsz: Constant.GoogleImageNumberPerPage
+                            }, function(err, origin_value, images) {
+                                if (err) {
+                                    throw err;
+                                } else {
+                                    if (origin_value == latest_search_input) {
+                                        $scope.lexicon_images = images.map(function(img) {
+                                            return img.url;
+                                        });
+                                        $scope.$apply();
+                                    }
                                 }
-                            }
-                        });
-                    }
+                            });
+                        } else {
+                            $scope.lexicon_images = [];
+                            $scope.lexicon_images_cursor = 0;
+                            $scope.lexicon_words = 0;
+                        }
+                    });
+                    $scope.openImageModal = function(src) {
+                        $scope.image_modal_src = src;
+
+                        $scope.openImageModal.modal.show();
+                    };
+                    $scope.closeImageModal = function() {
+                        $scope.openImageModal.modal.hide();
+                    };
+                    $ionicModal.fromTemplateUrl('image-modal.html', function(modal) {
+                        $scope.openImageModal.modal = modal;
+                    }, {
+                        scope: $scope,
+                        animation: 'slide-in-up'
+                    });
+
+
+
+
+                    // END
+                    message.startUp();
                 });
-
-
-                // For Testing
-                $scope.lexicon_input = 'office';
-
-
-                // END
-                message.startUp();
             });
         });
-    });
 
-    app.run(function(){
-        Globals.app_scope = angular.element(document.body).scope();
-    });
+        app.run(function() {
+            Globals.app_scope = angular.element(document.body).scope();
+        });
+    } else {
 
-
-
+        app.controller('AppCtrl', function($scope) {});
+    }
+    // should give up browser webkit recognition
+    // use google speech api module (node-speakable) is a way to go
 }());
 
 if(Util.isDefined('main')){
