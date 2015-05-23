@@ -1,7 +1,9 @@
 var Util = {}; // utility
 var Node = {}; // Node Modules
 var Class = {}; // Classes
-var Constant = {}; // Constant
+var Constant = {
+    GoogleImagePageNumber:4
+}; // Constant
 var Settings = {};
 var Functions = {
     Debug: {}
