@@ -22,7 +22,9 @@ function main() {
 (function() {
     var nop = function() {};
 
-    var app = Globals.app = angular.module('me310_Table', ['ionic', 'wu.masonry', 'ngDragDrop']);
+    var app = Globals.app = angular.module('me310_Table', ['ionic',
+                                                           'wu.masonry',
+                                                           'ngDraggable']);
 
     var message = {};
     message.startUp = function() {
@@ -71,10 +73,10 @@ function main() {
         return deferred.promise;
     });
 
-    var SetUpScopeVariable = function($scope) {
+    var SetUpGallery = function($scope) {
         //**********//
         $scope.lexicon_input = "";
-        $scope.setLexiconInput = function(x){
+        $scope.setLexiconInput = function(x) {
             $scope.lexicon_input = x;
         };
 
@@ -133,13 +135,14 @@ function main() {
 
 
     if (!Constant.DEBUG_UI) {
-        app.controller('AppCtrl', function($scope, storage_path, pasteasy_qrcode, $ionicModal) {
+        app.controller('AppCtrl',
+                       function($scope, storage_path, pasteasy_qrcode, $ionicModal, $ionicPopover) {
             // Every Thing Goes Here
             storage_path.then(function(storage_path) {
                 pasteasy_qrcode.then(function(pasteasy_qrcode) {
 
                     // setup $scope variables
-                    SetUpScopeVariable($scope);
+                    SetUpGallery($scope);
 
                     /**
                      lexicon_input
@@ -168,8 +171,8 @@ function main() {
                     // Watching the lexicon_input
                     var latest_search_input;
                     $scope.$watch('lexicon_input', function(nv, ov) {
+                        latest_search_input = nv;
                         if (nv) {
-                            latest_search_input = nv;
                             Util.getRelatedWord(Util.tokenizeAndStem(nv), function(err, origin_value, resultList) {
                                 if (err)
                                     throw err;
@@ -180,7 +183,7 @@ function main() {
                                             result_to_display = result_to_display.concat(r.slice(0, 10));
                                         });
                                         $scope.lexicon_words = result_to_display.slice(0, 10);
-                                        if(!$scope.$$phase) {
+                                        if (!$scope.$$phase) {
                                             $scope.$apply();
                                         }
                                     }
@@ -209,6 +212,8 @@ function main() {
                             $scope.lexicon_words = 0;
                         }
                     });
+
+                    // Image Modal
                     $scope.openImageModal = function(src) {
                         $scope.image_modal_src = src;
 
@@ -225,6 +230,20 @@ function main() {
                     });
 
 
+                    // Qrcode Popover
+                    $scope.openQrPopover = function($event) {
+                        $scope.openQrPopover.popover.show($event);
+                    };
+                    $scope.closeQrPopover = function(){
+                        $scope.openQrPopover.popover.hide();
+                    };
+                    $ionicPopover.fromTemplateUrl('qrcode-popover.html', {
+                        scope: $scope
+                    }).then(function(popover) {
+                        $scope.openQrPopover.popover = popover;
+                    });
+                    $scope.pasteasy_qrcode = pasteasy_qrcode;
+                    $scope.server_qrcode = Util.qrEncode(sharing_server.upload_addr);
 
 
                     // END
@@ -233,9 +252,6 @@ function main() {
             });
         });
 
-        app.run(function() {
-            Globals.app_scope = angular.element(document.body).scope();
-        });
     } else {
 
         app.controller('AppCtrl', function($scope) {});

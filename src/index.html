@@ -6,7 +6,7 @@
     <title>Table Version 2</title>
     <link href="./lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="./lib/animate.css/animate.min.css" rel="stylesheet" />
-    <link href="./lib/ionic/css/ionic.min.css" rel="stylesheet" />
+    <link href="./lib/ionic/release/css/ionic.min.css" rel="stylesheet" />
     <link href="./lib/ionicons/css/ionicons.min.css" rel="stylesheet" />
     <link href="./dist/css/app.css" rel="stylesheet" />
 
@@ -26,13 +26,13 @@
         <label class="item-input-wrapper">
             <input type="search" placeholder="What's Your Topic?" ng-model="lexicon_input">
         </label>
-        <button class="button button-clear">
+        <button class="button button-clear" ng-click="openQrPopover($event)">
             <i class="fa fa-qrcode"></i>
         </button>
     </div>
 
     <ion-content class="margin-top-vvlg">
-        <div ng-if="lexicon_images" class="lexicon">
+        <div ng-if="lexicon_images.length > 0" class="lexicon">
 
             <div class="row">
                 <div class="col col-75">
@@ -55,7 +55,7 @@
 
         <div masonry>
             <div class="masonry-brick" ng-repeat="image in main_gallery track by $index">
-                <img ng-src="{{image}}" class="image-item" alt="No Images Here" ng-click="gallery.index($index);openImageModal(gallery.current)" >
+                <img ng-src="{{image}}" class="image-item" alt="No Images Here" ng-click="gallery.index($index);openImageModal(gallery.current)">
             </div>
         </div>
     </ion-content>
@@ -64,8 +64,8 @@
 </body>
 
 <script src="./lib/jquery/dist/jquery.min.js"></script>
-<script src="./lib/ionic/js/dist/js/ionic.bundle.js"></script>
-<script src="./lib/other/angular-dragdrop.min.js"></script>
+<script src="./lib/ionic/release/js/ionic.bundle.js"></script>
+<script src="./lib/ngDraggable/ngDraggable.js"></script>
 <script src="./lib/other/imagesloaded.pkgd.min.js"></script>
 <script src="./lib/other/masonry.pkgd.min.js"></script>
 <script src="./lib/other/angular-masonry.min.js"></script>
@@ -75,9 +75,40 @@
 <script id="image-modal.html" type="text/ng-template">
     <div class="modal image-modal" ng-click="closeImageModal();">
 
-        <img alt="No Image Here" class="image-modal-main" ng-src="{{image_modal_src}}" ng-click="$event.stopPropagation();"  />
+        <img alt="No Image Here" class="image-modal-main" ng-src="{{image_modal_src}}" ng-click="$event.stopPropagation();" />
         <!--  detect swipe on this element  -->
     </div>
+</script>
+
+<script id="qrcode-popover.html" type="text/ng-template">
+    <ion-popover-view class="qrcode-popover">
+        <ion-header-bar class="bar-stable">
+            <h1 class="title">Qr Code</h1>
+        </ion-header-bar>
+        <ion-content>
+            <div class="list card">
+
+                <div class="item item-image">
+                    <img class="qrcode" ng-src="{{pasteasy_qrcode}}">
+                </div>
+
+                <a class="item item-icon-left positive" href="#">
+                    <i class="icon ion-network"></i> Sharing
+                </a>
+            </div>
+
+            <div class="list card">
+
+                <div class="item item-image">
+                    <img class="qrcode" ng-src="{{server_qrcode}}">
+                </div>
+
+                <a class="item item-icon-left positive" href="#">
+                    <i class="icon ion-code-download"></i> Server
+                </a>
+            </div>
+        </ion-content>
+    </ion-popover-view>
 </script>
 
 </html>

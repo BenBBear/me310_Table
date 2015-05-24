@@ -144,8 +144,8 @@ $md:15px;
 }
 
 img.qrcode {
-    width: 10em;
-    height: 10em;
+    width: 10em !important;
+    height: 10em !important;
 }
 
 .floating-btn {
@@ -214,4 +214,8 @@ body {
 
 .lexicon-words{
 
+}
+
+.qrcode-popover{
+    height:80%;
 }

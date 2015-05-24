@@ -116,8 +116,8 @@
   padding: 0.3em 0.1em 0.3em 0.1em; }
 
 img.qrcode {
-  width: 10em;
-  height: 10em; }
+  width: 10em !important;
+  height: 10em !important; }
 
 .floating-btn {
   color: #fff;
@@ -171,3 +171,5 @@ body {
   border-bottom: 1px solid #ddd;
   margin-bottom: 2em; }
 
+.qrcode-popover {
+  height: 80%; }
