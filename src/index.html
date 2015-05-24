@@ -32,7 +32,7 @@
     </div>
 
     <ion-content class="margin-top-vvlg">
-        <div ng-if="lexicon_words.length > 0 || lexicon_images.length > 0"
+        <div ng-if="lexicon_words.length > 0 || lexicon_images.length > 0 "
              class="lexicon"
              ng-drop="true" ng-drop-success="imageDropTo($data, lexicon_images, true)">
 
@@ -56,11 +56,18 @@
                     </ul>
                 </div>
             </div>
-
-            <div ng-if="get('dragging_from_gallery')" class="dropping-zone" >
+            <div  ng-if="get('dragging_from_gallery')" class="dropping-zone" > <!-- ng-if="get('dragging_from_gallery')" -->
                 Drop Here To Remove
             </div>
         </div>
+
+        <div ng-drop="true" ng-if="!(lexicon_words.length > 0 || lexicon_images.length > 0 )"   ng-drop-success="imageDropTo($data, lexicon_images, true)"  ng-class="{lexicon:get('dragging_from_gallery')}"  >
+            <div ng-class="{transparent:!get('dragging_from_gallery')}" class="dropping-zone" style="padding:0px;height:4em;" > <!-- ng-if="get('dragging_from_gallery')" -->
+                <br>
+                Drop Here To Remove
+            </div>
+        </div>
+
 
         <div ng-drop="true" ng-drop-success="imageDropTo($data, main_gallery)">
             <div ng-if="get('dragging_from_lexicon')" class="dropping-zone">

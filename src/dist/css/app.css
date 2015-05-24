@@ -198,3 +198,9 @@ body {
   border: 3px dotted #666;
   padding: 1em;
   margin: 1em; }
+
+.transparent {
+  opacity: 0; }
+
+.border-none {
+  border: none; }
