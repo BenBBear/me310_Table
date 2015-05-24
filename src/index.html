@@ -38,7 +38,9 @@
                 <div class="col col-75">
                     <div masonry>
                         <div class="masonry-brick" ng-repeat="image in lexicon_images track by $index">
-                            <img ng-src="{{image}}" class="image-item" alt="No Images Here" ng-click="lexicon.index($index);openImageModal(lexicon.current)">
+                            <div ng-drag="true">
+                                <img ng-src="{{image}}" class="image-item" alt="No Images Here" ng-click="lexicon.index($index);openImageModal(lexicon.current)">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -55,8 +57,14 @@
 
         <div masonry>
             <div class="masonry-brick" ng-repeat="image in main_gallery track by $index">
-                <img ng-src="{{image}}" class="image-item" alt="No Images Here" ng-click="gallery.index($index);openImageModal(gallery.current)">
+                <div ng-drag="true"  ng-drag-data="image" >
+                    <div ng-drop="true"   ng-drop-success="imageDrop(main_gallery,$data,$event)">
+                        <img ng-src="{{image}}" class="image-item" alt="No Images Here" ng-click="gallery.index($index);openImageModal(gallery.current)">
+                    </div>
+                </div>
+
             </div>
+
         </div>
     </ion-content>
 

@@ -246,6 +246,15 @@ function main() {
                     $scope.server_qrcode = Util.qrEncode(sharing_server.upload_addr);
 
 
+                    // Drag And Drop
+                    $scope.imageDrop = function(images, $data,$event){
+                        console.log('from:',$data);
+                        console.log('to:',$event.event.target.src);
+                    };
+
+
+
+
                     // END
                     message.startUp();
                 });
