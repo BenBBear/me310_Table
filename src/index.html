@@ -20,8 +20,8 @@
 
 
     <div class="bar bar-header item-input-inset">
-        <button class="button-clear button margin-right-sm">
-            <i class="fa fa-microphone"></i>
+        <button class="button-clear button margin-right-sm" ng-click="rotate()">
+            <i class="fa fa-repeat"></i>
         </button>
         <label class="item-input-wrapper">
             <input type="search" placeholder="What's Your Topic?" ng-model="lexicon_input">
@@ -32,14 +32,18 @@
     </div>
 
     <ion-content class="margin-top-vvlg">
-        <div ng-if="lexicon_images.length > 0" class="lexicon">
+        <div ng-if="lexicon_words.length > 0 || lexicon_images.length > 0"
+             class="lexicon"
+             ng-drop="true" ng-drop-success="imageDropTo($data, lexicon_images, true)">
 
             <div class="row">
                 <div class="col col-75">
-                    <div masonry>
-                        <div class="masonry-brick" ng-repeat="image in lexicon_images track by $index">
-                            <div ng-drag="true">
-                                <img ng-src="{{image}}" class="image-item" alt="No Images Here" ng-click="lexicon.index($index);openImageModal(lexicon.current)">
+                    <div>
+                        <div masonry>
+                            <div class="masonry-brick" ng-repeat="image in lexicon_images track by $index">
+                                <div ng-drag="true" ng-drag-start="imageDragstart()" ng-drag-data="{index:$index,image:image,from:lexicon_images, to:main_gallery}">
+                                    <img ng-src="{{image}}" class="image-item" alt="No Images Here" ng-click="lexicon.index($index);openImageModal(lexicon.current)">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -52,16 +56,24 @@
                     </ul>
                 </div>
             </div>
+
+            <div ng-if="get('dragging_from_gallery')" class="dropping-zone" >
+                Drop Here To Remove
+            </div>
         </div>
 
+        <div ng-drop="true" ng-drop-success="imageDropTo($data, main_gallery)">
+            <div ng-if="get('dragging_from_lexicon')" class="dropping-zone">
+                Drop Here To Save
+            </div>
 
-        <div masonry>
-            <div class="masonry-brick" ng-repeat="image in main_gallery track by $index">
-                <div ng-drag="true"  ng-drag-data="image" >
-                    <div ng-drop="true"   ng-drop-success="imageDrop(main_gallery,$data,$event)">
-                        <img ng-src="{{image}}" class="image-item" alt="No Images Here" ng-click="gallery.index($index);openImageModal(gallery.current)">
-                    </div>
-                </div>
+            <div style="display:inline-block" ng-repeat="image in main_gallery track by $index"
+                 ng-drag="true"
+                 class="image-item-container"
+                 ng-drag-data="{image:image,from:main_gallery,to:lexicon_images}">
+
+                <img  ng-src="{{image}}" class="image-item" alt="No Images Here"
+                      ng-click="gallery.index($index);openImageModal(gallery.current)" >
 
             </div>
 

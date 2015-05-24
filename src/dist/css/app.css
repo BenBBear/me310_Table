@@ -158,6 +158,17 @@ body {
   -moz-box-shadow: 6px 6px 35px -10px rgba(0, 0, 0, 0.75);
   box-shadow: 6px 6px 35px -10px rgba(0, 0, 0, 0.75); }
 
+.image-item-container.ng-enter, .image-item-container.ng-move {
+  /* -webkit-transition: 1s linear all; /\* Chrome *\/ */
+  /* transition: 1s linear all; */
+  /* opacity: 0; */
+  -webkit-animation: bounceIn 0.5s;
+  animation: bounceIn 0.5s; }
+
+/* .image-item-container.ng-enter.ng-enter-active, */
+/* .image-item-container.ng-move.ng-move-active { */
+/*   opacity:1; */
+/* } */
 .image-modal {
   background-color: rgba(17, 26, 24, 0.7) !important;
   text-align: center; }
@@ -181,3 +192,9 @@ body {
   left: auto;
   width: 100%;
   height: 100%; }
+
+.dropping-zone {
+  text-align: center;
+  border: 3px dotted #666;
+  padding: 1em;
+  margin: 1em; }
