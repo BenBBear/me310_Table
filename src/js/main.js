@@ -28,9 +28,11 @@ function main() {
     };
 
 
+
+
     var app = Globals.app = angular.module('me310_Table', ['ionic',
-        'wu.masonry',
-        'ngDraggable'
+        'wu.masonry', 'toaster'
+        // 'ngDraggable'
     ]);
 
     var message = {};
@@ -41,6 +43,19 @@ function main() {
 
 
 
+    app.directive('errRemove', function() {
+        return {
+            scope:{
+                source:'='
+            },
+
+            controller: function($scope, $element, $attrs) {
+                $element.bind('error', function() {
+                    $scope.source.remove($attrs.src);
+                });
+            }
+        };
+    });
     app.factory('storage_path', function($q) {
         var me = this;
         var deferred = $q.defer();
@@ -143,7 +158,7 @@ function main() {
 
     if (!Constant.DEBUG_UI) {
         app.controller('AppCtrl',
-                       function($scope, $log, storage_path, pasteasy_qrcode, $ionicModal, $ionicPopover,$timeout) {
+                       function($scope, $log, storage_path, pasteasy_qrcode, $ionicModal, $ionicPopover, $timeout, toaster,$window) {
 
                 // Every Thing Goes Here
                 storage_path.then(function(storage_path) {
@@ -271,13 +286,16 @@ function main() {
                                     return;
                                 } else if ($data.to == where) {
                                     // data.index;
-                                    $data.index = $data.from.indexOf($data.image);
-                                    if (!deleted) {
-                                        var img = $data.from[$data.index];
-                                        $data.to.unshift(img);
+                                    // $data.index = $data.from.indexOf($data.image);
+                                    if ($data.image != 'assets/images/bear.jpg') {
+                                        if (!deleted) {
+                                            var img = $data.from[$data.index];
+                                            $data.to.unshift(img);
+                                        }
+                                        $data.from.splice($data.index, 1);
+
+                                        $log.info('Drag Drop Successfully');
                                     }
-                                    $data.from.splice($data.index, 1);
-                                    $log.info('Drag Drop Successfully');
                                 }
                             }
                         };
@@ -308,10 +326,54 @@ function main() {
                         //rotate
                         var rotate_hash = {};
                         $scope.rotate = function() {
-
+                            var old = rotate_hash[document.body];
+                            if (old) {
+                                rotate_hash[document.body] += 90;
+                                Util.rotate(document.body, old + 90);
+                            } else {
+                                rotate_hash[document.body] = 90;
+                                Util.rotate(document.body, 90);
+                            }
                         };
 
 
+                        $scope.addToGallery = function(image_modal_src) {
+                            if ($scope.main_gallery.indexOf(image_modal_src) == -1) {
+                                $scope.main_gallery.unshift(image_modal_src);
+                                toaster.pop('success', "Well Done", "The Image Has Been Saved");
+
+                            }
+                            return;
+                        };
+
+                        $ionicModal.fromTemplateUrl('handwriting-modal.html', function(modal) {
+                            $scope.startWriting.modal = modal;
+                        }, {
+                            scope: $scope,
+                            animation: 'slide-in-up'
+                        });
+
+                        $scope.startWriting = function(){
+                            // $scope.startWriting.modal.show();
+                            $scope.writing = true;
+                        };
+                        $scope.stopWriting = function(){
+                            // $scope.startWriting.modal.hide();
+                            $scope.writing = false;
+                        };
+
+
+                        function receiveMessage(e) {
+                            console.log(e.data);
+                            if(e.data == "please close me!!$$**"){
+                                $scope.stopWriting();
+                            }else{
+                                $scope.lexicon_input = e.data;
+                            }
+                            $apply($scope);
+                          }
+
+                        $window.addEventListener('message', receiveMessage);
                         // END
                         message.startUp();
                     });

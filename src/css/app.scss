@@ -186,8 +186,8 @@ body {
 }
 
 .image-item {
-    width: 8em;
-    height: 10em;
+    max-width: 8em;
+    max-height: 10em;
     margin: 1em;
     border-radius: 5px;
     -webkit-box-shadow: 6px 6px 35px -10px rgba(0, 0, 0, 0.75);
@@ -260,3 +260,24 @@ body {
 .border-none{
     border:none;
 };
+
+
+.container{
+    width:40em;
+    height:40em;
+    display:inline-block;
+}
+
+
+.wrapper{
+    text-align:center;
+}
+
+.position-inherit{
+    position:inherit !important;
+}
+
+.writing-board{
+    width:100%;
+    height:20em;
+}
