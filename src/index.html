@@ -1,13 +1,16 @@
-<html>
+<html ng-app="me310_Table" ng-controller="AppCtrl">
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>Table Version 2</title>
-    <link href="./lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet" />
-    <!-- <link href="./lib/animate.css/animate.min.css" rel="stylesheet"/> -->
-    <link href="./lib/drawingboard.js/dist/drawingboard.min.css" rel="stylesheet" />
     <link href="./lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="./lib/webui-popover/dist/jquery.webui-popover.min.css" rel="stylesheet" />
+    <link href="./lib/animate.css/animate.min.css" rel="stylesheet" />
+    <link href="./lib/ionic/release/css/ionic.min.css" rel="stylesheet" />
+    <link href="./lib/ionicons/css/ionicons.min.css" rel="stylesheet" />
+    <link href="./lib/other/toaster.min.css" rel="stylesheet" />
     <link href="./dist/css/app.css" rel="stylesheet" />
+
 
 </head>
 
@@ -15,53 +18,128 @@
     <!-- Hidden Part -->
     <input type="file" id="storage_dir_chooser" style="display:none;" webkitdirectory directory multiple/>
     <input type="file" id="pasteasy_qr_chooser" style="display:none;" accept="image/x-png, image/gif, image/jpeg" />
-    <input type="file" id="choose-pasteasy-input" style="display:none;" />
-
-
-    <div class="relative">
-
-        <div id="touch-board">
-        </div>
-
-        <div class="search-bar">
-            <span><input name="" type="text" value="" class="search-input" /></span>
-            <span class="cancel" onclick="Globals.hideSearchBar()">Cancel</span>
-        </div>
-        <div class="bg-forsted search-content">
-        </div>
-        <div class="search-content-next">
-            <div id="lexicon_images">
+    <div class="wrapper">
+        <div class="container">
+            <div class="bar bar-header item-input-inset">
+                <button class="button-clear button margin-right-sm" ng-click="rotate()">
+                    <i class="fa fa-repeat"></i>
+                </button>
+                <label class="item-input-wrapper">
+                    <input type="search" placeholder="What's Your Topic?" ng-model="lexicon_input" ng-focus="startWriting()"  >
+                </label>
+                <button class="button button-clear" ng-click="openQrPopover($event)">
+                    <i class="fa fa-qrcode"></i>
+                </button>
             </div>
-            <div id="lexicon_words">
-            </div>
+
+            <ion-content class="main-gallery margin-top-vvlg position-inherit">
+                <iframe ng-if="writing" class="writing-board"   ng-src="./html/myscript/sample/text/rest/index.html" ></iframe>
+
+                <div ng-if="lexicon_words.length > 0 || lexicon_images.length > 0 " class="lexicon" ng-drop="true" ng-drop-success="imageDropTo($data, lexicon_images, true)">
+
+                    <div class="row">
+                        <div class="col col-75">
+                            <div>
+                                <div masonry>
+                                    <div class="masonry-brick" ng-repeat="image in lexicon_images track by $index">
+                                        <div ng-drag="true" ng-drag-start="imageDragstart()" ng-drag-data="{index:$index,image:image,from:lexicon_images, to:main_gallery}">
+                                            <img err-remove source="lexicon_images"   ng-src="{{image}}" class="image-item" alt="No Images Here" ng-click="lexicon.index($index);openImageModal(lexicon.current)">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <ul class="list lexicon-words">
+                                <li class="item" ng-repeat="word in lexicon_words" ng-click="setLexiconInput(word)">
+                                    {{word}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div ng-if="get('dragging_from_gallery')" class="dropping-zone">
+                        Drop Here To Remove
+                    </div>
+                </div>
+
+                <div ng-if="false">
+                <div ng-drop="true" ng-if="!(lexicon_words.length > 0 || lexicon_images.length > 0 )" ng-drop-success="imageDropTo($data, lexicon_images, true)" ng-class="{lexicon:get('dragging_from_gallery')}">
+                    <div  ng-class="{transparent:!get('dragging_from_gallery')}" class="dropping-zone" style="padding:0px;height:4em;">
+                        <br> Drop Here To Remove
+                    </div>
+                </div>
+                </div>
+
+                <div ng-drop="true" ng-drop-success="imageDropTo($data, main_gallery)">
+                    <div ng-if="get('dragging_from_lexicon')" class="dropping-zone">
+                        Drop Here To Save
+                    </div>
+
+                    <div style="display:inline-block" ng-repeat="image in main_gallery track by $index" ng-drag="true" class="image-item-container" ng-drag-data="{index:$index,image:image,from:main_gallery,to:lexicon_images}">
+
+                        <img ng-src="{{image}}" class="image-item" ng-click="gallery.index($index);openImageModal(gallery.current)">
+
+                    </div>
+
+                </div>
+            </ion-content>
         </div>
-
-        <div id="sketching" class="sketching">
-        </div>
-
-        <div class="toolbar">
-            <a class="floating-btn float-right"  id="qrcode-popover"><i class="fa fa-qrcode"></i></a>
-            <a class="floating-btn float-right margin-left-sm margin-right-sm" onclick="Globals.rotateScreen()"  ><i class="fa fa-repeat"></i></a>
-            <a class="floating-btn float-left " style="margin-left:4em;"  onclick="Globals.showSearchBar()"><i class="fa fa-search"></i></a>
-
-            <a class="floating-btn float-right margin-right-sm " onclick="Globals.toggleSketchBoard()"><i class="fa fa-paint-brush"></i></a>
-        </div>
-
-        <div class="galleria">
-        </div>
-
     </div>
+
 </body>
 
 <script src="./lib/jquery/dist/jquery.min.js"></script>
-<script src="./lib/other/touch-emu/emulator.js"></script>
-<script>
- TouchEmulator();
-</script>
-<script src="./lib/webui-popover/dist/jquery.webui-popover.min.js"></script>
-<script src="./lib/drawingboard.js/dist/drawingboard.min.js"></script>
-<script src="./lib/other/galleria/galleria-1.4.2.js"></script>
-<script src="./lib/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+<script src="./lib/ionic/release/js/ionic.bundle.js"></script>
+<script src="./lib/ngDraggable/ngDraggable.js"></script>
+<script src="./lib/other/imagesloaded.pkgd.min.js"></script>
+<script src="./lib/other/masonry.pkgd.min.js"></script>
+<script src="./lib/other/angular-masonry.min.js"></script>
+<script src="./lib/other/toaster.min.js"></script>
 <script src="./dist/js/app.js"></script>
+
+
+<script id="image-modal.html" type="text/ng-template">
+    <toaster-container></toaster-container>
+    <div class="modal image-modal" ng-click="closeImageModal();">
+        <img  class="image-modal-main" ng-src="{{image_modal_src}}" ng-click="addToGallery(image_modal_src);$event.stopPropagation();" />
+    </div>
+</script>
+
+<script id="handwriting-modal.html" type="text/ng-template">
+    <div>
+        <iframe  ng-src="./html/myscript/sample/text/rest/index.html" ></iframe>
+    </div>
+</script>
+
+<script id="qrcode-popover.html" type="text/ng-template">
+    <ion-popover-view class="qrcode-popover">
+        <ion-header-bar class="bar-stable">
+            <h1 class="title">Qr Code</h1>
+        </ion-header-bar>
+        <ion-content>
+            <div class="list card">
+
+                <div class="item item-image">
+                    <img class="qrcode" ng-src="{{pasteasy_qrcode}}">
+                </div>
+
+                <a class="item item-icon-left positive" href="#">
+                    <i class="icon ion-network"></i> Sharing
+                </a>
+            </div>
+
+            <div class="list card">
+
+                <div class="item item-image">
+                    <img class="qrcode" ng-src="{{server_qrcode}}">
+                </div>
+
+                <a class="item item-icon-left positive" href="#">
+                    <i class="icon ion-code-download"></i> Server
+                </a>
+            </div>
+        </ion-content>
+    </ion-popover-view>
+</script>
 
 </html>

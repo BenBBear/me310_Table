@@ -29,6 +29,8 @@
     "animate.css": "~3.2.6",
     "Hover": "~2.0.2",
     "drawingboard.js": "~0.4.4",
-    "webui-popover": "~1.1.4"
+    "webui-popover": "~1.1.4",
+    "ionic": "~1.0.0",
+    "ngDraggable": "~0.1.8"
   }
 }
