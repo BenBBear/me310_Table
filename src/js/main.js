@@ -103,6 +103,24 @@ function main() {
         };
 
         $scope.main_gallery = ['assets/images/bear.jpg']; //a array of images
+        $scope.h_main_gallery = [];
+        $scope.$watch(function(){
+            return $scope.main_gallery.length;
+        }, function(nv,ov){
+            if(nv){
+                var h_main_gallery = [];
+                while(true){
+                    var tmp =  $scope.main_gallery.slice(0,10);
+                    h_main_gallery.push(tmp);
+                    if(tmp.length<10){
+                        break;
+                    }
+                }
+                $scope.h_main_gallery = h_main_gallery;
+            }
+        });
+
+
         $scope.main_gallery_cursor = 0;
         $scope.gallery = {
             index: function(x) {
