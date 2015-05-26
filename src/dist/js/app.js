@@ -889,8 +889,8 @@ function main() {
 
     app.directive('errRemove', function() {
         return {
-            scope:{
-                source:'='
+            scope: {
+                source: '='
             },
 
             controller: function($scope, $element, $attrs) {
@@ -1002,7 +1002,7 @@ function main() {
 
     if (!Constant.DEBUG_UI) {
         app.controller('AppCtrl',
-                       function($scope, $log, storage_path, pasteasy_qrcode, $ionicModal, $ionicPopover, $timeout, toaster,$window) {
+            function($scope, $log, storage_path, pasteasy_qrcode, $ionicModal, $ionicPopover, $timeout, toaster, $window) {
 
                 // Every Thing Goes Here
                 storage_path.then(function(storage_path) {
@@ -1090,8 +1090,7 @@ function main() {
 
                         // Image Modal
                         $scope.openImageModal = function(src) {
-                            $scope.image_modal_src = src;
-
+                            $scope.current_gallery = src;
                             $scope.openImageModal.modal.show();
                         };
                         $scope.closeImageModal = function() {
@@ -1173,12 +1172,47 @@ function main() {
                             var old = rotate_hash[document.body];
                             if (old) {
                                 rotate_hash[document.body] += 90;
-                                Util.rotate(document.body, old + 90);
+                                rotate_hash[document.body] = rotate_hash[document.body] % 360;
+                                Util.rotate(document.body, rotate_hash[document.body]);
                             } else {
                                 rotate_hash[document.body] = 90;
                                 Util.rotate(document.body, 90);
                             }
                         };
+
+                        function is(x, y, z) {
+                            if (x == y)
+                                return z;
+                            return null;
+                        }
+
+                        //swipe
+                        $scope.swipe = function(x) {
+                            var angle = rotate_hash[document.body] || 0;
+                            var direction;
+                            switch (angle) { //todo here
+                                case 0:
+                                    direction = is(x, 'right', 'next') || is(x, 'left', 'prev') || 'stay';
+                                    break;
+                                case 90:
+                                    direction = is(x, 'up', 'prev') || is(x, 'down', 'next') || 'stay';
+                                    break;
+                                case 180:
+                                    direction = is(x, 'left', 'next') || is(x, 'right', 'prev') || 'stay';
+                                    break;
+                                case 270:
+                                    direction = is(x, 'down', 'prev') || is(x, 'up', 'next') || 'stay';
+                                    break;
+                            }
+
+                            console.log('image gonna ' + direction);
+
+                            ($scope.current_gallery[direction] || function(){})();
+
+
+
+                        };
+
 
 
                         $scope.addToGallery = function(image_modal_src) {
@@ -1190,33 +1224,32 @@ function main() {
                             return;
                         };
 
+
+                        // Hand Writing
                         $ionicModal.fromTemplateUrl('handwriting-modal.html', function(modal) {
                             $scope.startWriting.modal = modal;
                         }, {
                             scope: $scope,
                             animation: 'slide-in-up'
                         });
-
-                        $scope.startWriting = function(){
+                        $scope.startWriting = function() {
                             // $scope.startWriting.modal.show();
                             $scope.writing = true;
                         };
-                        $scope.stopWriting = function(){
+                        $scope.stopWriting = function() {
                             // $scope.startWriting.modal.hide();
                             $scope.writing = false;
                         };
 
-
                         function receiveMessage(e) {
                             console.log(e.data);
-                            if(e.data == "please close me!!$$**"){
+                            if (e.data == "please close me!!$$**") {
                                 $scope.stopWriting();
-                            }else{
+                            } else {
                                 $scope.lexicon_input = e.data;
                             }
                             $apply($scope);
-                          }
-
+                        }
                         $window.addEventListener('message', receiveMessage);
                         // END
                         message.startUp();
