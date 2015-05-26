@@ -43,7 +43,7 @@
                                 <div masonry>
                                     <div class="masonry-brick" ng-repeat="image in lexicon_images track by $index">
                                         <div ng-drag="true" ng-drag-start="imageDragstart()" ng-drag-data="{index:$index,image:image,from:lexicon_images, to:main_gallery}">
-                                            <img err-remove source="lexicon_images"   ng-src="{{image}}" class="image-item" alt="No Images Here" ng-click="lexicon.index($index);openImageModal(lexicon.current)">
+                                            <img err-remove source="lexicon_images"   ng-src="{{image}}" class="image-item" alt="No Images Here" ng-click="lexicon.index($index);openImageModal(lexicon)">
                                         </div>
                                     </div>
                                 </div>
@@ -77,7 +77,7 @@
 
                     <div style="display:inline-block" ng-repeat="image in main_gallery track by $index" ng-drag="true" class="image-item-container" ng-drag-data="{index:$index,image:image,from:main_gallery,to:lexicon_images}">
 
-                        <img ng-src="{{image}}" class="image-item" ng-click="gallery.index($index);openImageModal(gallery.current)">
+                        <img ng-src="{{image}}" class="image-item" ng-click="gallery.index($index);openImageModal(gallery)">
 
                     </div>
 
@@ -100,8 +100,8 @@
 
 <script id="image-modal.html" type="text/ng-template">
     <toaster-container></toaster-container>
-    <div class="modal image-modal" ng-click="closeImageModal();">
-        <img  class="image-modal-main" ng-src="{{image_modal_src}}" ng-click="addToGallery(image_modal_src);$event.stopPropagation();" />
+    <div class="modal image-modal" ng-click="closeImageModal();" on-swipe-down="swipe('down')" on-swipe-left="swipe('left')" on-swipe-right="swipe('right')" on-swipe-up="swipe('up')">
+        <img  class="image-modal-main" ng-src="{{current_gallery.current}}" ng-click="addToGallery(current_gallery.current);$event.stopPropagation();" />
     </div>
 </script>
 
