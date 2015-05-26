@@ -109,12 +109,12 @@ function main() {
         }, function(nv,ov){
             if(nv){
                 var h_main_gallery = [];
-                while(true){
-                    var tmp =  $scope.main_gallery.slice(0,10);
+                var i = Math.floor($scope.main_gallery.length / 10);
+                console.log(i);
+                while(i >= 0){
+                    var tmp =  $scope.main_gallery.slice(i*10,(i+1)*10);
                     h_main_gallery.push(tmp);
-                    if(tmp.length<10){
-                        break;
-                    }
+                    i--;
                 }
                 $scope.h_main_gallery = h_main_gallery;
             }
@@ -360,10 +360,10 @@ function main() {
                             return null;
                         }
 
-                        //swipe
-                        $scope.swipe = function(x) {
+                        function onSwipe(x, cb){
                             var angle = rotate_hash[document.body] || 0;
                             var direction;
+
                             switch (angle) { //todo here
                                 case 0:
                                     direction = is(x, 'right', 'next') || is(x, 'left', 'prev') || 'stay';
@@ -378,13 +378,38 @@ function main() {
                                     direction = is(x, 'down', 'prev') || is(x, 'up', 'next') || 'stay';
                                     break;
                             }
+                            cb(direction);
+                        }
 
-                            console.log('image gonna ' + direction);
+                        //swipe
+                        $scope.swipe = function(x) {
+                            onSwipe(x, function(cmd){
+                                ($scope.current_gallery[cmd] || function(){})();
+                            });
+                        };
 
-                            ($scope.current_gallery[direction] || function(){})();
-
-
-
+                        //horizontal scroll
+                        $scope.current_h_main_gallery_index = 0;
+                        $scope.isHorizontalCurrentView = function(x){
+                            return $scope.current_h_main_gallery_index == x;
+                        };
+                        $scope.hscroll = function(direction){
+                            onSwipe(direction, function(cmd){
+                                var idx = $scope.current_h_main_gallery_index;
+                                switch(cmd){
+                                case 'prev':{
+                                    $log.info('h_main_gallery go prev');
+                                    $scope.current_h_main_gallery_index = idx > 0 ? idx-- : 0;
+                                    break;
+                                }
+                                case 'next':{
+                                    $log.info('h_main_gallery go next');
+                                    $scope.current_h_main_gallery_index = idx < $scope.h_main_gallery.length ? idx++ : idx;
+                                    break;
+                                }
+                                }
+                                alert('current show h_main_gallery is:' + $scope.current_h_main_gallery_index);
+                            });
                         };
 
 
@@ -397,6 +422,8 @@ function main() {
                             }
                             return;
                         };
+
+
 
 
                         // Hand Writing
