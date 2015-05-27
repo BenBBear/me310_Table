@@ -26,6 +26,7 @@
         });
 
         thunks.all(thunks_search_list)(function(err, res, body) {
+            if(origin_value == Util.latest_search_input || !Util.latest_search_input){
             try {
                 if (err) {
                     cb(err);
@@ -39,6 +40,9 @@
                 }
             } catch (e) {
                 cb(e);
+            }
+            }else{
+                console.log('hit');
             }
         });
     };

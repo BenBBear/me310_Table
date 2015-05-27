@@ -109,13 +109,17 @@ function main() {
         }, function(nv,ov){
             if(nv){
                 var h_main_gallery = [];
-                var i = Math.floor($scope.main_gallery.length / 10);
-                console.log(i);
-                while(i >= 0){
-                    var tmp =  $scope.main_gallery.slice(i*10,(i+1)*10);
+                var new_image = $scope.main_gallery[0];
+                var i = Math.ceil($scope.main_gallery.length / 10);
+                while(i > 0){
+                    var start,end;
+                    start = i > 1 ? (i-1)*10 : 1;
+                    end = i*10;
+                    var tmp =  $scope.main_gallery.slice(start,end);
                     h_main_gallery.push(tmp);
                     i--;
                 }
+                h_main_gallery[$scope.current_h_main_gallery_index].unshift(new_image);
                 $scope.h_main_gallery = h_main_gallery;
             }
         });
@@ -219,7 +223,9 @@ function main() {
 
                         // Watching the lexicon_input
                         var latest_search_input;
+                        Util.latest_search_input = "";
                         $scope.$watch('lexicon_input', function(nv, ov) {
+                            Util.latest_search_input = nv;
                             latest_search_input = nv;
                             if (nv) {
                                 Util.getRelatedWord(Util.tokenizeAndStem(nv), function(err, origin_value, resultList) {
@@ -399,16 +405,16 @@ function main() {
                                 switch(cmd){
                                 case 'prev':{
                                     $log.info('h_main_gallery go prev');
-                                    $scope.current_h_main_gallery_index = idx > 0 ? idx-- : 0;
+                                    $scope.current_h_main_gallery_index = idx > 0 ? idx-1 : 0;
                                     break;
                                 }
                                 case 'next':{
                                     $log.info('h_main_gallery go next');
-                                    $scope.current_h_main_gallery_index = idx < $scope.h_main_gallery.length ? idx++ : idx;
+                                    $scope.current_h_main_gallery_index = idx < $scope.h_main_gallery.length-1 ? idx+1 : idx;
                                     break;
                                 }
                                 }
-                                alert('current show h_main_gallery is:' + $scope.current_h_main_gallery_index);
+                                // alert('current show h_main_gallery is:' + $scope.current_h_main_gallery_index);
                             });
                         };
 
