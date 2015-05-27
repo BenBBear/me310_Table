@@ -228,7 +228,7 @@ function main() {
                             Util.latest_search_input = nv;
                             latest_search_input = nv;
                             if (nv) {
-                                Util.getRelatedWord(Util.tokenizeAndStem(nv), function(err, origin_value, resultList) {
+                                Util.getRelatedWord(nv, function(err, origin_value, resultList) {
                                     if (err)
                                         throw err;
                                     else {
