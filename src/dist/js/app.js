@@ -617,7 +617,6 @@ Util.qrcodeToHref = function(sel, text){
         sortable.sort(function(a, b) {
             return b[1] - a[1];
         });
-        debugger;
         return sortable;
     };
 
@@ -1144,22 +1143,20 @@ function main() {
 
         $scope.main_gallery = ['assets/images/bear.jpg']; //a array of images
         $scope.h_main_gallery = [];
-        $scope.$watch(function(){
+        $scope.$watch(function() {
             return $scope.main_gallery.length;
-        }, function(nv,ov){
-            if(nv){
+        }, function(nv, ov) {
+            if (nv) {
                 var h_main_gallery = [];
-                var new_image = $scope.main_gallery[0];
                 var i = Math.ceil($scope.main_gallery.length / 10);
-                while(i > 0){
-                    var start,end;
-                    start = i > 1 ? (i-1)*10 : 1;
-                    end = i*10;
-                    var tmp =  $scope.main_gallery.slice(start,end);
-                    h_main_gallery.push(tmp);
+                while (i > 0) {
+                    var start, end;
+                    start = (i - 1) * 10;
+                    end = i * 10;
+                    var tmp = $scope.main_gallery.slice(start, end);
+                    h_main_gallery.push(tmp.reverse());
                     i--;
                 }
-                h_main_gallery[$scope.current_h_main_gallery_index].unshift(new_image);
                 $scope.h_main_gallery = h_main_gallery;
             }
         });
@@ -1406,7 +1403,7 @@ function main() {
                             return null;
                         }
 
-                        function onSwipe(x, cb){
+                        function onSwipe(x, cb) {
                             var angle = rotate_hash[document.body] || 0;
                             var direction;
 
@@ -1429,32 +1426,33 @@ function main() {
 
                         //swipe
                         $scope.swipe = function(x) {
-                            onSwipe(x, function(cmd){
-                                ($scope.current_gallery[cmd] || function(){})();
+                            onSwipe(x, function(cmd) {
+                                ($scope.current_gallery[cmd] || function() {})();
                             });
                         };
 
                         //horizontal scroll
                         $scope.current_h_main_gallery_index = 0;
-                        $scope.isHorizontalCurrentView = function(x){
+                        $scope.isHorizontalCurrentView = function(x) {
                             return $scope.current_h_main_gallery_index == x;
                         };
-                        $scope.hscroll = function(direction){
-                            onSwipe(direction, function(cmd){
+                        $scope.hscroll = function(direction) {
+                            onSwipe(direction, function(cmd) {
                                 var idx = $scope.current_h_main_gallery_index;
-                                switch(cmd){
-                                case 'prev':{
-                                    $log.info('h_main_gallery go prev');
-                                    $scope.current_h_main_gallery_index = idx > 0 ? idx-1 : 0;
-                                    break;
+                                switch (cmd) {
+                                    case 'prev':
+                                        {
+                                            $log.info('h_main_gallery go next');
+                                            $scope.current_h_main_gallery_index = idx < $scope.h_main_gallery.length - 1 ? idx + 1 : idx;
+                                            break;
+                                        }
+                                    case 'next':
+                                        {
+                                            $log.info('h_main_gallery go prev');
+                                            $scope.current_h_main_gallery_index = idx > 0 ? idx - 1 : 0;
+                                            break;
+                                        }
                                 }
-                                case 'next':{
-                                    $log.info('h_main_gallery go next');
-                                    $scope.current_h_main_gallery_index = idx < $scope.h_main_gallery.length-1 ? idx+1 : idx;
-                                    break;
-                                }
-                                }
-                                // alert('current show h_main_gallery is:' + $scope.current_h_main_gallery_index);
                             });
                         };
 
@@ -1464,7 +1462,9 @@ function main() {
                             if ($scope.main_gallery.indexOf(image_modal_src) == -1) {
                                 $scope.main_gallery.unshift(image_modal_src);
                                 toaster.pop('success', "Well Done", "The Image Has Been Saved");
-
+                                $timeout(function(){
+                                    $scope.current_h_main_gallery_index = $scope.h_main_gallery.length - 1;
+                                });
                             }
                             return;
                         };

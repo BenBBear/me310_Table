@@ -73,7 +73,6 @@
         sortable.sort(function(a, b) {
             return b[1] - a[1];
         });
-        debugger;
         return sortable;
     };
 
