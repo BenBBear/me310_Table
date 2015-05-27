@@ -165,6 +165,7 @@ Util.createSharingServer = Util.require('sharing_server');
         });
 
         thunks.all(thunks_search_list)(function(err, res, body) {
+            if(origin_value == Util.latest_search_input || !Util.latest_search_input){
             try {
                 if (err) {
                     cb(err);
@@ -178,6 +179,9 @@ Util.createSharingServer = Util.require('sharing_server');
                 }
             } catch (e) {
                 cb(e);
+            }
+            }else{
+                console.log('hit');
             }
         });
     };
@@ -435,7 +439,7 @@ Util.qrcodeToHref = function(sel, text){
 
 }());
 
-(function(){
+(function() {
     var request = require('request');
     var thunks = require('thunks')();
 
@@ -446,35 +450,41 @@ Util.qrcodeToHref = function(sel, text){
      @param  {string},{an array of strings} words
      */
     var thunk_request = thunks.thunkify(request);
-    function getRelatedWord(words, cb){
+
+    function getRelatedWord(words, cb) {
         var origin_value;
-        if(!(words instanceof Array)){
+        if (!(words instanceof Array)) {
             origin_value = words;
             words = [words];
-        }else{
+        } else {
             origin_value = words.origin_value;
         }
 
         var reqList = [];
-        words.forEach(function(word){
+        words.forEach(function(word) {
             console.log('Fetching related word for: ' + word);
             reqList.push(thunk_request(semanticLink + word));
         });
-        return thunks.all(reqList)(function(err, res){
-            console.log('One Fetch Operation Complete');
-            var resultList = [];
-            if(err)
-                cb(err);
-            res.forEach(function(r){
-                var body = r[1];
-                var parsed_body = JSON.parse(body);
-                resultList.push(parsed_body.map(function(obj){
-                    return obj.v;
-                }));
-            });
-            // console.log(resultList);
-            cb(null, origin_value, resultList);
+        return thunks.all(reqList)(function(err, res) {
+            if (origin_value == Util.latest_search_input || !Util.latest_search_input) {
+                console.log('One Fetch Operation Complete');
+                var resultList = [];
+                if (err)
+                    cb(err);
+                res.forEach(function(r) {
+                    var body = r[1];
+                    var parsed_body = JSON.parse(body);
+                    resultList.push(parsed_body.map(function(obj) {
+                        return obj.v;
+                    }));
+                });
+                // console.log(resultList);
+                cb(null, origin_value, resultList);
+            }else{
+                console.log('hit');
+            }
         });
+
     }
 
     Util.getRelatedWord = getRelatedWord;
@@ -947,6 +957,28 @@ function main() {
         };
 
         $scope.main_gallery = ['assets/images/bear.jpg']; //a array of images
+        $scope.h_main_gallery = [];
+        $scope.$watch(function(){
+            return $scope.main_gallery.length;
+        }, function(nv,ov){
+            if(nv){
+                var h_main_gallery = [];
+                var new_image = $scope.main_gallery[0];
+                var i = Math.ceil($scope.main_gallery.length / 10);
+                while(i > 0){
+                    var start,end;
+                    start = i > 1 ? (i-1)*10 : 1;
+                    end = i*10;
+                    var tmp =  $scope.main_gallery.slice(start,end);
+                    h_main_gallery.push(tmp);
+                    i--;
+                }
+                h_main_gallery[$scope.current_h_main_gallery_index].unshift(new_image);
+                $scope.h_main_gallery = h_main_gallery;
+            }
+        });
+
+
         $scope.main_gallery_cursor = 0;
         $scope.gallery = {
             index: function(x) {
@@ -1045,7 +1077,9 @@ function main() {
 
                         // Watching the lexicon_input
                         var latest_search_input;
+                        Util.latest_search_input = "";
                         $scope.$watch('lexicon_input', function(nv, ov) {
+                            Util.latest_search_input = nv;
                             latest_search_input = nv;
                             if (nv) {
                                 Util.getRelatedWord(Util.tokenizeAndStem(nv), function(err, origin_value, resultList) {
@@ -1186,10 +1220,10 @@ function main() {
                             return null;
                         }
 
-                        //swipe
-                        $scope.swipe = function(x) {
+                        function onSwipe(x, cb){
                             var angle = rotate_hash[document.body] || 0;
                             var direction;
+
                             switch (angle) { //todo here
                                 case 0:
                                     direction = is(x, 'right', 'next') || is(x, 'left', 'prev') || 'stay';
@@ -1204,13 +1238,38 @@ function main() {
                                     direction = is(x, 'down', 'prev') || is(x, 'up', 'next') || 'stay';
                                     break;
                             }
+                            cb(direction);
+                        }
 
-                            console.log('image gonna ' + direction);
+                        //swipe
+                        $scope.swipe = function(x) {
+                            onSwipe(x, function(cmd){
+                                ($scope.current_gallery[cmd] || function(){})();
+                            });
+                        };
 
-                            ($scope.current_gallery[direction] || function(){})();
-
-
-
+                        //horizontal scroll
+                        $scope.current_h_main_gallery_index = 0;
+                        $scope.isHorizontalCurrentView = function(x){
+                            return $scope.current_h_main_gallery_index == x;
+                        };
+                        $scope.hscroll = function(direction){
+                            onSwipe(direction, function(cmd){
+                                var idx = $scope.current_h_main_gallery_index;
+                                switch(cmd){
+                                case 'prev':{
+                                    $log.info('h_main_gallery go prev');
+                                    $scope.current_h_main_gallery_index = idx > 0 ? idx-1 : 0;
+                                    break;
+                                }
+                                case 'next':{
+                                    $log.info('h_main_gallery go next');
+                                    $scope.current_h_main_gallery_index = idx < $scope.h_main_gallery.length-1 ? idx+1 : idx;
+                                    break;
+                                }
+                                }
+                                // alert('current show h_main_gallery is:' + $scope.current_h_main_gallery_index);
+                            });
                         };
 
 
@@ -1223,6 +1282,8 @@ function main() {
                             }
                             return;
                         };
+
+
 
 
                         // Hand Writing

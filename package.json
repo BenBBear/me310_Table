@@ -5,10 +5,10 @@
   "main": "./src/index.html",
   "window": {
     "title": "me310_Table",
-    "toolbar": false,
+    "toolbar": true,
     "resizable": true,
     "always-on-top": true,
-    "fullscreen": true,
+    "fullscreen": false,
     "position": "center"
   },
   "scripts": {
