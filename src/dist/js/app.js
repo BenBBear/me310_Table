@@ -1384,17 +1384,25 @@ function main() {
 
 
                         //rotate
-                        var rotate_hash = {};
-                        $scope.rotate = function() {
-                            var old = rotate_hash[document.body];
-                            if (old) {
-                                rotate_hash[document.body] += 90;
-                                rotate_hash[document.body] = rotate_hash[document.body] % 360;
-                                Util.rotate(document.body, rotate_hash[document.body]);
+
+
+                        $scope.rotate = function(x) {
+                            x = Math.abs(x);
+                            console.log('previous body_angle is:' + $scope.body_angle || 0);
+                            if (x !== undefined) {
+                                $scope.body_angle = x;
                             } else {
-                                rotate_hash[document.body] = 90;
-                                Util.rotate(document.body, 90);
+                                var old = $scope.body_angle;
+                                if (old) {
+                                    $scope.body_angle += 90;
+                                    $scope.body_angle = $scope.body_angle % 360;
+                                } else {
+                                    $scope.body_angle = 90;
+                                }
                             }
+                            console.log('current body_angle is:' + $scope.body_angle || 0);
+                            // Util.rotate(document.body, $scope.body_angle);
+                            Util.rotate('#my-body', $scope.body_angle);
                         };
 
                         function is(x, y, z) {
@@ -1404,7 +1412,7 @@ function main() {
                         }
 
                         function onSwipe(x, cb) {
-                            var angle = rotate_hash[document.body] || 0;
+                            var angle = $scope.body_angle || 0;
                             var direction;
 
                             switch (angle) { //todo here
@@ -1462,7 +1470,7 @@ function main() {
                             if ($scope.main_gallery.indexOf(image_modal_src) == -1) {
                                 $scope.main_gallery.unshift(image_modal_src);
                                 toaster.pop('success', "Well Done", "The Image Has Been Saved");
-                                $timeout(function(){
+                                $timeout(function() {
                                     $scope.current_h_main_gallery_index = $scope.h_main_gallery.length - 1;
                                 });
                             }
