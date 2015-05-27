@@ -116,8 +116,8 @@
   padding: 0.3em 0.1em 0.3em 0.1em; }
 
 img.qrcode {
-  width: 10em !important;
-  height: 10em !important; }
+  width: 5em !important;
+  height: 5em !important; }
 
 .floating-btn {
   color: #fff;
@@ -228,7 +228,7 @@ body {
 
 .rotate-panel {
   position: absolute;
-  background-color: rgba(46, 64, 94, 0.5); }
+  background-color: rgba(46, 64, 94, 0); }
   .rotate-panel.right {
     height: 100%;
     width: 4em;
@@ -245,3 +245,19 @@ body {
     height: 4em;
     width: 100%;
     bottom: 0em; }
+
+.pull-up {
+  position: absolute;
+  top: 2%; }
+
+.pull-left {
+  position: absolute;
+  left: 2%; }
+
+.pull-right {
+  position: absolute;
+  right: 2%; }
+
+.auto-linker {
+  color: #3b88c3;
+  text-decoration: none; }
