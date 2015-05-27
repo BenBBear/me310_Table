@@ -24,6 +24,16 @@
             <div class="rotate-panel right" ng-click="rotate(270);"></div>
             <div class="rotate-panel left" ng-click="rotate(90);"></div>
             <div class="rotate-panel bottom" ng-click="rotate(0);"></div>
+            <div class="pull-right pull-up">
+                <img class="qrcode " ng-src="{{pasteasy_qrcode}}">
+                <p class="auto-linker">Pasteasy</p>
+            </div>
+            <div class="pull-left pull-up">
+                <img class="qrcode  " ng-src="{{server_qrcode}}">
+                <p class="auto-linker">Download</p>
+            </div>
+
+
             <div id="my-body">
                 <div class="item-input-inset margin-top-vvlg">
                     <label class="item-input-wrapper">
@@ -111,6 +121,7 @@
         <iframe ng-src="./html/myscript/sample/text/rest/index.html"></iframe>
     </div>
 </script>
+
 
 <script id="qrcode-popover.html" type="text/ng-template">
     <ion-popover-view class="qrcode-popover">
