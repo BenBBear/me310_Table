@@ -18,7 +18,7 @@
   margin-left: 5px; }
 
 .margin-top-vvlg {
-  margin-top: 3em; }
+  margin-top: 2em; }
 
 .relative {
   position: relative; }
@@ -146,6 +146,9 @@ img.qrcode {
 body {
   -webkit-transition: -webkit-transform 0.5s cubic-bezier(0, 0.825, 0.695, 1); }
 
+#my-body {
+  -webkit-transition: -webkit-transform 0.5s cubic-bezier(0, 0.825, 0.695, 1); }
+
 .pointer-events-none {
   pointer-events: none; }
 
@@ -205,10 +208,11 @@ body {
 .border-none {
   border: none; }
 
-.container {
+#my-body {
   width: 40em;
   height: 40em;
-  display: inline-block; }
+  display: inline-block;
+  overflow: scroll !important; }
 
 .wrapper {
   text-align: center; }
@@ -218,5 +222,25 @@ body {
 
 .writing-board {
   width: 100%;
+  overflow: hidden;
   height: 20em; }
 
+.rotate-panel {
+  position: absolute;
+  background-color: rgba(46, 64, 94, 0.5); }
+  .rotate-panel.right {
+    height: 100%;
+    width: 5em;
+    right: 0em; }
+  .rotate-panel.left {
+    height: 100%;
+    width: 5em;
+    left: 0em; }
+  .rotate-panel.top {
+    height: 5em;
+    width: 100%;
+    top: 0em; }
+  .rotate-panel.bottom {
+    height: 5em;
+    width: 100%;
+    bottom: 0em; }
