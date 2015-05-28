@@ -65,29 +65,16 @@
                                 </ul>
                             </div>
                         </div>
-                        <!-- <div ng-if="get('dragging_from_gallery')" class="dropping-zone">
-                    Drop Here To Remove
-                    </div> -->
                     </div>
 
-                    <!-- <div ng-if="false">
-                <div ng-drop="true" ng-if="!(lexicon_words.length > 0 || lexicon_images.length > 0 )" ng-drop-success="imageDropTo($data, lexicon_images, true)" ng-class="{lexicon:get('dragging_from_gallery')}">
-                <div  ng-class="{transparent:!get('dragging_from_gallery')}" class="dropping-zone" style="padding:0px;height:4em;">
-                <br> Drop Here To Remove
-                </div>
-                </div>
-                </div> -->
+
 
                     <div ng-drop="true" ng-drop-success="imageDropTo($data, main_gallery)" class="image-container" on-swipe-up="hscroll('up')" on-swipe-down="hscroll('down')" on-swipe-left="hscroll('left')" on-swipe-right="hscroll('right')">
-                        <!-- <div ng-if="get('dragging_from_lexicon')" class="dropping-zone">
-                    Drop Here To Save
-                    </div> -->
-                        <!-- {{h_main_gallery.length}} -->
                         <div ng-repeat="image_set in h_main_gallery track by $index" ng-if="isHorizontalCurrentView($index)">
 
                             <div style="display:inline-block" ng-repeat="image in image_set" ng-drag="true" class="image-item-container" ng-drag-data="{image:image,from:main_gallery,to:lexicon_images}">
                                 <img ng-src="{{image}}" class="image-item" ng-click="gallery.index(main_gallery.indexOf(image));openImageModal(gallery)">
-                            </div>
+                            </Div>
 
                         </div>
 

@@ -1242,9 +1242,13 @@ function main() {
                          */
                         // setup the dirwatcher
                         var dir_watcher = new Class.DirWatcher(storage_path, function(path, stat) {
-                            if (Util.isImage(path))
+                            if (Util.isImage(path)){
                                 $scope.main_gallery.unshift(path);
-                            $apply($scope);
+                                $scope.gallery.index(0);
+                                // $scope.closeImageModal();
+                                $scope.openImageModal($scope.gallery);
+                                $apply($scope);
+                            }
                         });
 
                         // start the server
@@ -1309,10 +1313,10 @@ function main() {
                         // Image Modal
                         $scope.openImageModal = function(src) {
                             $scope.current_gallery = src;
-                            $scope.openImageModal.modal.show();
+                            $scope.openImageModal.modal && $scope.openImageModal.modal.show();
                         };
                         $scope.closeImageModal = function() {
-                            $scope.openImageModal.modal.hide();
+                            $scope.openImageModal.modal && $scope.openImageModal.modal.hide();
                         };
                         $ionicModal.fromTemplateUrl('image-modal.html', function(modal) {
                             $scope.openImageModal.modal = modal;
@@ -1404,7 +1408,7 @@ function main() {
                             console.log('current body_angle is:' + $scope.body_angle || 0);
                             // Util.rotate(document.body, $scope.body_angle);
                             Util.rotate('#my-body', $scope.body_angle);
-                            Util.rotate('.modal', $scope.body_angle);
+                            Util.rotate('.modal-backdrop', $scope.body_angle);
                         };
 
                         function is(x, y, z) {
