@@ -13,4 +13,6 @@
         result.origin_value = str;
         return result;
     };
+
+    Util.stem = natural.PorterStemmer.stem;
 }());

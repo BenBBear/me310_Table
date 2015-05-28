@@ -602,15 +602,22 @@ Util.qrcodeToHref = function(sel, text){
     google.resultsPerPage = 25;
 
 
-    var recordFreq = function(hash, arr) {
-        arr.forEach(function(x) {
-            hash[x] = hash[x] || 0;
-            hash[x]++;
+    var recordFreq = function(hash, word) {
+        var words = word.removeStopWordsAndGetArray();
+        words.forEach(function(w) {
+            var stem = Util.stem(w);
+
+            hash[stem] = hash[stem] || {
+                count: 0,
+                words: {}
+            };
+            hash[stem].count++;
+            hash[stem].words[w] = hash[stem].words[w] || 0;
+            hash[stem].words[w]++;
         });
     };
 
     var sortObjectByValue = function(obj) {
-
         var sortable = [];
         for (var vehicle in obj)
             sortable.push([vehicle, obj[vehicle]]);
@@ -620,10 +627,20 @@ Util.qrcodeToHref = function(sel, text){
         return sortable;
     };
 
+    var getTopStems = function(obj,num){
+        var sortable = [];
+        for (var v in obj)
+            sortable.push([v, obj[v].count]);
+        sortable.sort(function(a, b) {
+            return b[1] - a[1];
+        });
+        return sortable.slice(0,num).map(function(x){
+            return x[0];
+        });
+    };
+
 
     // new version
-    var cheerio = require('cheerio');
-    var excerptHtml = require('excerpt-html');
     Util.getRelatedWord = function(word, cb) {
         // cb(null, origin_value, resultList);
         var origin_value = word;
@@ -633,41 +650,23 @@ Util.qrcodeToHref = function(sel, text){
                     cb(err);
                 else {
                     var freq_hash_map = {};
-
                     links.forEach(function(l) {
-                        recordFreq(freq_hash_map, l.title.removeStopWordsAndGetArray());
-                        recordFreq(freq_hash_map, l.description.removeStopWordsAndGetArray());
+                        recordFreq(freq_hash_map, l.title || "");
+                        recordFreq(freq_hash_map, l.description || "");
                     });
                     var num = 10,
-                        resultList;
-                    resultList = sortObjectByValue(freq_hash_map).slice(0,10).map(function(x){
-                        return x[0];
+                        resultList = [];
+                    var top_stems = getTopStems(freq_hash_map, 10);
+
+                    top_stems.forEach(function(word){
+                        var word_obj  = freq_hash_map[word].words;
+                        var max;
+                        Object.keys(word_obj).forEach(function(key){
+                            max = (word_obj[key] > (word_obj[max] || 0)) ? key : max;
+                        });
+                        resultList.push(max);
                     });
-
                     cb(null, origin_value, resultList);
-                    // Util.MultiRequest(links.map(function(x) {
-                    //     return x.href;
-                    // }).filter(function(x) {
-                    //     return x;
-                    // }), function(err, res) {
-                    //     if (err) {
-                    //         throw err;
-                    //     } else {
-                    //         if (origin_value == Util.latest_search_input || !Util.latest_search_input) {
-                    //             res.forEach(function(r) {
-                    //                 var body = r[1];
-                    //                 debugger;
-                    //                 excerptHtml(body);
-                    //                 var $ = cheerio.load(body);
-
-                    //             });
-
-                    //         } else {
-                    //             console.log('hit');
-                    //         }
-                    //     }
-                    // });
-                    //use title, description
                 }
             } else {
                 console.log('hit');
@@ -750,6 +749,8 @@ Util.storage = window.localStorage;
         result.origin_value = str;
         return result;
     };
+
+    Util.stem = natural.PorterStemmer.stem;
 }());
 
 (function() {
@@ -1403,6 +1404,7 @@ function main() {
                             console.log('current body_angle is:' + $scope.body_angle || 0);
                             // Util.rotate(document.body, $scope.body_angle);
                             Util.rotate('#my-body', $scope.body_angle);
+                            Util.rotate('.modal', $scope.body_angle);
                         };
 
                         function is(x, y, z) {

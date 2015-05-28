@@ -364,6 +364,7 @@ function main() {
                             console.log('current body_angle is:' + $scope.body_angle || 0);
                             // Util.rotate(document.body, $scope.body_angle);
                             Util.rotate('#my-body', $scope.body_angle);
+                            Util.rotate('.modal', $scope.body_angle);
                         };
 
                         function is(x, y, z) {

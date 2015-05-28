@@ -210,7 +210,7 @@ body {
   border: none; }
 
 #my-body {
-  width: 40em;
+  width: 50em;
   height: 40em;
   display: inline-block;
   overflow: scroll !important; }
@@ -231,11 +231,11 @@ body {
   background-color: rgba(46, 64, 94, 0); }
   .rotate-panel.right {
     height: 100%;
-    width: 4em;
+    width: 5em;
     right: 0em; }
   .rotate-panel.left {
     height: 100%;
-    width: 4em;
+    width: 5em;
     left: 0em; }
   .rotate-panel.top {
     height: 4em;
