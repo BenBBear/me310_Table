@@ -110,8 +110,9 @@
 
 
 <script id="image-modal.html" type="text/ng-template">
-    <toaster-container></toaster-container>
+
     <div class="modal image-modal" ng-click="closeImageModal();" on-swipe-down="swipe('down')" on-swipe-left="swipe('left')" on-swipe-right="swipe('right')" on-swipe-up="swipe('up')">
+        <toaster-container></toaster-container>
         <img class="image-modal-main" ng-src="{{current_gallery.current}}" ng-click="addToGallery(current_gallery.current);$event.stopPropagation();" />
     </div>
 </script>
