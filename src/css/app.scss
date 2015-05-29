@@ -1,11 +1,9 @@
 /* @import "./lib/normalize.scss"; */
 /* @import "./lib/skeleton.scss"; */
 /* @import "./gallery.scss"; */
-/* @import "./popup.scss"; */
+@import "./variable.scss"
+@import "./theme.scss";
 
-$screen-height:40em;
-$screen-width:50em;
-$rotate-divider:10;
 
 
 $sm:5px;

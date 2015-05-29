@@ -31,7 +31,7 @@ function main() {
 
 
     var app = Globals.app = angular.module('me310_Table', ['ionic',
-        'wu.masonry', 'toaster'
+        'wu.masonry', 'toaster' // , 'angular-images-loaded'
         // 'ngDraggable'
     ]);
 
@@ -109,14 +109,15 @@ function main() {
         }, function(nv, ov) {
             if (nv) {
                 var h_main_gallery = [];
-                var i = Math.ceil($scope.main_gallery.length / 10);
-                while (i > 0) {
+                var len = Math.ceil($scope.main_gallery.length / 10);
+                var i = 1;
+                while (i <= len) {
                     var start, end;
                     start = (i - 1) * 10;
                     end = i * 10;
                     var tmp = $scope.main_gallery.slice(start, end);
-                    h_main_gallery.push(tmp.reverse());
-                    i--;
+                    h_main_gallery.push(tmp);
+                    i++;
                 }
                 $scope.h_main_gallery = h_main_gallery;
             }
@@ -203,10 +204,15 @@ function main() {
                          */
                         // setup the dirwatcher
                         var dir_watcher = new Class.DirWatcher(storage_path, function(path, stat) {
-                            if (Util.isImage(path)){
-                                $scope.main_gallery.unshift(path);
+                            if (Util.isImage(path) || path.startsWith('data:image/')) {
+                                $scope.main_gallery.push(path);
                                 $scope.gallery.index(0);
                                 $scope.openImageModal($scope.gallery);
+                                toaster.pop({
+                                    type: 'note',
+                                    title: "Recieved",
+                                    body: "Your Image will appear in the Last Page."
+                                });
                                 $apply($scope);
                             }
                         });
@@ -219,7 +225,7 @@ function main() {
                         });
 
 
-                        dir_watcher.start();
+                        dir_watcher.start(1500);
                         sharing_server.start();
 
 
@@ -383,16 +389,16 @@ function main() {
 
                             switch (angle) { //todo here
                                 case 0:
-                                    direction = is(x, 'right', 'next') || is(x, 'left', 'prev') || 'stay';
+                                    direction = is(x, 'right', 'right') || is(x, 'left', 'left') || 'stay';
                                     break;
                                 case 90:
-                                    direction = is(x, 'up', 'prev') || is(x, 'down', 'next') || 'stay';
+                                    direction = is(x, 'up', 'left') || is(x, 'down', 'right') || 'stay';
                                     break;
                                 case 180:
-                                    direction = is(x, 'left', 'next') || is(x, 'right', 'prev') || 'stay';
+                                    direction = is(x, 'left', 'right') || is(x, 'right', 'left') || 'stay';
                                     break;
                                 case 270:
-                                    direction = is(x, 'down', 'prev') || is(x, 'up', 'next') || 'stay';
+                                    direction = is(x, 'down', 'left') || is(x, 'up', 'right') || 'stay';
                                     break;
                             }
                             cb(direction);
@@ -401,6 +407,11 @@ function main() {
                         //swipe
                         $scope.swipe = function(x) {
                             onSwipe(x, function(cmd) {
+                                if(cmd == 'left'){
+                                    cmd = 'next';
+                                }else if(cmd=='right'){
+                                    cmd='prev';
+                                }
                                 ($scope.current_gallery[cmd] || function() {})();
                             });
                         };
@@ -414,13 +425,13 @@ function main() {
                             onSwipe(direction, function(cmd) {
                                 var idx = $scope.current_h_main_gallery_index;
                                 switch (cmd) {
-                                    case 'prev':
-                                        {
-                                            $log.info('h_main_gallery go next');
-                                            $scope.current_h_main_gallery_index = idx < $scope.h_main_gallery.length - 1 ? idx + 1 : idx;
+                                case 'left':
+                                    {
+                                        $log.info('h_main_gallery go next');
+                                        $scope.current_h_main_gallery_index = idx < $scope.h_main_gallery.length - 1 ? idx + 1 : idx;
                                             break;
                                         }
-                                    case 'next':
+                                case 'right':
                                         {
                                             $log.info('h_main_gallery go prev');
                                             $scope.current_h_main_gallery_index = idx > 0 ? idx - 1 : 0;
@@ -434,7 +445,7 @@ function main() {
 
                         $scope.addToGallery = function(image_modal_src) {
                             if ($scope.main_gallery.indexOf(image_modal_src) == -1) {
-                                $scope.main_gallery.unshift(image_modal_src);
+                                $scope.main_gallery.push(image_modal_src);
                                 toaster.pop('success', "Well Done", "The Image Has Been Saved");
                                 $timeout(function() {
                                     $scope.current_h_main_gallery_index = $scope.h_main_gallery.length - 1;
@@ -472,6 +483,14 @@ function main() {
                             $apply($scope);
                         }
                         $window.addEventListener('message', receiveMessage);
+
+
+
+
+
+
+
+
                         // END
                         message.startUp();
                     });

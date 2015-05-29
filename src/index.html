@@ -51,7 +51,7 @@
                                     <div masonry>
                                         <div class="masonry-brick" ng-repeat="image in lexicon_images track by $index">
                                             <div ng-drag="true" ng-drag-start="imageDragstart()" ng-drag-data="{index:$index,image:image,from:lexicon_images, to:main_gallery}">
-                                                <img err-remove source="lexicon_images" ng-src="{{image}}" class="image-item" alt="No Images Here" ng-click="lexicon.index($index);openImageModal(lexicon)">
+                                                <img images-loaded="imgLoadedEvents"  source="lexicon_images" ng-src="{{image}}" class="image-item" err-remove  ng-click="lexicon.index($index);openImageModal(lexicon)">
                                             </div>
                                         </div>
                                     </div>
@@ -70,6 +70,8 @@
 
 
                     <div ng-drop="true" ng-drop-success="imageDropTo($data, main_gallery)" class="image-container" on-swipe-up="hscroll('up')" on-swipe-down="hscroll('down')" on-swipe-left="hscroll('left')" on-swipe-right="hscroll('right')">
+
+
                         <div ng-repeat="image_set in h_main_gallery track by $index" ng-if="isHorizontalCurrentView($index)">
 
                             <div style="display:inline-block" ng-repeat="image in image_set" ng-drag="true" class="image-item-container" ng-drag-data="{image:image,from:main_gallery,to:lexicon_images}">
@@ -93,6 +95,7 @@
 <script src="./lib/other/masonry.pkgd.min.js"></script>
 <script src="./lib/other/angular-masonry.min.js"></script>
 <script src="./lib/other/toaster.min.js"></script>
+<script src="./lib/other/angular-images-loaded.js"></script>
 <script src="./dist/js/app.js"></script>
 
 
