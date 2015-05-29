@@ -97,10 +97,11 @@
 
 
     // new version
-    Util.getRelatedWord = function(word, cb) {
+    Util.getRelatedWord = function(w, cb) {
         // cb(null, origin_value, resultList);
-        var origin_value = word;
-        google(word, function(err, next, links) {
+        var origin_value = w.word;
+
+        google(w.word, function(err, next, links) {
             if (origin_value == Util.latest_search_input || !Util.latest_search_input) {
                 if (err)
                     cb(err);
@@ -110,9 +111,8 @@
                         recordFreq(freq_hash_map, l.title || "");
                         recordFreq(freq_hash_map, l.description || "");
                     });
-                    var num = 10,
-                        resultList = [];
-                    var top_stems = getTopStems(freq_hash_map, 10);
+                    var resultList = [];
+                    var top_stems = getTopStems(freq_hash_map, w.result_num);
 
                     top_stems.forEach(function(word){
                         var word_obj  = freq_hash_map[word].words;

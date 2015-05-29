@@ -1,7 +1,6 @@
 /* @import "./lib/normalize.scss"; */
 /* @import "./lib/skeleton.scss"; */
 /* @import "./gallery.scss"; */
-/* @import "./popup.scss"; */
 .wrapper-sm {
   padding: 5px; }
 
@@ -261,3 +260,6 @@ body {
 .auto-linker {
   color: #3b88c3;
   text-decoration: none; }
+
+.page.active {
+  border-bottom: 2px solid #ddd; }

@@ -1,11 +1,9 @@
 /* @import "./lib/normalize.scss"; */
 /* @import "./lib/skeleton.scss"; */
 /* @import "./gallery.scss"; */
-@import "./variable.scss"
+
+@import "./variable.scss";
 @import "./theme.scss";
-
-
-
 $sm:5px;
 $md:15px;
 .wrapper-sm {
@@ -183,11 +181,11 @@ img.qrcode {
 body {
     -webkit-transition: -webkit-transform 0.5s cubic-bezier(0.000, 0.825, 0.695, 1.000);
 }
-#my-body{
-    margin-top:2em;
+
+#my-body {
+    margin-top: 2em;
     -webkit-transition: -webkit-transform 0.5s cubic-bezier(0.000, 0.825, 0.695, 1.000);
 }
-
 
 .pointer-events-none {
     pointer-events: none
@@ -203,140 +201,135 @@ body {
     box-shadow: 6px 6px 35px -10px rgba(0, 0, 0, 0.75);
 }
 
-
-.image-item-container.ng-enter, .image-item-container.ng-move{
+.image-item-container.ng-enter,
+.image-item-container.ng-move {
     /* -webkit-transition: 1s linear all; /\* Chrome *\/ */
     /* transition: 1s linear all; */
     /* opacity: 0; */
+
     -webkit-animation: bounceIn 0.5s;
     animation: bounceIn 0.5s;
 }
-
-
 /* .image-item-container.ng-enter.ng-enter-active, */
 /* .image-item-container.ng-move.ng-move-active { */
 /*   opacity:1; */
 /* } */
 
-
-
-
-
-
-.image-modal{
-    background-color:rgba(17, 26, 24, 0.7) !important;
-    text-align:center;
+.image-modal {
+    background-color: rgba(17, 26, 24, 0.7) !important;
+    text-align: center;
 }
 
-.image-modal-main{
-    max-width:40em;
-    max-height:40em;
-    margin-top:10%;
+.image-modal-main {
+    max-width: 40em;
+    max-height: 40em;
+    margin-top: 10%;
 }
 
-.lexicon{
-    border-bottom:1px solid #ddd;
-    margin-bottom:2em;
+.lexicon {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 2em;
 }
 
+.lexicon-words {}
 
-.lexicon-words{
-
+.qrcode-popover {
+    height: 80%;
 }
 
-.qrcode-popover{
-    height:80%;
-}
-.modal{
-    top:auto;
-    bottom:auto;
-    right:auto;
-    left:auto;
-    width:100%;
-    height:100%;
+.modal {
+    top: auto;
+    bottom: auto;
+    right: auto;
+    left: auto;
+    width: 100%;
+    height: 100%;
 }
 
-.dropping-zone{
-    text-align:center;
+.dropping-zone {
+    text-align: center;
     border: 3px dotted #666;
-    padding:1em;
-    margin:1em;
+    padding: 1em;
+    margin: 1em;
 }
 
-.transparent{
-    opacity:0;
-}
-.border-none{
-    border:none;
-};
-
-
-#my-body{
-    width:$screen-width;
-    height:$screen-height;
-    display:inline-block;
-    overflow:scroll !important;
+.transparent {
+    opacity: 0;
 }
 
-
-.wrapper{
-    text-align:center;
+.border-none {
+    border: none;
 }
 
-.position-inherit{
-    position:inherit !important;
+;
+#my-body {
+    width: $screen-width;
+    height: $screen-height;
+    display: inline-block;
+    overflow: scroll !important;
 }
 
-.writing-board{
-    width:100%;
-    overflow:hidden;
-    height:$screen-height/2;
+.wrapper {
+    text-align: center;
 }
 
-.rotate-panel{
+.position-inherit {
+    position: inherit !important;
+}
 
-    position:absolute;
-    background-color:rgba(46, 64, 94, 0);
+.writing-board {
+    width: 100%;
+    overflow: hidden;
+    height: $screen-height/2;
+}
 
-    &.right{
-        height:100%;
-        width:$screen-width/$rotate-divider;
-        right:0em;
+.rotate-panel {
+    position: absolute;
+    background-color: rgba(46, 64, 94, 0);
+    &.right {
+        height: 100%;
+        width: $screen-width/$rotate-divider;
+        right: 0em;
     }
-
-    &.left{
-        height:100%;
-        width:$screen-width/$rotate-divider;
-        left:0em;
+    &.left {
+        height: 100%;
+        width: $screen-width/$rotate-divider;
+        left: 0em;
     }
-
-    &.top{
-        height:$screen-height/$rotate-divider;
-        width:100%;
-        top:0em;
+    &.top {
+        height: $screen-height/$rotate-divider;
+        width: 100%;
+        top: 0em;
     }
-
-    &.bottom{
-        height:$screen-height/$rotate-divider;
-        width:100%;
-        bottom:0em;
+    &.bottom {
+        height: $screen-height/$rotate-divider;
+        width: 100%;
+        bottom: 0em;
     }
 }
-.pull-up{
-    position:absolute;
-    top:2%;
-}
-.pull-left{
-    position:absolute;
-    left:2%;
-}
-.pull-right{
-    position:absolute;
-    right:2%;
+
+.pull-up {
+    position: absolute;
+    top: 2%;
 }
 
+.pull-left {
+    position: absolute;
+    left: 2%;
+}
+
+.pull-right {
+    position: absolute;
+    right: 2%;
+}
 
 .auto-linker {
     color: #3b88c3;
     text-decoration: none;
+}
+
+.pagination {}
+
+.page.active {
+    border-bottom: 2px solid #ddd;
 }

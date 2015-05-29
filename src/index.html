@@ -59,9 +59,10 @@
                             </div>
                             <div class="col">
                                 <ul class="list lexicon-words">
-                                    <li class="item" ng-repeat="word in lexicon_words.slice(0,7)" ng-click="setLexiconInput(word)">
+                                    <li class="item" ng-repeat="word in lexicon_words.slice(lexicon_words_cursor_start, min(lexicon_words_cursor_start+6, lexicon_words.length))" ng-click="setLexiconInput(word)">
                                         {{word}}
                                     </li>
+                                    <li class="item" ng-click="lexiconWordsCursorMore()"> <i class="icon ion-ios-refresh"></i></li>
                                 </ul>
                             </div>
                         </div>
@@ -77,9 +78,13 @@
                             <div style="display:inline-block" ng-repeat="image in image_set" ng-drag="true" class="image-item-container" ng-drag-data="{image:image,from:main_gallery,to:lexicon_images}">
                                 <img ng-src="{{image}}" class="image-item" ng-click="gallery.index(main_gallery.indexOf(image));openImageModal(gallery)">
                             </Div>
-
                         </div>
 
+                        <div class="pagination">
+                            <span ng-repeat="i in range(h_main_gallery.length) track by $index">
+                                <span class="page"  ng-class="{active:($index == current_h_main_gallery_index)}"> Page {{$index + 1}} </span>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

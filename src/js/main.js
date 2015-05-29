@@ -152,6 +152,18 @@ function main() {
         $scope.lexicon_images = []; //the image search results
         $scope.lexicon_images_cursor = 0;
         $scope.lexicon_words = []; //the relative words search results;
+        $scope.lexiconWordsCursorReset = function(){
+            $scope.lexicon_words_cursor_start = 0;
+        };
+        $scope.lexiconWordsCursorMore = function(){
+            debugger;
+            var len = $scope.lexicon_words.length;
+            $scope.lexicon_words_cursor_start =  ($scope.lexicon_words_cursor_start + 6) % len;
+        };
+        $scope.lexiconWordsCursorReset();
+
+
+
         $scope.lexicon = {
             index: function(x) {
                 $scope.lexicon_images_cursor = x;
@@ -185,6 +197,12 @@ function main() {
                 storage_path.then(function(storage_path) {
                     pasteasy_qrcode.then(function(pasteasy_qrcode) {
 
+                        $scope.min  = function(a,b){
+                            return Math.min(a,b);
+                        };
+                        $scope.range = function(n) {
+                            return new Array(n);
+                        };
                         var set = $scope.set = function(k, v) {
                             $scope[k] = v;
                             return set;
@@ -236,16 +254,17 @@ function main() {
                             Util.latest_search_input = nv;
                             latest_search_input = nv;
                             if (nv) {
-                                Util.getRelatedWord(nv, function(err, origin_value, resultList) {
+                                Util.getRelatedWord({
+                                    word: nv,
+                                    result_num: 30
+                                }, function(err, origin_value, resultList) {
                                     if (err)
                                         throw err;
                                     else {
                                         if (origin_value == latest_search_input) {
-                                            var result_to_display = [];
-                                            resultList.forEach(function(r) {
-                                                result_to_display = result_to_display.concat(r.slice(0, 10));
-                                            });
-                                            $scope.lexicon_words = result_to_display.slice(0, 10);
+
+                                            $scope.lexiconWordsCursorReset();
+                                            $scope.lexicon_words = resultList;
                                             if (!$scope.$$phase) {
                                                 $scope.$apply();
                                             }
@@ -407,10 +426,10 @@ function main() {
                         //swipe
                         $scope.swipe = function(x) {
                             onSwipe(x, function(cmd) {
-                                if(cmd == 'left'){
+                                if (cmd == 'left') {
                                     cmd = 'next';
-                                }else if(cmd=='right'){
-                                    cmd='prev';
+                                } else if (cmd == 'right') {
+                                    cmd = 'prev';
                                 }
                                 ($scope.current_gallery[cmd] || function() {})();
                             });
@@ -425,13 +444,13 @@ function main() {
                             onSwipe(direction, function(cmd) {
                                 var idx = $scope.current_h_main_gallery_index;
                                 switch (cmd) {
-                                case 'left':
-                                    {
-                                        $log.info('h_main_gallery go next');
-                                        $scope.current_h_main_gallery_index = idx < $scope.h_main_gallery.length - 1 ? idx + 1 : idx;
+                                    case 'left':
+                                        {
+                                            $log.info('h_main_gallery go next');
+                                            $scope.current_h_main_gallery_index = idx < $scope.h_main_gallery.length - 1 ? idx + 1 : idx;
                                             break;
                                         }
-                                case 'right':
+                                    case 'right':
                                         {
                                             $log.info('h_main_gallery go prev');
                                             $scope.current_h_main_gallery_index = idx > 0 ? idx - 1 : 0;

@@ -19,10 +19,6 @@
                     setTimeout(function() {
                         me.addCb(path,stat);
                     }, x);
-                    // var x = Datauri(path);
-                    // console.log(x);
-                    // me.addCb(x,stat);
-
                 });
                 return this;
             },
