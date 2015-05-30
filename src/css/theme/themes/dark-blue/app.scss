@@ -1,65 +1,86 @@
+$screen-height:50em;
+$screen-width:50em;
+$rotate-width-divider:14;
+$rotate-height-divider:14;
+$rotate-panel-border-radius: 8px;
+$writing-board-divider:4;
 /* default theme */
-.dark-blue{
+
+.dark-blue {
     /* 旋转 panel */
-    &.rotate-panel.top{
+    &.rotate-panel{
+        background-color:rgba(10,10,10,0.3);
+    }
+    &.rotate-panel.top {
         /* background-color:red; */
+        -webkit-border-radius: 0px 0px $rotate-panel-border-radius $rotate-panel-border-radius;
+        border-radius: 0px 0px $rotate-panel-border-radius $rotate-panel-border-radius;
     }
-    &.rotate-panel.left{}
-
-    &.rotate-panel.right{}
-
-    &.rotate-panel.bottom{}
-
-
+    &.rotate-panel.left {
+        -webkit-border-radius: 0px $rotate-panel-border-radius 0px $rotate-panel-border-radius;
+        border-radius: 0px $rotate-panel-border-radius $rotate-panel-border-radius 0px;
+    }
+    &.rotate-panel.right {
+        -webkit-border-radius: $rotate-panel-border-radius 0px 0px $rotate-panel-border-radius;
+        border-radius: $rotate-panel-border-radius 0px 0px $rotate-panel-border-radius;
+    }
+    &.rotate-panel.bottom {
+        -webkit-border-radius: $rotate-panel-border-radius $rotate-panel-border-radius 0px 0px;
+        border-radius: $rotate-panel-border-radius $rotate-panel-border-radius 0px 0px;
+    }
     /* qrcode */
-    &.qrcode-badge{
 
+    &.qrcode-badge {}
+    &.auto-linker {
+        color: RGBA(207, 220, 229, 1);
     }
-    &.auto-linker{
-
-    }
-
     /* 容器 */
-    &#my-body{
 
+    &#my-body {
+        background-color: RGBA(33, 38, 44, 1);
+        border-radius: 8%;
     }
-
     /* search 框 */
-    &.search-input-wrapper{
 
+    &.search-input {
+        label {
+            background-color: RGBA(167, 177, 184, 1);
+        }
+        input {
+            background-color: RGBA(167, 177, 184, 1);
+        }
     }
-    &.search-input{
-
+    &.container {
+        background-color: RGBA(89, 95, 100, 1);
     }
-
-
-
     /* canvas writing board */
-    &.writing-board{
 
+    &.writing-board {
+        margin: 0 1em 0 1em;
     }
-
-
     /* lexicon */
-    &.lexicon-words{
 
+    &.lexicon-words {}
+    &.lexicon-word {
+        background-color:RGBA(182, 193, 200, 1);
+        color:black;
+        border-width:2px;
+        border-color:RGBA(33, 38, 44, 1);
     }
-
-    &.lexicon-word{
-
+    &.lexicon-images-refresh {
+        background-color:RGBA(19, 120, 188, 1);
+        border-color:RGBA(19, 120, 188, 1);
+        color:RGBA(237, 237, 237, 1);
     }
-
-    &.lexicon-images-refresh{
-
-    }
-
-
     /* 分页 */
-    &.pagination{
 
-    }
-
-    &.page.active{
-
+    &.pagination {
+        .page {
+            color: RGBA(237, 237, 237, 1);
+            background-color: transparent;
+        }
+        .page.active {
+            border: 1px solid;
+        }
     }
 }

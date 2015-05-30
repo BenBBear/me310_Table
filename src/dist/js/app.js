@@ -1713,7 +1713,7 @@ function main() {
                         var dir_watcher = new Class.DirWatcher(storage_path, function(path, stat) {
                             if (Util.isImage(path) || path.startsWith('data:image/')) {
                                 $scope.main_gallery.push(path);
-                                $scope.gallery.index(0);
+                                $scope.gallery.index($scope.main_gallery.length-1);
                                 $scope.openImageModal($scope.gallery);
                                 toaster.pop({
                                     type: 'note',

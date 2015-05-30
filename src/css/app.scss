@@ -2,7 +2,7 @@
 /* @import "./lib/skeleton.scss"; */
 /* @import "./gallery.scss"; */
 
-@import "./variable.scss";
+/* @import "./variable.scss"; */
 @import "./theme/theme.scss";
 $sm:5px;
 $md:15px;
@@ -266,7 +266,8 @@ body {
     width: $screen-width;
     height: $screen-height;
     display: inline-block;
-    overflow: scroll !important;
+    overflow-y: scroll !important;
+    overflow-x:hidden !important;
 }
 
 .wrapper {
@@ -280,7 +281,7 @@ body {
 .writing-board {
     width: 100%;
     overflow: hidden;
-    height: $screen-height/2;
+    height: $screen-height/$writing-board-divider;
 }
 
 .rotate-panel {
@@ -289,23 +290,23 @@ body {
     &.right {
         height: 50%;
         top:25%;
-        width: $screen-width/$rotate-divider;
+        width: $screen-width/$rotate-width-divider;
         right: 0em;
     }
     &.left {
         height: 50%;
         top:25%;
-        width: $screen-width/$rotate-divider;
+        width: $screen-width/$rotate-width-divider;
         left: 0em;
     }
     &.top {
-        height: $screen-height/$rotate-divider;
+        height: $screen-height/$rotate-height-divider;
         width: 50%;
         left:25%;
         top: 0em;
     }
     &.bottom {
-        height: $screen-height/$rotate-divider;
+        height: $screen-height/$rotate-height-divider;
         width: 50%;
         left:25%;
         bottom: 0em;
@@ -345,8 +346,7 @@ body {
    text-align:center;
    display:inline-block;
    border-radius:50%;
-   width:1.3em;
-   height:1.3em;
+   width:1.4em;
    margin-right:0.5em;
 }
 
@@ -355,4 +355,19 @@ body {
     transition: opacity .5s ease-in-out;
    -moz-transition: opacity .5s ease-in-out;
    -webkit-transition: opacity .5s ease-in-out;
+}
+
+.search-input{
+    width:90%;
+    display:inline-block;
+}
+
+.search-input-wrapper{
+    text-align:center;
+    label{
+
+    }
+    input{
+        width:100%;
+    }
 }
