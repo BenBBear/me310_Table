@@ -3,20 +3,23 @@
 
 <head>
     <meta charset="utf-8" />
+    <link href="../../../../../css/theme/iframe_theme.css" rel="stylesheet"/>
+
 </head>
 
 <body>
-    <button id="close">close</button>
-    <button id="trash">Trash</button>
-    <button id="undo">Undo</button>
-    <button id="redo">Redo</button>
-    <label for="languages">Language: </label>
-    <select id="languages">
+
+    <button id="close" class="btn"><img alt="" class="btn-icon" src="../../../../../assets/svgs/no.svg"/> </button>
+    <button id="trash" class="btn"><img alt="" class="btn-icon" src="../../../../../assets/svgs/bin.svg"/></button>
+    <button id="undo" class="btn"><img alt="" class="btn-icon" src="../../../../../assets/svgs/undo.svg"/></button>
+    <button id="redo" class="btn"><img alt="" class="btn-icon" src="../../../../../assets/svgs/redo.svg"/></button>
+    <label for="languages" style="display:none">Language: </label>
+    <select id="languages" style="display:none">
         <option value="en_US">en_US</option>
         <option value="fr_FR">fr_FR</option>
     </select>
     <br/>
-    <canvas id="canvas" width="1000" height="200" style="background-color: lightyellow; border: 1px solid darkgoldenrod;"></canvas>
+    <canvas id="canvas" width="1000" height="200" ></canvas>
     <br/>
     <pre style="display:none" id="result"></pre>
 </body>
@@ -149,6 +152,8 @@
 
             languages.addEventListener('change', function() {
                 textRecognizer.getParameters().setLanguage(languages.options[languages.selectedIndex].value);
+                /* textRecognizer.getParameters().setLanguage('en_US'); */
+                /* en_US */
                 doRecognition();
             }, false);
 

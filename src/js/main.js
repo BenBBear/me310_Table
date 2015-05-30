@@ -31,7 +31,7 @@ function main() {
 
 
     var app = Globals.app = angular.module('me310_Table', ['ionic',
-        'wu.masonry', 'toaster'
+        'wu.masonry', 'toaster' // , 'angular-images-loaded'
         // 'ngDraggable'
     ]);
 
@@ -109,14 +109,15 @@ function main() {
         }, function(nv, ov) {
             if (nv) {
                 var h_main_gallery = [];
-                var i = Math.ceil($scope.main_gallery.length / 10);
-                while (i > 0) {
+                var len = Math.ceil($scope.main_gallery.length / Constant.GalleryImagesPerPage);
+                var i = 1;
+                while (i <= len) {
                     var start, end;
-                    start = (i - 1) * 10;
-                    end = i * 10;
+                    start = (i - 1) * Constant.GalleryImagesPerPage;
+                    end = i * Constant.GalleryImagesPerPage;
                     var tmp = $scope.main_gallery.slice(start, end);
-                    h_main_gallery.push(tmp.reverse());
-                    i--;
+                    h_main_gallery.push(tmp);
+                    i++;
                 }
                 $scope.h_main_gallery = h_main_gallery;
             }
@@ -151,6 +152,25 @@ function main() {
         $scope.lexicon_images = []; //the image search results
         $scope.lexicon_images_cursor = 0;
         $scope.lexicon_words = []; //the relative words search results;
+        $scope.lexiconWordsCursorReset = function() {
+            $scope.lexicon_words_cursor_start = 0;
+        };
+        $scope.lexiconWordsCursorMore = function() {
+            var len = $scope.lexicon_words.length;
+            $scope.lexicon_words_cursor_start = ($scope.lexicon_words_cursor_start + Constant.WordsPerPage) % len;
+        };
+        $scope.lexiconWordsCursorReset();
+
+        $scope.lexiconImagesSelectReset = function() {
+            $scope.lexicon_images_select_start = 0;
+        };
+        $scope.lexiconImagesSelectMore = function() {
+            var len = $scope.lexicon_images.length;
+            $scope.lexicon_images_select_start = ($scope.lexicon_images_select_start + Constant.LexiconImagesPerPage) % len;
+        };
+        $scope.lexiconImagesSelectReset();
+
+
         $scope.lexicon = {
             index: function(x) {
                 $scope.lexicon_images_cursor = x;
@@ -183,7 +203,18 @@ function main() {
                 // Every Thing Goes Here
                 storage_path.then(function(storage_path) {
                     pasteasy_qrcode.then(function(pasteasy_qrcode) {
+                        $scope.storage_path = storage_path;
+                        $scope.pasteasy_qrcode = pasteasy_qrcode;
+                        $scope.WordsPerPage = Constant.WordsPerPage;
+                        $scope.LexiconImagesPerPage = Constant.LexiconImagesPerPage;
+                        $scope.GalleryImagesPerPage = Constant.GalleryImagesPerPage;
 
+                        $scope.min = function(a, b) {
+                            return Math.min(a, b);
+                        };
+                        $scope.range = function(n) {
+                            return new Array(n);
+                        };
                         var set = $scope.set = function(k, v) {
                             $scope[k] = v;
                             return set;
@@ -194,6 +225,7 @@ function main() {
                         // setup $scope variables
                         SetUpGallery($scope);
 
+
                         /**
                          lexicon_input
                          main_gallery
@@ -202,9 +234,17 @@ function main() {
                          */
                         // setup the dirwatcher
                         var dir_watcher = new Class.DirWatcher(storage_path, function(path, stat) {
-                            if (Util.isImage(path))
-                                $scope.main_gallery.unshift(path);
-                            $apply($scope);
+                            if (Util.isImage(path) || path.startsWith('data:image/')) {
+                                $scope.main_gallery.push(path);
+                                $scope.gallery.index($scope.main_gallery.length-1);
+                                $scope.openImageModal($scope.gallery);
+                                toaster.pop({
+                                    type: 'note',
+                                    title: "Recieved",
+                                    body: "Your Image will appear in the Last Page."
+                                });
+                                $apply($scope);
+                            }
                         });
 
                         // start the server
@@ -215,64 +255,40 @@ function main() {
                         });
 
 
-                        dir_watcher.start();
+                        dir_watcher.start(1500);
                         sharing_server.start();
-
+                        $scope.server_qrcode = Util.qrEncode(sharing_server.upload_addr);
 
                         // Watching the lexicon_input
-                        var latest_search_input;
                         Util.latest_search_input = "";
                         $scope.$watch('lexicon_input', function(nv, ov) {
                             Util.latest_search_input = nv;
-                            latest_search_input = nv;
                             if (nv) {
-                                Util.getRelatedWord(nv, function(err, origin_value, resultList) {
-                                    if (err)
-                                        throw err;
-                                    else {
-                                        if (origin_value == latest_search_input) {
-                                            var result_to_display = [];
-                                            resultList.forEach(function(r) {
-                                                result_to_display = result_to_display.concat(r.slice(0, 10));
-                                            });
-                                            $scope.lexicon_words = result_to_display.slice(0, 10);
-                                            if (!$scope.$$phase) {
-                                                $scope.$apply();
-                                            }
-                                        }
-                                    }
-                                });
-
-                                Util.googleImageSearch({
-                                    for: nv,
-                                    page: Constant.GoogleImagePageNumber,
-                                    rsz: Constant.GoogleImageNumberPerPage
-                                }, function(err, origin_value, images) {
+                                Util.google(nv, function(err, images, words) {
                                     if (err) {
-                                        throw err;
+                                        $log.error(err);
                                     } else {
-                                        if (origin_value == latest_search_input) {
-                                            $scope.lexicon_images = images.map(function(img) {
-                                                return img.url;
-                                            });
-                                            $apply($scope);
-                                        }
+                                        $scope.lexicon_images = images;
+                                        $scope.lexicon_words = words;
+                                        $scope.lexiconWordsCursorReset();
+                                        $scope.lexiconImagesSelectReset();
+                                        $apply($scope);
                                     }
                                 });
                             } else {
                                 $scope.lexicon_images = [];
                                 $scope.lexicon_images_cursor = 0;
-                                $scope.lexicon_words = 0;
+                                $scope.lexicon_words = [];
                             }
                         });
 
                         // Image Modal
                         $scope.openImageModal = function(src) {
                             $scope.current_gallery = src;
-                            $scope.openImageModal.modal.show();
+                            $scope.openImageModal.modal && $scope.openImageModal.modal.show();
                         };
                         $scope.closeImageModal = function() {
-                            $scope.openImageModal.modal.hide();
+                            $scope.openImageModal.modal && $scope.openImageModal.modal.hide();
                         };
                         $ionicModal.fromTemplateUrl('image-modal.html', function(modal) {
                             $scope.openImageModal.modal = modal;
@@ -281,72 +297,7 @@ function main() {
                             animation: 'slide-in-up'
                         });
 
-
-                        // Qrcode Popover
-                        $scope.openQrPopover = function($event) {
-                            $scope.openQrPopover.popover.show($event);
-                        };
-                        $scope.closeQrPopover = function() {
-                            $scope.openQrPopover.popover.hide();
-                        };
-                        $ionicPopover.fromTemplateUrl('qrcode-popover.html', {
-                            scope: $scope
-                        }).then(function(popover) {
-                            $scope.openQrPopover.popover = popover;
-                        });
-                        $scope.pasteasy_qrcode = pasteasy_qrcode;
-                        $scope.server_qrcode = Util.qrEncode(sharing_server.upload_addr);
-
-
-                        // Drag And Drop
-                        $scope.imageDropTo = function($data, where, deleted) {
-                            $log.info('Dropping');
-                            if ($data) {
-                                if ($data.from == where) {
-                                    $log.info('Drag Drop in the same place');
-                                    return;
-                                } else if ($data.to == where) {
-                                    // data.index;
-                                    // $data.index = $data.from.indexOf($data.image);
-                                    if ($data.image != 'assets/images/bear.jpg') {
-                                        if (!deleted) {
-                                            var img = $data.from[$data.index];
-                                            $data.to.unshift(img);
-                                        }
-                                        $data.from.splice($data.index, 1);
-
-                                        $log.info('Drag Drop Successfully');
-                                    }
-                                }
-                            }
-                        };
-
-                        // draggable:end
-                        $scope.dragging_from_gallery = false;
-                        $scope.dragging_from_lexicon = false;
-                        var dragging = function(from, b) {
-                            if (from == $scope.main_gallery) {
-                                $log.info('dragging_from_gallery', b);
-                                set('dragging_from_gallery', b);
-                            } else if (from == $scope.lexicon_images) {
-                                $log.info('dragging_from_lexicon', b);
-                                set('dragging_from_lexicon', b);
-                            }
-                            $apply($scope);
-                        };
-                        $scope.$on('draggable:start', function($event, info) {
-                            dragging(info.data.from, true);
-                        });
-                        $scope.$on('draggable:end', function($event, info) {
-
-                            dragging(info.data.from, false);
-
-                        });
-
-
                         //rotate
-
-
                         $scope.rotate = function(x) {
                             x = Math.abs(x);
                             console.log('previous body_angle is:' + $scope.body_angle || 0);
@@ -363,8 +314,10 @@ function main() {
                             }
                             console.log('current body_angle is:' + $scope.body_angle || 0);
                             // Util.rotate(document.body, $scope.body_angle);
-                            Util.rotate('#my-body', $scope.body_angle);
-                            Util.rotate('.modal', $scope.body_angle);
+                            Util.redraw('#my-body')
+                                .rotate('#my-body', $scope.body_angle);
+
+                            Util.rotate('.modal-backdrop', $scope.body_angle);
                         };
 
                         function is(x, y, z) {
@@ -379,16 +332,16 @@ function main() {
 
                             switch (angle) { //todo here
                                 case 0:
-                                    direction = is(x, 'right', 'next') || is(x, 'left', 'prev') || 'stay';
+                                    direction = is(x, 'right', 'right') || is(x, 'left', 'left') || 'stay';
                                     break;
                                 case 90:
-                                    direction = is(x, 'up', 'prev') || is(x, 'down', 'next') || 'stay';
+                                    direction = is(x, 'up', 'left') || is(x, 'down', 'right') || 'stay';
                                     break;
                                 case 180:
-                                    direction = is(x, 'left', 'next') || is(x, 'right', 'prev') || 'stay';
+                                    direction = is(x, 'left', 'right') || is(x, 'right', 'left') || 'stay';
                                     break;
                                 case 270:
-                                    direction = is(x, 'down', 'prev') || is(x, 'up', 'next') || 'stay';
+                                    direction = is(x, 'down', 'left') || is(x, 'up', 'right') || 'stay';
                                     break;
                             }
                             cb(direction);
@@ -397,6 +350,11 @@ function main() {
                         //swipe
                         $scope.swipe = function(x) {
                             onSwipe(x, function(cmd) {
+                                if (cmd == 'left') {
+                                    cmd = 'next';
+                                } else if (cmd == 'right') {
+                                    cmd = 'prev';
+                                }
                                 ($scope.current_gallery[cmd] || function() {})();
                             });
                         };
@@ -410,13 +368,13 @@ function main() {
                             onSwipe(direction, function(cmd) {
                                 var idx = $scope.current_h_main_gallery_index;
                                 switch (cmd) {
-                                    case 'prev':
+                                    case 'left':
                                         {
                                             $log.info('h_main_gallery go next');
                                             $scope.current_h_main_gallery_index = idx < $scope.h_main_gallery.length - 1 ? idx + 1 : idx;
                                             break;
                                         }
-                                    case 'next':
+                                    case 'right':
                                         {
                                             $log.info('h_main_gallery go prev');
                                             $scope.current_h_main_gallery_index = idx > 0 ? idx - 1 : 0;
@@ -430,7 +388,7 @@ function main() {
 
                         $scope.addToGallery = function(image_modal_src) {
                             if ($scope.main_gallery.indexOf(image_modal_src) == -1) {
-                                $scope.main_gallery.unshift(image_modal_src);
+                                $scope.main_gallery.push(image_modal_src);
                                 toaster.pop('success', "Well Done", "The Image Has Been Saved");
                                 $timeout(function() {
                                     $scope.current_h_main_gallery_index = $scope.h_main_gallery.length - 1;
@@ -468,6 +426,43 @@ function main() {
                             $apply($scope);
                         }
                         $window.addEventListener('message', receiveMessage);
+
+
+
+
+
+                        $scope.showQrCode = function(sel) {
+                            var opacity = $(sel).css("opacity");
+                            if (opacity == "1") {
+                                $(sel).css("opacity", 0);
+                            } else {
+                                $(sel).css("opacity", 1);
+                            }
+                        };
+
+
+                        // Theme
+                        var themes = ['dark-blue'];
+
+                        $scope.themes = {};
+                        $scope.resetTheme = function (){
+                            themes.forEach(function(x){
+                                $scope.themes[x] = false;
+                            });
+                        };
+                        $scope.themes_cursor = 0;
+                        $scope.toggleTheme = function() {
+                            var len = themes.length;
+                            $scope.themes_cursor = ($scope.themes_cursor + 1) % len;
+                            $scope.setTheme($scope.themes_cursor);
+                        };
+                        $scope.setTheme = function(idx){
+                            idx = idx || 0;
+                            $scope.resetTheme();
+                            $scope.themes[themes[$scope.themes_cursor]] = true;
+                        };
+                        $scope.setTheme(0);
+
                         // END
                         message.startUp();
                     });

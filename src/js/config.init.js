@@ -2,9 +2,10 @@ var Util = {}; // utility
 var Node = {}; // Node Modules
 var Class = {}; // Classes
 var Constant = {
-    GoogleImagePageNumber:1,
-    GoogleImageNumberPerPage:8,
-    DEBUG_UI:false
+    DEBUG_UI:false,
+    LexiconImagesPerPage:8,
+    GalleryImagesPerPage:10,
+    WordsPerPage:6
 }; // Constant
 var Settings = {};
 var Functions = {

@@ -1,0 +1,30 @@
+body{
+    background-color:rgba(31, 36, 42, 1);
+    margin-left: 0;
+}
+
+
+
+.btn{
+
+    background-color:rgba(19, 120, 188, 1);
+    border:none;
+    color:RGBA(237, 237, 237, 1);
+    width: 4em;
+    height: 3em;
+    margin-bottom: 0.5em;
+    margin-right: 1em;
+    border-radius:10px;
+}
+
+#canvas{
+    background-color:rgba(207, 220, 229, 1);
+    border:none;
+}
+
+
+.btn-icon{
+    color:white;
+    margin:2px;
+    width:2em;
+}

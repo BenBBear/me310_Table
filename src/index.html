@@ -19,29 +19,31 @@
     <input type="file" id="storage_dir_chooser" style="display:none;" webkitdirectory directory multiple/>
     <input type="file" id="pasteasy_qr_chooser" style="display:none;" accept="image/x-png, image/gif, image/jpeg" />
     <div class="wrapper">
-        <div class="container">
-            <div class="rotate-panel top" ng-click="rotate(180);"></div>
-            <div class="rotate-panel right" ng-click="rotate(270);"></div>
-            <div class="rotate-panel left" ng-click="rotate(90);"></div>
-            <div class="rotate-panel bottom" ng-click="rotate(0);"></div>
-            <div class="pull-right pull-up">
-                <img class="qrcode " ng-src="{{pasteasy_qrcode}}">
-                <p class="auto-linker">Pasteasy</p>
+        <div class="container" ng-class="themes">
+            <div class="rotate-panel top"  ng-class="themes" ng-click="rotate(180);"></div>
+            <div class="rotate-panel right" ng-class="themes" ng-click="rotate(270);"></div>
+            <div class="rotate-panel left" ng-class="themes" ng-click="rotate(90);"></div>
+            <div class="rotate-panel bottom" ng-class="themes" ng-click="rotate(0);"></div>
+            <div class="pull-right pull-up qrcode-badge" ng-class="themes"  id="pasteasy_qrcode"  on-double-tap="showQrCode('#pasteasy_qrcode')" >
+                <img class="qrcode" ng-src="{{pasteasy_qrcode}}">
+                <p class="auto-linker" ng-class="themes">Pasteasy</p>
             </div>
-            <div class="pull-left pull-up">
-                <img class="qrcode  " ng-src="{{server_qrcode}}">
-                <p class="auto-linker">Download</p>
+            <div class="pull-left pull-up qrcode-badge" ng-class="themes"  id="server_qrcode"  on-double-tap="showQrCode('#server_qrcode')">
+                <img class="qrcode  " ng-src="{{server_qrcode}}"  >
+                <p class="auto-linker" ng-class="themes">Download</p>
             </div>
 
 
-            <div id="my-body">
-                <div class="item-input-inset margin-top-vvlg">
-                    <label class="item-input-wrapper">
-                        <input type="search" placeholder="What's Your Topic?" ng-model="lexicon_input" ng-focus="startWriting()">
-                    </label>
+            <div id="my-body" ng-class="themes">
+                <div class="search-input-wrapper" ng-class="themes">
+                    <div class="search-input item-input-inset margin-top-vvlg" ng-class="themes">
+                        <label class="item-input-wrapper " >
+                            <input type="search" class=""  placeholder="What's Your Topic?" ng-model="lexicon_input" ng-focus="startWriting()" >
+                        </label>
+                    </div>
                 </div>
-                <div class="main-gallery margin-top-vvlg position-inherit">
-                    <iframe ng-if="writing" scrolling="no" class="writing-board" ng-src="./html/myscript/sample/text/rest/index.html"></iframe>
+                <div class=" margin-top-vvlg position-inherit" >
+                    <iframe ng-if="writing" scrolling="no" class="writing-board" ng-src="./html/myscript/sample/text/rest/index.html" ng-class="themes"></iframe>
 
                     <div ng-if="lexicon_words.length > 0 || lexicon_images.length > 0 " class="lexicon" ng-drop="true" ng-drop-success="imageDropTo($data, lexicon_images, true)">
 
@@ -49,48 +51,43 @@
                             <div class="col col-75">
                                 <div>
                                     <div masonry>
-                                        <div class="masonry-brick" ng-repeat="image in lexicon_images track by $index">
+                                        <div class="masonry-brick" ng-repeat="image in lexicon_images.slice(lexicon_images_select_start, min(lexicon_images_select_start+LexiconImagesPerPage, lexicon_images.length)) track by $index">
                                             <div ng-drag="true" ng-drag-start="imageDragstart()" ng-drag-data="{index:$index,image:image,from:lexicon_images, to:main_gallery}">
-                                                <img err-remove source="lexicon_images" ng-src="{{image}}" class="image-item" alt="No Images Here" ng-click="lexicon.index($index);openImageModal(lexicon)">
+                                                <img images-loaded="imgLoadedEvents"  source="lexicon_images" ng-src="{{image}}" class="image-item" err-remove  ng-click="lexicon.index($index);openImageModal(lexicon)">
                                             </div>
                                         </div>
                                     </div>
+                                    <button class="button button-block lexicon-images-refresh" ng-click="lexiconImagesSelectMore()" ng-class="themes"  > load more <i class="icon ion-ios-refresh"></i></button>
                                 </div>
                             </div>
                             <div class="col">
-                                <ul class="list lexicon-words">
-                                    <li class="item" ng-repeat="word in lexicon_words.slice(0,7)" ng-click="setLexiconInput(word)">
+                                <ul class="list lexicon-words" ng-class="themes">
+                                    <li class="item lexicon-word" ng-class="themes" ng-repeat="word in lexicon_words.slice(lexicon_words_cursor_start, min(lexicon_words_cursor_start+ WordsPerPage, lexicon_words.length))" ng-click="setLexiconInput(word)">
                                         {{word}}
                                     </li>
+                                    <li class="item lexicon-word" ng-class="themes" ng-click="lexiconWordsCursorMore()"> <i class="icon ion-ios-refresh"></i></li>
                                 </ul>
                             </div>
                         </div>
-                        <!-- <div ng-if="get('dragging_from_gallery')" class="dropping-zone">
-                    Drop Here To Remove
-                    </div> -->
                     </div>
 
-                    <!-- <div ng-if="false">
-                <div ng-drop="true" ng-if="!(lexicon_words.length > 0 || lexicon_images.length > 0 )" ng-drop-success="imageDropTo($data, lexicon_images, true)" ng-class="{lexicon:get('dragging_from_gallery')}">
-                <div  ng-class="{transparent:!get('dragging_from_gallery')}" class="dropping-zone" style="padding:0px;height:4em;">
-                <br> Drop Here To Remove
-                </div>
-                </div>
-                </div> -->
+
 
                     <div ng-drop="true" ng-drop-success="imageDropTo($data, main_gallery)" class="image-container" on-swipe-up="hscroll('up')" on-swipe-down="hscroll('down')" on-swipe-left="hscroll('left')" on-swipe-right="hscroll('right')">
-                        <!-- <div ng-if="get('dragging_from_lexicon')" class="dropping-zone">
-                    Drop Here To Save
-                    </div> -->
-                        <!-- {{h_main_gallery.length}} -->
+
+
                         <div ng-repeat="image_set in h_main_gallery track by $index" ng-if="isHorizontalCurrentView($index)">
 
                             <div style="display:inline-block" ng-repeat="image in image_set" ng-drag="true" class="image-item-container" ng-drag-data="{image:image,from:main_gallery,to:lexicon_images}">
                                 <img ng-src="{{image}}" class="image-item" ng-click="gallery.index(main_gallery.indexOf(image));openImageModal(gallery)">
-                            </div>
-
+                            </Div>
                         </div>
 
+                        <div class="pagination" ng-class="themes">
+                            <span ng-repeat="i in range(h_main_gallery.length) track by $index">
+                                <span class="page"   ng-click="set('current_h_main_gallery_index', $index)"  ng-class="{active:($index == current_h_main_gallery_index)}">  {{$index + 1}} </span>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -106,6 +103,8 @@
 <script src="./lib/other/masonry.pkgd.min.js"></script>
 <script src="./lib/other/angular-masonry.min.js"></script>
 <script src="./lib/other/toaster.min.js"></script>
+<script src="./lib/other/angular-images-loaded.js"></script>
+<script src="./lib/other/parallel.js"></script>
 <script src="./dist/js/app.js"></script>
 
 
