@@ -20,10 +20,10 @@
     <input type="file" id="pasteasy_qr_chooser" style="display:none;" accept="image/x-png, image/gif, image/jpeg" />
     <div class="wrapper">
         <div class="container" ng-class="themes">
-            <div class="rotate-panel top"  ng-class="themes" ng-click="rotate(180);"></div>
-            <div class="rotate-panel right" ng-class="themes" ng-click="rotate(270);"></div>
-            <div class="rotate-panel left" ng-class="themes" ng-click="rotate(90);"></div>
-            <div class="rotate-panel bottom" ng-class="themes" ng-click="rotate(0);"></div>
+            <div class="rotate-panel top"  ng-class="themes" ng-if="body_angle != 180"  ng-click="rotate(180);"></div>
+            <div class="rotate-panel right" ng-class="themes" ng-if="body_angle != 270"  ng-click="rotate(270);"></div>
+            <div class="rotate-panel left" ng-class="themes" ng-if="body_angle != 90" ng-click="rotate(90);"></div>
+            <div class="rotate-panel bottom" ng-class="themes" ng-if="body_angle != 0" ng-click="rotate(0);"></div>
             <div class="pull-right pull-up qrcode-badge" ng-class="themes"  id="pasteasy_qrcode"  on-double-tap="showQrCode('#pasteasy_qrcode')" >
                 <img class="qrcode" ng-src="{{pasteasy_qrcode}}">
                 <p class="auto-linker" ng-class="themes">Pasteasy</p>
