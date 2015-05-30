@@ -40,8 +40,8 @@
                         <input type="search" class="search-input"  placeholder="What's Your Topic?" ng-model="lexicon_input" ng-focus="startWriting()" ng-class="themes">
                     </label>
                 </div>
-                <div class="main-gallery margin-top-vvlg position-inherit" ng-class="themes">
-                    <iframe ng-if="writing" scrolling="no" class="writing-board" ng-src="./html/myscript/sample/text/rest/index.html"></iframe>
+                <div class=" margin-top-vvlg position-inherit" >
+                    <iframe ng-if="writing" scrolling="no" class="writing-board" ng-src="./html/myscript/sample/text/rest/index.html" ng-class="themes"></iframe>
 
                     <div ng-if="lexicon_words.length > 0 || lexicon_images.length > 0 " class="lexicon" ng-drop="true" ng-drop-success="imageDropTo($data, lexicon_images, true)">
 
@@ -81,9 +81,9 @@
                             </Div>
                         </div>
 
-                        <div class="pagination">
+                        <div class="pagination" ng-class="themes">
                             <span ng-repeat="i in range(h_main_gallery.length) track by $index">
-                                <span class="page"  ng-class="{active:($index == current_h_main_gallery_index)}">  {{$index + 1}} </span>
+                                <span class="page"  ng-class="themes"  ng-class="{active:($index == current_h_main_gallery_index)}">  {{$index + 1}} </span>
                             </span>
                         </div>
                     </div>

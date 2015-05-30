@@ -1,7 +1,19 @@
+@charset "UTF-8";
 /* @import "./lib/normalize.scss"; */
 /* @import "./lib/skeleton.scss"; */
 /* @import "./gallery.scss"; */
 /* default theme */
+.dark-blue {
+  /* 旋转 panel */
+  /* qrcode */
+  /* 容器 */
+  /* search 框 */
+  /* canvas writing board */
+  /* lexicon */
+  /* 分页 */ }
+  .dark-blue.rotate-panel.top {
+    /* background-color:red; */ }
+
 .wrapper-sm {
   padding: 5px; }
 
