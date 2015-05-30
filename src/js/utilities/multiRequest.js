@@ -1,8 +1,7 @@
 (function(){
-        var request = require('request');
+    var request = require('request');
     var thunks = require('thunks')();
 
-    var semanticLink = 'http://semantic-link.com/related.php?word=';
 
     var thunk_request = thunks.thunkify(request);
 

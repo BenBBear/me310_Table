@@ -109,12 +109,12 @@ function main() {
         }, function(nv, ov) {
             if (nv) {
                 var h_main_gallery = [];
-                var len = Math.ceil($scope.main_gallery.length / 10);
+                var len = Math.ceil($scope.main_gallery.length / Constant.GalleryImagesPerPage);
                 var i = 1;
                 while (i <= len) {
                     var start, end;
-                    start = (i - 1) * 10;
-                    end = i * 10;
+                    start = (i - 1) * Constant.GalleryImagesPerPage;
+                    end = i * Constant.GalleryImagesPerPage;
                     var tmp = $scope.main_gallery.slice(start, end);
                     h_main_gallery.push(tmp);
                     i++;
@@ -152,16 +152,23 @@ function main() {
         $scope.lexicon_images = []; //the image search results
         $scope.lexicon_images_cursor = 0;
         $scope.lexicon_words = []; //the relative words search results;
-        $scope.lexiconWordsCursorReset = function(){
+        $scope.lexiconWordsCursorReset = function() {
             $scope.lexicon_words_cursor_start = 0;
         };
-        $scope.lexiconWordsCursorMore = function(){
-            debugger;
+        $scope.lexiconWordsCursorMore = function() {
             var len = $scope.lexicon_words.length;
-            $scope.lexicon_words_cursor_start =  ($scope.lexicon_words_cursor_start + 6) % len;
+            $scope.lexicon_words_cursor_start = ($scope.lexicon_words_cursor_start + Constant.WordsPerPage) % len;
         };
         $scope.lexiconWordsCursorReset();
 
+        $scope.lexiconImagesSelectReset = function() {
+            $scope.lexicon_images_select_start = 0;
+        };
+        $scope.lexiconImagesSelectMore = function() {
+            var len = $scope.lexicon_images.length;
+            $scope.lexicon_images_select_start = ($scope.lexicon_images_select_start + Constant.LexiconImagesPerPage) % len;
+        };
+        $scope.lexiconImagesSelectReset();
 
 
         $scope.lexicon = {
@@ -196,9 +203,14 @@ function main() {
                 // Every Thing Goes Here
                 storage_path.then(function(storage_path) {
                     pasteasy_qrcode.then(function(pasteasy_qrcode) {
+                        $scope.storage_path = storage_path;
+                        $scope.pasteasy_qrcode = pasteasy_qrcode;
+                        $scope.WordsPerPage = Constant.WordsPerPage;
+                        $scope.LexiconImagesPerPage = Constant.LexiconImagesPerPage;
+                        $scope.GalleryImagesPerPage = Constant.GalleryImagesPerPage;
 
-                        $scope.min  = function(a,b){
-                            return Math.min(a,b);
+                        $scope.min = function(a, b) {
+                            return Math.min(a, b);
                         };
                         $scope.range = function(n) {
                             return new Array(n);
@@ -245,53 +257,28 @@ function main() {
 
                         dir_watcher.start(1500);
                         sharing_server.start();
-
+                        $scope.server_qrcode = Util.qrEncode(sharing_server.upload_addr);
 
                         // Watching the lexicon_input
-                        var latest_search_input;
                         Util.latest_search_input = "";
                         $scope.$watch('lexicon_input', function(nv, ov) {
                             Util.latest_search_input = nv;
-                            latest_search_input = nv;
                             if (nv) {
-                                Util.getRelatedWord({
-                                    word: nv,
-                                    result_num: 30
-                                }, function(err, origin_value, resultList) {
-                                    if (err)
-                                        throw err;
-                                    else {
-                                        if (origin_value == latest_search_input) {
-
-                                            $scope.lexiconWordsCursorReset();
-                                            $scope.lexicon_words = resultList;
-                                            if (!$scope.$$phase) {
-                                                $scope.$apply();
-                                            }
-                                        }
-                                    }
-                                });
-
-                                Util.googleImageSearch({
-                                    for: nv,
-                                    page: Constant.GoogleImagePageNumber,
-                                    rsz: Constant.GoogleImageNumberPerPage
-                                }, function(err, origin_value, images) {
+                                Util.google(nv, function(err, images, words) {
                                     if (err) {
-                                        throw err;
+                                        $log.error(err);
                                     } else {
-                                        if (origin_value == latest_search_input) {
-                                            $scope.lexicon_images = images.map(function(img) {
-                                                return img.url;
-                                            });
-                                            $apply($scope);
-                                        }
+                                        $scope.lexicon_images = images;
+                                        $scope.lexicon_words = words;
+                                        $scope.lexiconWordsCursorReset();
+                                        $scope.lexiconImagesSelectReset();
+                                        $apply($scope);
                                     }
                                 });
                             } else {
                                 $scope.lexicon_images = [];
                                 $scope.lexicon_images_cursor = 0;
-                                $scope.lexicon_words = 0;
+                                $scope.lexicon_words = [];
                             }
                         });
 
@@ -310,72 +297,7 @@ function main() {
                             animation: 'slide-in-up'
                         });
 
-
-                        // Qrcode Popover
-                        $scope.openQrPopover = function($event) {
-                            $scope.openQrPopover.popover.show($event);
-                        };
-                        $scope.closeQrPopover = function() {
-                            $scope.openQrPopover.popover.hide();
-                        };
-                        $ionicPopover.fromTemplateUrl('qrcode-popover.html', {
-                            scope: $scope
-                        }).then(function(popover) {
-                            $scope.openQrPopover.popover = popover;
-                        });
-                        $scope.pasteasy_qrcode = pasteasy_qrcode;
-                        $scope.server_qrcode = Util.qrEncode(sharing_server.upload_addr);
-
-
-                        // Drag And Drop
-                        $scope.imageDropTo = function($data, where, deleted) {
-                            $log.info('Dropping');
-                            if ($data) {
-                                if ($data.from == where) {
-                                    $log.info('Drag Drop in the same place');
-                                    return;
-                                } else if ($data.to == where) {
-                                    // data.index;
-                                    // $data.index = $data.from.indexOf($data.image);
-                                    if ($data.image != 'assets/images/bear.jpg') {
-                                        if (!deleted) {
-                                            var img = $data.from[$data.index];
-                                            $data.to.unshift(img);
-                                        }
-                                        $data.from.splice($data.index, 1);
-
-                                        $log.info('Drag Drop Successfully');
-                                    }
-                                }
-                            }
-                        };
-
-                        // draggable:end
-                        $scope.dragging_from_gallery = false;
-                        $scope.dragging_from_lexicon = false;
-                        var dragging = function(from, b) {
-                            if (from == $scope.main_gallery) {
-                                $log.info('dragging_from_gallery', b);
-                                set('dragging_from_gallery', b);
-                            } else if (from == $scope.lexicon_images) {
-                                $log.info('dragging_from_lexicon', b);
-                                set('dragging_from_lexicon', b);
-                            }
-                            $apply($scope);
-                        };
-                        $scope.$on('draggable:start', function($event, info) {
-                            dragging(info.data.from, true);
-                        });
-                        $scope.$on('draggable:end', function($event, info) {
-
-                            dragging(info.data.from, false);
-
-                        });
-
-
                         //rotate
-
-
                         $scope.rotate = function(x) {
                             x = Math.abs(x);
                             console.log('previous body_angle is:' + $scope.body_angle || 0);

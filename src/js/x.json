@@ -1,0 +1,471 @@
+{
+ "kind": "customsearch#search",
+ "url": {
+  "type": "application/json",
+  "template": "https://www.googleapis.com/customsearch/v1?q={searchTerms}&num={count?}&start={startIndex?}&lr={language?}&safe={safe?}&cx={cx?}&cref={cref?}&sort={sort?}&filter={filter?}&gl={gl?}&cr={cr?}&googlehost={googleHost?}&c2coff={disableCnTwTranslation?}&hq={hq?}&hl={hl?}&siteSearch={siteSearch?}&siteSearchFilter={siteSearchFilter?}&exactTerms={exactTerms?}&excludeTerms={excludeTerms?}&linkSite={linkSite?}&orTerms={orTerms?}&relatedSite={relatedSite?}&dateRestrict={dateRestrict?}&lowRange={lowRange?}&highRange={highRange?}&searchType={searchType}&fileType={fileType?}&rights={rights?}&imgSize={imgSize?}&imgType={imgType?}&imgColorType={imgColorType?}&imgDominantColor={imgDominantColor?}&alt=json"
+ },
+ "queries": {
+  "nextPage": [
+   {
+    "title": "Google Custom Search - bear",
+    "totalResults": "58400000",
+    "searchTerms": "bear",
+    "count": 10,
+    "startIndex": 11,
+    "inputEncoding": "utf8",
+    "outputEncoding": "utf8",
+    "safe": "off",
+    "cx": "006496385873236739195:hu_sr_4w_hc"
+   }
+  ],
+  "request": [
+   {
+    "title": "Google Custom Search - bear",
+    "totalResults": "58400000",
+    "searchTerms": "bear",
+    "count": 10,
+    "startIndex": 1,
+    "inputEncoding": "utf8",
+    "outputEncoding": "utf8",
+    "safe": "off",
+    "cx": "006496385873236739195:hu_sr_4w_hc"
+   }
+  ]
+ },
+ "context": {
+  "title": "Me310-table"
+ },
+ "searchInformation": {
+  "searchTime": 0.513349,
+  "formattedSearchTime": "0.51",
+  "totalResults": "58400000",
+  "formattedTotalResults": "58,400,000"
+ },
+ "items": [
+  {
+   "kind": "customsearch#result",
+   "title": "Bear - Wikipedia, the free encyclopedia",
+   "htmlTitle": "\u003cb\u003eBear\u003c/b\u003e - Wikipedia, the free encyclopedia",
+   "link": "http://en.wikipedia.org/wiki/Bear",
+   "displayLink": "en.wikipedia.org",
+   "snippet": "The English word \"bear\" comes from Old English bera and belongs to a family of \nnames for the bear in Germanic languages that originate from an adjective ...",
+   "htmlSnippet": "The English word &quot;\u003cb\u003ebear\u003c/b\u003e&quot; comes from Old English bera and belongs to a family of \u003cbr\u003e\nnames for the \u003cb\u003ebear\u003c/b\u003e in Germanic languages that originate from an adjective&nbsp;...",
+   "cacheId": "dOSNTnKusVYJ",
+   "formattedUrl": "en.wikipedia.org/wiki/Bear",
+   "htmlFormattedUrl": "en.wikipedia.org/wiki/\u003cb\u003eBear\u003c/b\u003e",
+   "pagemap": {
+    "cse_image": [
+     {
+      "src": "http://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Ursus_arctos_-_Norway.jpg/200px-Ursus_arctos_-_Norway.jpg"
+     }
+    ],
+    "cse_thumbnail": [
+     {
+      "width": "160",
+      "height": "240",
+      "src": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcS0Lw6ziH18TQ3DntSy6PMnI6iuItJojQHrQtYlbOU0NBWhFv8y-3D4N5xm"
+     }
+    ]
+   }
+  },
+  {
+   "kind": "customsearch#result",
+   "title": "Bear | Define Bear at Dictionary.com",
+   "htmlTitle": "\u003cb\u003eBear\u003c/b\u003e | Define \u003cb\u003eBear\u003c/b\u003e at Dictionary.com",
+   "link": "http://dictionary.reference.com/browse/bear",
+   "displayLink": "dictionary.reference.com",
+   "snippet": "The roof will not bear the strain of his weight. 3. to bring forth (young); give birth to\n: to bear a child. 4. to produce by natural growth: a tree that bears fruit. 5.",
+   "htmlSnippet": "The roof will not \u003cb\u003ebear\u003c/b\u003e the strain of his weight. 3. to bring forth (young); give birth to\u003cbr\u003e\n: to \u003cb\u003ebear\u003c/b\u003e a child. 4. to produce by natural growth: a tree that bears fruit. 5.",
+   "cacheId": "jrl6D-ldP-oJ",
+   "formattedUrl": "dictionary.reference.com/browse/bear",
+   "htmlFormattedUrl": "dictionary.reference.com/browse/\u003cb\u003ebear\u003c/b\u003e",
+   "pagemap": {
+    "cse_image": [
+     {
+      "src": "http://static.sfdict.com/dictcloud/img/social_logo-b8e2f.png"
+     }
+    ],
+    "metatags": [
+     {
+      "fb:admins": "100000304287730;109125464873",
+      "og:site_name": "Dictionary.com",
+      "og:image": "http://static.sfdict.com/dictcloud/img/social_logo-b8e2f.png",
+      "fb:app_id": "127444090629600",
+      "msvalidate.01": "DF5542D7723770377E9ABFF59AC1DC97",
+      "viewport": "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+      "og:title": "the definition of bear",
+      "og:url": "http://dictionary.reference.com/browse/bear"
+     }
+    ]
+   }
+  },
+  {
+   "kind": "customsearch#result",
+   "title": "Bear | Definition of bear by Merriam-Webster",
+   "htmlTitle": "\u003cb\u003eBear\u003c/b\u003e | Definition of \u003cb\u003ebear\u003c/b\u003e by Merriam-Webster",
+   "link": "http://www.merriam-webster.com/dictionary/bear",
+   "displayLink": "www.merriam-webster.com",
+   "snippet": "any one of a group of large and heavy animals that have thick hair and sharp \nclaws and that can stand on two legs like a person. finance : a person who \nexpects ...",
+   "htmlSnippet": "any one of a group of large and heavy animals that have thick hair and sharp \u003cbr\u003e\nclaws and that can stand on two legs like a person. finance : a person who \u003cbr\u003e\nexpects&nbsp;...",
+   "cacheId": "nzedmcSEcGwJ",
+   "formattedUrl": "www.merriam-webster.com/dictionary/bear",
+   "htmlFormattedUrl": "www.merriam-webster.com/dictionary/\u003cb\u003ebear\u003c/b\u003e",
+   "pagemap": {
+    "cse_image": [
+     {
+      "src": "http://www.merriam-webster.com/images/social-media/mwlogo_245x245.png"
+     }
+    ],
+    "metatags": [
+     {
+      "fb:app_id": "178450008855735",
+      "og:title": "bear | any one of a group of large and heavy animals that have thick hair and sharp claws and that can stand on two legs like a person",
+      "og:image": "http://www.merriam-webster.com/images/social-media/mwlogo_245x245.png",
+      "og:url": "http://www.merriam-webster.com/dictionary/bear",
+      "og:description": "noun | \\ˈber\\ | See the full definition...",
+      "twitter:card": "summary",
+      "twitter:site": "@MerriamWebster",
+      "twitter:title": "bear | any one of a group of large and heavy animals that have thick hair and sharp claws and that can stand on two legs like a person",
+      "twitter:url": "http://www.merriam-webster.com/dictionary/bear",
+      "twitter:description": "noun | \\ˈber\\ | See the full definition...",
+      "twitter:image": "http://www.merriam-webster.com/images/social-media/mwlogo_245x245.png"
+     }
+    ]
+   }
+  },
+  {
+   "kind": "customsearch#result",
+   "title": "bear - definition of bear by The Free Dictionary",
+   "htmlTitle": "\u003cb\u003ebear\u003c/b\u003e - definition of \u003cb\u003ebear\u003c/b\u003e by The Free Dictionary",
+   "link": "http://www.thefreedictionary.com/bear",
+   "displayLink": "www.thefreedictionary.com",
+   "snippet": "v. bore (bôr), borne (bôrn) or born (bôrn), bear·ing, bears. v.tr. 1. a. To carry (\nsomething) on one's person from one place to another: bore the suitcase to the ...",
+   "htmlSnippet": "v. bore (bôr), borne (bôrn) or born (bôrn), \u003cb\u003ebear\u003c/b\u003e·ing, bears. v.tr. 1. a. To carry (\u003cbr\u003e\nsomething) on one&#39;s person from one place to another: bore the suitcase to the&nbsp;...",
+   "cacheId": "fFUi6k7eNTUJ",
+   "formattedUrl": "www.thefreedictionary.com/bear",
+   "htmlFormattedUrl": "www.thefreedictionary.com/\u003cb\u003ebear\u003c/b\u003e",
+   "pagemap": {
+    "cse_image": [
+     {
+      "src": "http://img.tfd.com/wn/C5/61667-bear.jpg"
+     }
+    ],
+    "cse_thumbnail": [
+     {
+      "width": "102",
+      "height": "68",
+      "src": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcS68MTeJoni-Ihvi5FU98XoIYW-OpSUBz2JgneGuBGxssrc4arSexMVxA"
+     }
+    ],
+    "metatags": [
+     {
+      "viewport": "width=device-width, initial-scale=1.0",
+      "msapplication-id": "Farlex.581429F59E1D8",
+      "msapplication-packagefamilyname": "Farlex.581429F59E1D8_wyegy4e46y996",
+      "apple-itunes-app": "app-id=379450383, app-argument=thefreedictionary://search/bear?",
+      "og:url": "http://www.thefreedictionary.com/bear",
+      "og:description": "Definition of bear by The Free Dictionary",
+      "og:title": "bear",
+      "og:type": "article",
+      "og:image": "http://img.tfd.com/wn/C5/61667-bear.jpg",
+      "og:site_name": "TheFreeDictionary.com"
+     }
+    ]
+   }
+  },
+  {
+   "kind": "customsearch#result",
+   "title": "Bear Archery",
+   "htmlTitle": "\u003cb\u003eBear\u003c/b\u003e Archery",
+   "link": "http://www.beararchery.com/",
+   "displayLink": "www.beararchery.com",
+   "snippet": "Menu. Bear Bows ... Goblin · Wizard · Crusader · Titan · Bullseye X Recurve · \nSonoma Recurve · Firebird · Firestar · Bear Archery Catalog · Equipment & \nApparel ...",
+   "htmlSnippet": "Menu. \u003cb\u003eBear\u003c/b\u003e Bows ... Goblin &middot; Wizard &middot; Crusader &middot; Titan &middot; Bullseye X Recurve &middot; \u003cbr\u003e\nSonoma Recurve &middot; Firebird &middot; Firestar &middot; \u003cb\u003eBear\u003c/b\u003e Archery Catalog &middot; Equipment &amp; \u003cbr\u003e\nApparel&nbsp;...",
+   "cacheId": "iYYK6zsFo1AJ",
+   "formattedUrl": "www.beararchery.com/",
+   "htmlFormattedUrl": "www.\u003cb\u003ebear\u003c/b\u003earchery.com/",
+   "pagemap": {
+    "cse_image": [
+     {
+      "src": "http://www.beararchery.com/sites/all/themes/bear2014/img/walk_among_legends_logo.png"
+     }
+    ],
+    "cse_thumbnail": [
+     {
+      "width": "308",
+      "height": "163",
+      "src": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTOHJZP9JIpRFxtbbPohbKAAuGUGpmg-99aITzRvTyhfXg3svHJNDrZyhyZ"
+     }
+    ],
+    "metatags": [
+     {
+      "viewport": "initial-scale=1"
+     }
+    ]
+   }
+  },
+  {
+   "kind": "customsearch#result",
+   "title": "Bear Mountain - Big Bear's Best Snowboarding & Golf | Official",
+   "htmlTitle": "\u003cb\u003eBear\u003c/b\u003e Mountain - Big \u003cb\u003eBear&#39;s\u003c/b\u003e Best Snowboarding &amp; Golf | Official",
+   "link": "http://www.bearmountain.com/",
+   "displayLink": "www.bearmountain.com",
+   "snippet": "Enjoy Big Bear's best snowboarding & golf. Bear Mountain is Southern \nCalifornia's most accessible snowboarding destination. Use your Cali4nia pass.",
+   "htmlSnippet": "Enjoy Big \u003cb\u003eBear&#39;s\u003c/b\u003e best snowboarding &amp; golf. \u003cb\u003eBear\u003c/b\u003e Mountain is Southern \u003cbr\u003e\nCalifornia&#39;s most accessible snowboarding destination. Use your Cali4nia pass.",
+   "cacheId": "FlUaHQuFvkwJ",
+   "formattedUrl": "www.bearmountain.com/",
+   "htmlFormattedUrl": "www.\u003cb\u003ebear\u003c/b\u003emountain.com/",
+   "pagemap": {
+    "cse_image": [
+     {
+      "src": "http://www.bearmountain.com/images/librariesprovider33/default-album/bear-built.png?sfvrsn=0"
+     }
+    ],
+    "cse_thumbnail": [
+     {
+      "width": "378",
+      "height": "133",
+      "src": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRor89rY4LhTpV5G9poLQIq7xq3g7b1QcjY_1cgvAzcMCFnxNr-3AukRNSf"
+     }
+    ],
+    "metatags": [
+     {
+      "viewport": "width=device-width, initial-scale=1.0",
+      "com.silverpop.brandeddomains": "www.pages03.net,bearmountain.com,bigbear.mkt7087.com,bigbearmountainresorts.com,cali4niapass.com,junemountain.com,juniperspringsmammoth.com,mammothmountain.com,snowsummit.com,tamaracklodge.com,themammothmountaininn.com,thevillagelodgemammoth.com,www.bearmountain.com,www.bigbearmountainresorts.com,www.cali4niapass.com,www.junemountain.com,www.juniperspringsmammoth.com,www.mammothmountain.com,www.snowsummit.com,www.tamaracklodge.com,www.themammothmountaininn.com,www.thevillagelodgemammoth.com"
+     }
+    ]
+   }
+  },
+  {
+   "kind": "customsearch#result",
+   "title": "North American Bear Center - Home",
+   "htmlTitle": "North American \u003cb\u003eBear\u003c/b\u003e Center - Home",
+   "link": "http://www.bear.org/",
+   "displayLink": "www.bear.org",
+   "snippet": "The NABC aims to improve the understanding of bears through education, \nresearch and rehabilitation. This site provides biological information on black, \ngrizzly ...",
+   "htmlSnippet": "The NABC aims to improve the understanding of bears through education, \u003cbr\u003e\nresearch and rehabilitation. This site provides biological information on black, \u003cbr\u003e\ngrizzly&nbsp;...",
+   "cacheId": "_otXN4jf5CMJ",
+   "formattedUrl": "www.bear.org/",
+   "htmlFormattedUrl": "www.\u003cb\u003ebear\u003c/b\u003e.org/",
+   "pagemap": {
+    "cse_image": [
+     {
+      "src": "http://www.bear.org/website/cache/lofthumbs/385x255-bear_in_woods_approaching.jpg"
+     }
+    ],
+    "cse_thumbnail": [
+     {
+      "width": "276",
+      "height": "183",
+      "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6lIkTznSerFZ-NC35LcLn_Jqc2QbTGGCFhD2Rg-ngwPsq_nmfy45h7wkZ"
+     }
+    ]
+   }
+  },
+  {
+   "kind": "customsearch#result",
+   "title": "Bear (2010) - IMDb",
+   "htmlTitle": "\u003cb\u003eBear\u003c/b\u003e (2010) - IMDb",
+   "link": "http://www.imdb.com/title/tt1468703/",
+   "displayLink": "www.imdb.com",
+   "snippet": "Two young couples are driving through a remote forest when their car breaks \ndown. When a run-in with a curious grizzly bear ends up with the bear being shot\n ...",
+   "htmlSnippet": "Two young couples are driving through a remote forest when their car breaks \u003cbr\u003e\ndown. When a run-in with a curious grizzly \u003cb\u003ebear\u003c/b\u003e ends up with the \u003cb\u003ebear\u003c/b\u003e being shot\u003cbr\u003e\n&nbsp;...",
+   "cacheId": "kYdVbqWEI_cJ",
+   "formattedUrl": "www.imdb.com/title/tt1468703/",
+   "htmlFormattedUrl": "www.imdb.com/title/tt1468703/",
+   "pagemap": {
+    "cse_image": [
+     {
+      "src": "http://ia.media-imdb.com/images/M/MV5BMTcyNzU1NTI1NV5BMl5BanBnXkFtZTcwNDAyODg5Mg@@._V1_SY1200_CR88,0,630,1200_AL_.jpg"
+     }
+    ],
+    "videoobject": [
+     {
+      "duration": "T2M3S",
+      "url": "http://www.imdb.com/video/screenplay/vi1775633945?ref_=tt_pv_vi_aiv_1",
+      "image": "http://ia.media-imdb.com/images/M/MV5BMTU3MDc2MDMzNV5BMl5BanBnXkFtZTcwNjgxNDU3Mw@@._V1_SP229,229,0,C,0,0,0_CR45,62,139,105_PIimdb-blackband-204-14,TopLeft,0,0_PIimdb-blackband-204-28,BottomLeft,0,1_CR0,0,139,105_PIimdb-bluebutton-big,BottomRight,-1,-1_ZATrailer,2,76,16,137,verdenab,8,255,255,255,1_ZAon%2520IMDb,2,1,14,137,verdenab,7,255,255,255,1_ZA02:03,103,1,14,36,verdenab,7,255,255,255,1_.jpg"
+     }
+    ],
+    "organization": [
+     {
+      "url": "Rebel Film BV",
+      "name": "Rebel Film BV"
+     },
+     {
+      "url": "Wiseacre Films",
+      "name": "Wiseacre Films"
+     }
+    ],
+    "person": [
+     {
+      "url": "John Rebel",
+      "name": "John Rebel"
+     },
+     {
+      "url": "Roel Reiné",
+      "name": "Roel Reiné"
+     },
+     {
+      "url": "Brendan Michael Coughlin",
+      "name": "Brendan Michael Coughlin"
+     },
+     {
+      "url": "Brendan Michael Coughlin",
+      "name": "Brendan Michael Coughlin"
+     },
+     {
+      "url": "Patrick Scott Lewis",
+      "name": "Patrick Scott Lewis"
+     },
+     {
+      "url": "Katie Lowes",
+      "name": "Katie Lowes"
+     },
+     {
+      "url": "Bill Rampley",
+      "name": "Bill Rampley"
+     },
+     {
+      "url": "Mary Alexandra Stiefvater",
+      "name": "Mary Alexandra Stiefvater"
+     }
+    ],
+    "cse_thumbnail": [
+     {
+      "width": "163",
+      "height": "310",
+      "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5dXaqNC09qDtbbguZOgBi2d6nqYKU4e_qu2iiOPUpH9fj6AIoaqloak4"
+     }
+    ],
+    "audience": [
+     {
+      "url": "View content advisory"
+     }
+    ],
+    "aggregaterating": [
+     {
+      "ratingvalue": "2.9",
+      "bestrating": "10",
+      "ratingcount": "853",
+      "reviewcount": "34 user"
+     }
+    ],
+    "movie": [
+     {
+      "image": "http://ia.media-imdb.com/images/M/MV5BMTcyNzU1NTI1NV5BMl5BanBnXkFtZTcwNDAyODg5Mg@@._V1_SX214_AL_.jpg",
+      "name": "Bear",
+      "contentrating": "R",
+      "duration": "PT78M",
+      "genre": "Horror",
+      "datepublished": "2010",
+      "description": "Two young couples are driving through a remote forest when their car breaks down. When a run-in with a curious grizzly bear ends up with the bear being shot to death, the bear's mate ... See...",
+      "trailer": "Watch Trailer",
+      "headline": "Scandal Finale: Last-Minute Tinkering Has Cast in the Dark About Final Twists",
+      "provider": "TVLine.com",
+      "url": "Show HTML",
+      "thumbnailurl": "http://www.imdb.com/media/rm804556288/tt1468703?ref_=tt_pv_md_1",
+      "keywords": "Plot Keywords: bear | forest | car won't start | cigarette smoking | alcoholism | See All (14) »"
+     }
+    ],
+    "rating": [
+     {
+      "worstrating": "1",
+      "ratingvalue": "2",
+      "bestrating": "10"
+     }
+    ],
+    "metatags": [
+     {
+      "og:url": "http://www.imdb.com/title/tt1468703/",
+      "og:image": "http://ia.media-imdb.com/images/M/MV5BMTcyNzU1NTI1NV5BMl5BanBnXkFtZTcwNDAyODg5Mg@@._V1_SY1200_CR88,0,630,1200_AL_.jpg",
+      "og:type": "video.movie",
+      "fb:app_id": "115109575169727",
+      "og:title": "Bear (2010)",
+      "og:site_name": "IMDb",
+      "title": "Bear (2010) - IMDb",
+      "og:description": "Directed by John Rebel.  With Brendan Michael Coughlin, Patrick Scott Lewis, Katie Lowes, Bill Rampley. Two young couples are driving through a remote forest when their car breaks down. When a run-in with a curious grizzly bear ends up with the bear being shot to death, the bear's mate arrives on the scene and vengefully attacks their van. The couples are trapped inside the disabled car and must come up with clever ways to survive. As they battle the surprisingly intelligent creature, and ...",
+      "request_id": "1F42RZ81JSZ58BHTH444"
+     }
+    ],
+    "moviereview": [
+     {
+      "ratingstars": "1.5",
+      "best": "10",
+      "originalrating": "2.9",
+      "votes": "853",
+      "ratingcount": "34 user",
+      "image_href": "http://ia.media-imdb.com/images/M/MV5BMTM4MzA4OTE4OV5BMl5BanBnXkFtZTcwMzQ5ODQ5Mg@@._V1_SX105_CR0,0,105,105_AL_.jpg",
+      "name": "Bear",
+      "release_date": "2010",
+      "release_year": "2010",
+      "runtime": "PT78M",
+      "genre": "Horror/Thriller",
+      "directed_by": "John Rebel",
+      "starring": "Katie Lowes, Brendan Michael Coughlin, Patrick Scott Lewis",
+      "summary": "Two young couples are driving through a remote forest when their car breaks down. When a run-in with a curious grizzly bear ends up with the bear being..."
+     }
+    ],
+    "review": [
+     {
+      "name": "Unpleasant Characters in a Stupid Story",
+      "author": "Claudio Carvalho",
+      "datepublished": "2012-11-18",
+      "reviewbody": "In California, Nick (Brendan Michael Coughlin) decides to take a shortcut while driving his van to a steakhouse to celebrate his parents' anniversary with his girlfriend Christine (Katie Lowes),..."
+     }
+    ]
+   }
+  },
+  {
+   "kind": "customsearch#result",
+   "title": "bear. {restaurant}",
+   "htmlTitle": "\u003cb\u003ebear\u003c/b\u003e. {restaurant}",
+   "link": "http://www.bearnyc.com/",
+   "displayLink": "www.bearnyc.com",
+   "snippet": "A few days ago the ladies from We Heart Astoria - the best local blog on our \nneighborhood, stopped by to take some incredible photos and write up an article \non ...",
+   "htmlSnippet": "A few days ago the ladies from We Heart Astoria - the best local blog on our \u003cbr\u003e\nneighborhood, stopped by to take some incredible photos and write up an article \u003cbr\u003e\non&nbsp;...",
+   "cacheId": "NppzvamIjesJ",
+   "formattedUrl": "www.bearnyc.com/",
+   "htmlFormattedUrl": "www.\u003cb\u003ebear\u003c/b\u003enyc.com/",
+   "pagemap": {
+    "cse_image": [
+     {
+      "src": "http://www.bearnyc.com/pages/images/P1160765.jpg"
+     }
+    ],
+    "cse_thumbnail": [
+     {
+      "width": "275",
+      "height": "183",
+      "src": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRHi-iLtaw5BTOeTQMT0z5SjzXtYKoq7EGIaNdMH9bSD-1UJ5R0kiijt_Q"
+     }
+    ]
+   }
+  },
+  {
+   "kind": "customsearch#result",
+   "title": "Elizabeth Bear",
+   "htmlTitle": "Elizabeth \u003cb\u003eBear\u003c/b\u003e",
+   "link": "http://www.elizabethbear.com/",
+   "displayLink": "www.elizabethbear.com",
+   "snippet": "Mar 24, 2015 ... Hi, guys! Long time no blog. Tucson Festival of Books was great, and was \nfollowed by a whirlwind tour of the Southwest. Now I'm back in ...",
+   "htmlSnippet": "Mar 24, 2015 \u003cb\u003e...\u003c/b\u003e Hi, guys! Long time no blog. Tucson Festival of Books was great, and was \u003cbr\u003e\nfollowed by a whirlwind tour of the Southwest. Now I&#39;m back in&nbsp;...",
+   "cacheId": "uVEibxui9ycJ",
+   "formattedUrl": "www.elizabethbear.com/",
+   "htmlFormattedUrl": "www.elizabeth\u003cb\u003ebear\u003c/b\u003e.com/",
+   "pagemap": {
+    "cse_image": [
+     {
+      "src": "https://farm9.staticflickr.com/8645/15827096314_4268ca702e_c.jpg"
+     }
+    ],
+    "cse_thumbnail": [
+     {
+      "width": "386",
+      "height": "130",
+      "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROGdSI20h1RAbBHlgnEDezQhWE1LGKbJw2j3BCd6ZjyaaiZxk_s-eW2P4"
+     }
+    ]
+   }
+  }
+ ]
+}
