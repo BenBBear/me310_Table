@@ -1,16 +1,26 @@
-body{}
-
-#close{
-    color:red;
+body{
+    background-color:rgba(31, 36, 42, 1);
 }
 
 
-#trash{}
 
-#undo{}
+.btn{
+
+    background-color:rgba(19, 120, 188, 1);
+    border:none;
+    color:RGBA(237, 237, 237, 1);
+    width: 4em;
+    height: 3em;
+    margin-bottom: 0.5em;
+    margin-right: 1em
+}
+
+#canvas{
+    background-color:rgba(207, 220, 229, 1);
+    border:none;
+}
 
 
-#redo{}
-
-
-#canvas{}
+.btn-icon{
+    color:white;
+}
