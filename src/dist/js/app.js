@@ -564,6 +564,11 @@ Util.qrcodeToHref = function(sel, text){
     return Util;
 };
 
+Util.redraw = function(sel){
+    $(sel).hide().show(0);
+    return Util;
+};
+
 (function() {
     var fs = require('fs'),
         path = require('path');
@@ -1786,7 +1791,9 @@ function main() {
                             }
                             console.log('current body_angle is:' + $scope.body_angle || 0);
                             // Util.rotate(document.body, $scope.body_angle);
-                            Util.rotate('#my-body', $scope.body_angle);
+                            Util.redraw('#my-body')
+                                .rotate('#my-body', $scope.body_angle);
+
                             Util.rotate('.modal-backdrop', $scope.body_angle);
                         };
 
@@ -1901,8 +1908,37 @@ function main() {
 
 
 
+                        $scope.showQrCode = function(sel) {
+                            var opacity = $(sel).css("opacity");
+                            if (opacity == "1") {
+                                $(sel).css("opacity", 0);
+                            } else {
+                                $(sel).css("opacity", 1);
+                            }
+                        };
 
 
+                        // Theme
+                        var themes = ['dark-blue'];
+
+                        $scope.themes = {};
+                        $scope.resetTheme = function (){
+                            themes.forEach(function(x){
+                                $scope.themes[x] = false;
+                            });
+                        };
+                        $scope.themes_cursor = 0;
+                        $scope.toggleTheme = function() {
+                            var len = themes.length;
+                            $scope.themes_cursor = ($scope.themes_cursor + 1) % len;
+                            $scope.setTheme($scope.themes_cursor);
+                        };
+                        $scope.setTheme = function(idx){
+                            idx = idx || 0;
+                            $scope.resetTheme();
+                            $scope.themes[themes[$scope.themes_cursor]] = true;
+                        };
+                        $scope.setTheme(0);
 
                         // END
                         message.startUp();

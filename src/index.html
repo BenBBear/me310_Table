@@ -20,27 +20,27 @@
     <input type="file" id="pasteasy_qr_chooser" style="display:none;" accept="image/x-png, image/gif, image/jpeg" />
     <div class="wrapper">
         <div class="container">
-            <div class="rotate-panel top" ng-click="rotate(180);"></div>
-            <div class="rotate-panel right" ng-click="rotate(270);"></div>
-            <div class="rotate-panel left" ng-click="rotate(90);"></div>
-            <div class="rotate-panel bottom" ng-click="rotate(0);"></div>
-            <div class="pull-right pull-up">
-                <img class="qrcode " ng-src="{{pasteasy_qrcode}}">
-                <p class="auto-linker">Pasteasy</p>
+            <div class="rotate-panel top"  ng-class="themes" ng-click="rotate(180);"></div>
+            <div class="rotate-panel right" ng-class="themes" ng-click="rotate(270);"></div>
+            <div class="rotate-panel left" ng-class="themes" ng-click="rotate(90);"></div>
+            <div class="rotate-panel bottom" ng-class="themes" ng-click="rotate(0);"></div>
+            <div class="pull-right pull-up qrcode-badge" ng-class="themes"  id="pasteasy_qrcode"  on-double-tap="showQrCode('#pasteasy_qrcode')" >
+                <img class="qrcode" ng-src="{{pasteasy_qrcode}}">
+                <p class="auto-linker" ng-class="themes">Pasteasy</p>
             </div>
-            <div class="pull-left pull-up">
-                <img class="qrcode  " ng-src="{{server_qrcode}}">
-                <p class="auto-linker">Download</p>
+            <div class="pull-left pull-up qrcode-badge" ng-class="themes"  id="server_qrcode"  on-double-tap="showQrCode('#server_qrcode')">
+                <img class="qrcode  " ng-src="{{server_qrcode}}"  >
+                <p class="auto-linker" ng-class="themes">Download</p>
             </div>
 
 
-            <div id="my-body">
+            <div id="my-body" ng-class="themes">
                 <div class="item-input-inset margin-top-vvlg">
-                    <label class="item-input-wrapper">
-                        <input type="search" placeholder="What's Your Topic?" ng-model="lexicon_input" ng-focus="startWriting()">
+                    <label class="item-input-wrapper search-input-wrapper" ng-class="themes">
+                        <input type="search" class="search-input"  placeholder="What's Your Topic?" ng-model="lexicon_input" ng-focus="startWriting()" ng-class="themes">
                     </label>
                 </div>
-                <div class="main-gallery margin-top-vvlg position-inherit">
+                <div class="main-gallery margin-top-vvlg position-inherit" ng-class="themes">
                     <iframe ng-if="writing" scrolling="no" class="writing-board" ng-src="./html/myscript/sample/text/rest/index.html"></iframe>
 
                     <div ng-if="lexicon_words.length > 0 || lexicon_images.length > 0 " class="lexicon" ng-drop="true" ng-drop-success="imageDropTo($data, lexicon_images, true)">
@@ -55,15 +55,15 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="button button-block" ng-click="lexiconImagesSelectMore()"> load more <i class="icon ion-ios-refresh"></i></button>
+                                    <button class="button button-block lexicon-images-refresh" ng-click="lexiconImagesSelectMore()"> load more <i class="icon ion-ios-refresh"></i></button>
                                 </div>
                             </div>
                             <div class="col">
                                 <ul class="list lexicon-words">
-                                    <li class="item" ng-repeat="word in lexicon_words.slice(lexicon_words_cursor_start, min(lexicon_words_cursor_start+ WordsPerPage, lexicon_words.length))" ng-click="setLexiconInput(word)">
+                                    <li class="item lexicon-word" ng-repeat="word in lexicon_words.slice(lexicon_words_cursor_start, min(lexicon_words_cursor_start+ WordsPerPage, lexicon_words.length))" ng-click="setLexiconInput(word)">
                                         {{word}}
                                     </li>
-                                    <li class="item" ng-click="lexiconWordsCursorMore()"> <i class="icon ion-ios-refresh"></i></li>
+                                    <li class="item lexicon-word" ng-click="lexiconWordsCursorMore()"> <i class="icon ion-ios-refresh"></i></li>
                                 </ul>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
 
                         <div class="pagination">
                             <span ng-repeat="i in range(h_main_gallery.length) track by $index">
-                                <span class="page"  ng-class="{active:($index == current_h_main_gallery_index)}"> Page {{$index + 1}} </span>
+                                <span class="page"  ng-class="{active:($index == current_h_main_gallery_index)}">  {{$index + 1}} </span>
                             </span>
                         </div>
                     </div>
