@@ -145,8 +145,8 @@ $md:15px;
 }
 
 img.qrcode {
-    width: 5em !important;
-    height: 5em !important;
+    width: 8em !important;
+    height: 8em !important;
 }
 
 .floating-btn {
@@ -183,7 +183,7 @@ body {
 }
 
 #my-body {
-    margin-top: 2em;
+    margin-top: $screen-width/$rotate-width-divider + 1em;
     -webkit-transition: -webkit-transform 0.5s cubic-bezier(0.000, 0.825, 0.695, 1.000);
 }
 
@@ -266,7 +266,8 @@ body {
     width: $screen-width;
     height: $screen-height;
     display: inline-block;
-    overflow-y: scroll !important;
+    /* overflow-y: scroll !important; */
+    overflow-y: hidden !important;
     overflow-x:hidden !important;
 }
 
@@ -370,4 +371,9 @@ body {
     input{
         width:100%;
     }
+}
+
+
+.container{
+    height:100%;
 }

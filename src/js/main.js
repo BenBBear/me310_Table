@@ -298,6 +298,7 @@ function main() {
                         });
 
                         //rotate
+                        $scope.body_angle = 0;
                         $scope.rotate = function(x) {
                             x = Math.abs(x);
                             console.log('previous body_angle is:' + $scope.body_angle || 0);
