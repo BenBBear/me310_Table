@@ -36,13 +36,13 @@
 
             <div id="my-body" ng-class="themes">
                 <div class="search-input-wrapper" ng-class="themes">
-                    <div class="search-input item-input-inset margin-top-vvlg" ng-class="themes">
+                    <div class="search-input item-input-inset margin-top-vvlg" style="padding-bottom:0em;" ng-class="themes">
                         <label class="item-input-wrapper " >
                             <input type="search" class=""  placeholder="What's Your Topic?" ng-model="lexicon_input" ng-focus="startWriting()" >
                         </label>
                     </div>
                 </div>
-                <div class=" margin-top-vvlg position-inherit" >
+                <div class="position-inherit" >
                     <iframe ng-if="writing" scrolling="no" class="writing-board" ng-src="./html/myscript/sample/text/rest/index.html" ng-class="themes"></iframe>
 
                     <div ng-if="lexicon_words.length > 0 || lexicon_images.length > 0 " class="lexicon" ng-drop="true" ng-drop-success="imageDropTo($data, lexicon_images, true)">

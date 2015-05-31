@@ -200,7 +200,7 @@ body {
   -webkit-transition: -webkit-transform 0.5s cubic-bezier(0, 0.825, 0.695, 1); }
 
 #my-body {
-  margin-top: 4.57143em;
+  margin-top: 5.5em;
   -webkit-transition: -webkit-transform 0.5s cubic-bezier(0, 0.825, 0.695, 1); }
 
 .pointer-events-none {
@@ -263,8 +263,8 @@ body {
   border: none; }
 
 #my-body {
-  width: 50em;
-  height: 50em;
+  width: 63em;
+  height: 63em;
   display: inline-block;
   /* overflow-y: scroll !important; */
   overflow-y: hidden !important;
@@ -279,7 +279,7 @@ body {
 .writing-board {
   width: 100%;
   overflow: hidden;
-  height: 12.5em; }
+  height: 15.75em; }
 
 .rotate-panel {
   position: absolute;
@@ -287,20 +287,20 @@ body {
   .rotate-panel.right {
     height: 50%;
     top: 25%;
-    width: 3.57143em;
+    width: 4.5em;
     right: 0em; }
   .rotate-panel.left {
     height: 50%;
     top: 25%;
-    width: 3.57143em;
+    width: 4.5em;
     left: 0em; }
   .rotate-panel.top {
-    height: 3.57143em;
+    height: 4.5em;
     width: 50%;
     left: 25%;
     top: 0em; }
   .rotate-panel.bottom {
-    height: 3.57143em;
+    height: 4.5em;
     width: 50%;
     left: 25%;
     bottom: 0em; }
