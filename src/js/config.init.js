@@ -4,7 +4,7 @@ var Class = {}; // Classes
 var Constant = {
     DEBUG_UI:false,
     LexiconImagesPerPage:8,
-    GalleryImagesPerPage:10,
+    GalleryImagesPerPage:6,
     WordsPerPage:6
 }; // Constant
 var Settings = {};
