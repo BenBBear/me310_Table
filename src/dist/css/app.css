@@ -169,8 +169,8 @@
   padding: 0.3em 0.1em 0.3em 0.1em; }
 
 img.qrcode {
-  width: 5em !important;
-  height: 5em !important; }
+  width: 8em !important;
+  height: 8em !important; }
 
 .floating-btn {
   color: #fff;
@@ -200,7 +200,7 @@ body {
   -webkit-transition: -webkit-transform 0.5s cubic-bezier(0, 0.825, 0.695, 1); }
 
 #my-body {
-  margin-top: 2em;
+  margin-top: 4.57143em;
   -webkit-transition: -webkit-transform 0.5s cubic-bezier(0, 0.825, 0.695, 1); }
 
 .pointer-events-none {
@@ -266,7 +266,8 @@ body {
   width: 50em;
   height: 50em;
   display: inline-block;
-  overflow-y: scroll !important;
+  /* overflow-y: scroll !important; */
+  overflow-y: hidden !important;
   overflow-x: hidden !important; }
 
 .wrapper {
@@ -346,3 +347,6 @@ body {
   text-align: center; }
   .search-input-wrapper input {
     width: 100%; }
+
+.container {
+  height: 100%; }

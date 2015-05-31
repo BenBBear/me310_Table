@@ -298,6 +298,7 @@ function main() {
                         });
 
                         //rotate
+                        $scope.body_angle = 0;
                         $scope.rotate = function(x) {
                             x = Math.abs(x);
                             console.log('previous body_angle is:' + $scope.body_angle || 0);
@@ -389,14 +390,21 @@ function main() {
                         $scope.addToGallery = function(image_modal_src) {
                             if ($scope.main_gallery.indexOf(image_modal_src) == -1) {
                                 $scope.main_gallery.push(image_modal_src);
-                                toaster.pop('success', "Well Done", "The Image Has Been Saved");
+                                toaster.pop('success', "Well Done", "The Image Has Been Saved.");
                                 $timeout(function() {
                                     $scope.current_h_main_gallery_index = $scope.h_main_gallery.length - 1;
                                 });
                             }
                             return;
                         };
-
+                        $scope.delFromGallery = function(src){
+                            toaster.pop('error', "Deleted", "The Image Has Been removed.");
+                            $timeout(function(){
+                            $scope.main_gallery.remove(src);
+                            $scope.gallery.index(0);
+                                $scope.closeImageModal();
+                            },1000);
+                        };
 
 
 
