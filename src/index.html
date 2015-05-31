@@ -113,6 +113,9 @@
     <div class="modal image-modal" ng-click="closeImageModal();" on-swipe-down="swipe('down')" on-swipe-left="swipe('left')" on-swipe-right="swipe('right')" on-swipe-up="swipe('up')">
         <toaster-container></toaster-container>
         <img class="image-modal-main" ng-src="{{current_gallery.current}}" ng-click="addToGallery(current_gallery.current);$event.stopPropagation();" />
+        <div style="text-align:center;" ng-if="current_gallery== gallery"  >
+            <button style="width:3em;border-radius:50%;margin-top:2em" class="button button-outline button-icon " ng-click="delFromGallery(current_gallery.current); $event.stopPropagation();"> <i class="fa fa-trash"></i></button>
+        </div>
     </div>
 </script>
 
